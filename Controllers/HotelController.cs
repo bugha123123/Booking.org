@@ -1,4 +1,5 @@
 ﻿using Hotel.org.Interface;
+using Hotel.org.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.org.Controllers
@@ -17,6 +18,21 @@ namespace Hotel.org.Controllers
             var result = await _hotelService.SearchForHotel(place, checkInDate, checkOutDate, AdultsCount, ChildrenCount);
             return View(result);
         }
+
+        public IActionResult HotelBookedSuccessPage()
+        {
+            return View();
+        }
+
+        [HttpPost("bookhotel")]
+        public async Task<IActionResult> BookHotel(int HotelId)
+        {
+            // Book the hotel
+            await _hotelService.BookHotel(HotelId);
+
+            return RedirectToAction("HotelBookedSuccessPage", new { HotelId = HotelId });
+        }
+
 
     }
 }

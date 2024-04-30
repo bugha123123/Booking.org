@@ -9,11 +9,25 @@ namespace Hotel.org.Service
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
         }
+
+        public async Task<User> GetLoggedInUserAsync()
+        {
+            string userName = _httpContextAccessor.HttpContext.User.Identity.Name!;
+
+            // Find the user by username
+            var user = await _userManager.FindByNameAsync(userName);
+
+            return user;
+        }
+
+
 
         //registers user using identity
         public async Task RegisterUser(RegisterViewModel registerViewModel)

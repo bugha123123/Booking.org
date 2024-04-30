@@ -1,4 +1,5 @@
 ﻿using Hotel.org.DTO;
+using Hotel.org.Models;
 
 namespace Hotel.org.Interface
 {
@@ -9,5 +10,7 @@ namespace Hotel.org.Interface
         Task SignInUser(LoginViewModel loginViewModel);
 
         Task SignOutUser();
+
+        Task<User> GetLoggedInUserAsync();
     }
 }

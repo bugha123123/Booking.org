@@ -8,7 +8,7 @@ namespace Hotel.org.ApplicationDBContext
     public class AppDbContext : IdentityDbContext<User>
     {
         public DbSet<Hotels> Hotels { get; set; }
-
+        public DbSet<BookedHotels> bookedHotels { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
