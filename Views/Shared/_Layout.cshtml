@@ -26,26 +26,29 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-
-            <a asp-action="Index" asp-controller="Home" class="navbar-brand d-flex flex-column align-items-center" style="margin-left:20px;" >
+            <a asp-action="Index" asp-controller="Home" class="navbar-brand d-flex flex-column align-items-center" style="margin-left:20px;">
                 <img src="~/Logos/Logo.png" alt="Logo" width="60" height="60" class="d-inline-block align-top img-fluid ml-4">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="d-flex mx-auto" style="width: 600px;">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <ul class="navbar-nav ms-auto " style="margin-right:100px">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> <!-- Remove inline width style -->
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person"></i>
                             </a>
-                            <ul class="dropdown-menu "  aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">Payments</a></li>
                                 <li><a class="dropdown-item" href="#">Support</a></li>
                                 <li>
@@ -69,6 +72,8 @@
             </div>
         </div>
     </nav>
+
+
 
 
 

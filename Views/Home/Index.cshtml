@@ -1,3 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+
+<style>
+    .full-width-img {
+        position: relative;
+        width: 100%;
+        height: auto; /* Change height to auto for responsiveness */
+        overflow: hidden;
+    }
+
+    .overlay-text {
+        position: absolute;
+        top: 20%;
+        left: 5%;
+        color: #043E5F;
+        font-size: 2vw; /* Adjust font size for responsiveness */
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        width: 90%; /* Set width to 90% for responsiveness */
+    }
+</style>
+
+<div class="container-fluid mt-5 p-0">
+    <div class="row">
+        <div class="col-12 p-0">
+            <div class="full-width-img">
+                <img src="~/Images/Image.png" class="img-fluid rounded-3" alt="Your Image">
+                <div class="overlay-text">
+                    <h1>Discover Your Trips Worldwide</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
