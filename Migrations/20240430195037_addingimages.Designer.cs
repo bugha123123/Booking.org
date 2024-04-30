@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240430195037_addingimages")]
+    partial class addingimages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,7 +162,7 @@ namespace Hotel.org.Migrations
                             Pool = false,
                             PostalCode = "98765",
                             Rating = 4,
-                            RoomImage = "/Images/mountain_lodge.jpg",
+                            RoomImage = "/mountain_lodge.jpg",
                             RoomTypes = "Standard, Chalet, Cabin",
                             Wifi = true
                         },
@@ -185,7 +188,7 @@ namespace Hotel.org.Migrations
                             Pool = false,
                             PostalCode = "12345",
                             Rating = 4,
-                            RoomImage = "/Images/city_center_hotel.jpg",
+                            RoomImage = "/city_center_hotel.jpg",
                             RoomTypes = "Standard, Executive, Suite",
                             Wifi = true
                         },
@@ -211,7 +214,7 @@ namespace Hotel.org.Migrations
                             Pool = true,
                             PostalCode = "13579",
                             Rating = 4,
-                            RoomImage = "/Images/coastal_retreat.jpg",
+                            RoomImage = "/coastal_retreat.jpg",
                             RoomTypes = "Standard, Ocean View, Beachfront Villa",
                             Wifi = true
                         },
@@ -237,7 +240,7 @@ namespace Hotel.org.Migrations
                             Pool = false,
                             PostalCode = "24680",
                             Rating = 3,
-                            RoomImage = "/Images/rural_farmstay.jpg",
+                            RoomImage = "rural_farmstay.jpg",
                             RoomTypes = "Farmhouse, Cottage",
                             Wifi = false
                         },
@@ -263,7 +266,7 @@ namespace Hotel.org.Migrations
                             Pool = false,
                             PostalCode = "86420",
                             Rating = 4,
-                            RoomImage = "/Images/urban_boutique_hotel.jpg",
+                            RoomImage = "urban_boutique_hotel.jpg",
                             RoomTypes = "Standard, Loft, Penthouse",
                             Wifi = true
                         },
@@ -289,7 +292,7 @@ namespace Hotel.org.Migrations
                             Pool = false,
                             PostalCode = "97531",
                             Rating = 4,
-                            RoomImage = "/Images/historic_inn.jpg",
+                            RoomImage = "historic_inn.jpg",
                             RoomTypes = "Classic Room, Suite",
                             Wifi = true
                         },
@@ -315,7 +318,7 @@ namespace Hotel.org.Migrations
                             Pool = false,
                             PostalCode = "36984",
                             Rating = 4,
-                            RoomImage = "/Images/ski_lodge.jpg",
+                            RoomImage = "ski_lodge.jpg",
                             RoomTypes = "Standard, Chalet",
                             Wifi = true
                         },

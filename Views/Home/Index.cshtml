@@ -1,4 +1,6 @@
-﻿@using static Hotel.org.Models.Hotels
+﻿@using Hotel.org.Interface
+@using static Hotel.org.Models.Hotels
+@inject IHotelService _hotelservice;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -7,64 +9,113 @@
     .full-width-img {
         position: relative;
         width: 100%;
-        height: auto; /* Change height to auto for responsiveness */
+        height: auto;
         overflow: hidden;
     }
 
     .overlay-text {
         position: absolute;
-        top: 20%;
-        left: 5%;
-        color: #043E5F;
-        font-size: 2vw; /* Adjust font size for responsiveness */
-        font-weight: bold;
+        top: 70%;
+        left: -17.5%;
+        color: white;
         text-align: center;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        width: 90%; /* Set width to 90% for responsiveness */
+        width: 90%;
     }
 </style>
 
-<div class="container-fluid mt-5 p-0">
-    <div class="row">
-        <div class="col-12 p-0">
-            <div class="full-width-img">
-                <img src="~/Images/Image.png" class="img-fluid rounded-3" alt="Your Image">
-                <div class="overlay-text">
-                    <h1>Discover Your Trips Worldwide</h1>
+<div class="container mx-auto">
+    <div class="container-fluid mt-5 p-0">
+        <div class="row">
+            <div class="col-12 p-0">
+                <div class="full-width-img">
+                    <img src="~/Images/Image.png" class="img-fluid rounded-3" alt="Your Image">
+                    <div class="overlay-text">
+                        <h1 style="font-weight:bold;">Discover Your Trips Worldwide</h1>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <div class="d-flex align-items-center p-3 p-md-5 shadow-md" style="transform: translateY(-50%); z-index: 1000;">
-        <input class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted flex-grow-1" placeholder="Where Are You Going To?" />
-        <input type="date" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mx-2" placeholder="Check In Date" />
-        <input type="date" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mr-2" placeholder="Check Out Date" />
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownAdults" data-bs-toggle="dropdown" aria-expanded="false">
-                Adults
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownAdults">
-                @foreach (var value in Enum.GetValues(typeof(NumberOfAdultsEnum)))
-                {
-                    <li><button class="dropdown-item" type="button">@value</button></li>
-                }
-            </ul>
-        </div>
-        <div class="dropdown ml-2">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChildren" data-bs-toggle="dropdown" aria-expanded="false">
-                Children
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownChildren">
-                @foreach (var value in Enum.GetValues(typeof(NumberOfChildrenEnum)))
-                {
-                    <li><button class="dropdown-item" type="button">@value</button></li>
-                }
-            </ul>
-        </div>
+    <div class="container-fluid">
+        <form action="@Url.Action("HotelSearchPage", "Hotel")" method="GET">
+            <div class="d-flex align-items-center p-3 p-md-5 shadow-md" style="transform: translateY(-50%); z-index: 1000;">
+                <input name="place" required class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted flex-grow-1" placeholder="Where Are You Going To?" />
+                <input name="checkInDate"  type="date" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mx-2" placeholder="Check In Date" />
+                <input name="checkOutDate" type="date" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mr-2" placeholder="Check Out Date" />
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" style="margin-left:10px; margin-right:10px;" type="button" id="dropdownAdults" data-bs-toggle="dropdown" aria-expanded="false">
+                        Adults
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownAdults">
+                        @foreach (var value in Enum.GetValues(typeof(NumberOfAdultsEnum)))
+                        {
+                            <li>
+                                <input class="dropdown-item" name="AdultsCount" type="radio" value="@value" id="@($"adult_{value}")" onclick="updateDropdownText('dropdownAdults', '@value')" />
+                                <label for="@($"adult_{value}")">@value</label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="dropdown ml-2">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChildren" style="margin-right:10px;" data-bs-toggle="dropdown" aria-expanded="false">
+                        Children
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownChildren">
+                        @foreach (var value in Enum.GetValues(typeof(NumberOfChildrenEnum)))
+                        {
+                            <li>
+                                <input class="dropdown-item" name="ChildrenCount" type="radio" value="@value" id="@($"child_{value}")" />
+                                <label for="@($"child_{value}")">@value</label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </div>
+        </form>
 
-        <button class="btn btn-primary ml-2">Search</button>
+     
     </div>
+    <div class="container-fluid">
+        <h3 style="color:#000000; margin-bottom:20px;font-weight:bold;">Explore Stays In Trending Destinations</h3>
+
+        <div class="row row-cols-1 row-cols-md-5 gap-5 rounder-2">
+
+            @foreach (var hotel in await _hotelservice.GetHotelsAsync())
+            {
+                <div class="col">
+                    <div class="card position-relative" style="width: 288px; height: 367px; background: #FFFFFF; padding: 8px;">
+                        <div style="position: relative; height: 200px; overflow: hidden;">
+                            <img src="@hotel.RoomImage" class="img-fluid mx-auto d-block rounded-1" style="height: 100%; object-fit: cover;" />
+                            <span class="position-absolute bottom-0 end-0 p-2 bg-gradient text-white rounded-start border">@hotel.Rating</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@hotel.City</h5>
+                            <p>
+                                <strong>From <span class="text-danger">@hotel.CheckInTime.ToString("hh\\:mm")</span> - to <span class="text-danger">@hotel.CheckOutTime.ToString("hh\\:mm")</span></strong>
+                            </p>
+                            <p class="hotel-description" style="color:#8f8f8f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@hotel.Description</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            }
+        </div>
+    </div>
+
+    <div>
+
+    </div>
+
 </div>
+
+<script>
+    function updateDropdownText(dropdownId, value) {
+        document.getElementById(dropdownId).innerText = value;
+    }
+</script>

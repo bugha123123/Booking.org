@@ -22,6 +22,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 // Registering services
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IHotelService, HotelService>();
 // Registration ends here
 
 builder.Services.AddControllersWithViews();
