@@ -1,31 +1,43 @@
 using Hotel.org.ApplicationDBContext;
+using Hotel.org.Interface;
+using Hotel.org.Models;
+using Hotel.org.Service;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HotelConnectionString")));
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    // Set desired options
+    options.Password.RequiredLength = 1; // Set minimum password length to zero
+    options.Password.RequireUppercase = false; // Disable uppercase characters requirement
+    options.Password.RequireLowercase = false; // Disable lowercase characters requirement
+    options.Password.RequireDigit = false; // Disable digit requirement
+    options.Password.RequireNonAlphanumeric = false; // Disable non-alphanumeric requirement
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
+// Registering services
+builder.Services.AddScoped<IAccountService, AccountService>();
+// Registration ends here
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(

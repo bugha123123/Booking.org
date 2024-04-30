@@ -1,0 +1,44 @@
+﻿@using Hotel.org.DTO
+@model RegisterViewModel
+
+<div class="RegisterContainer container-fluid bg-light rounded mt-5 p-5">
+    <form asp-action="RegisterUser" asp-controller="Account" method="post">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="~/Images/travel photo.png" class="img-fluid" style="max-width: 416px; min-height: 609px;">
+            </div>
+            <div class="col-md-6">
+                <h3 class="fw-bold mb-4">Register</h3>
+
+                <input asp-for="EmailAddress" type="text" class="form-control mb-3" placeholder="Email Address">
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+
+                <div class="input-group mb-3">
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password">
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i id="eyeIcon" class="bi bi-eye" ></i>
+                    </button>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <br />
+                <button type="submit" style="background:#07689f;color:white;" class="btn btn-lg btn-block">Register Now</button>
+            </div>
+        </div>
+    </form>
+</div>
+    <script>
+        // JavaScript to toggle password visibility
+        document.addEventListener('DOMContentLoaded', function () {
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#Password');
+            const eyeIcon = document.querySelector('#eyeIcon');
+
+            togglePassword.addEventListener('click', function () {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                eyeIcon.classList.toggle('bi-eye');
+                eyeIcon.classList.toggle('bi-eye-slash');
+            });
+        });
+    </script>
