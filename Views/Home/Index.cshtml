@@ -1,4 +1,5 @@
-﻿@{
+﻿@using static Hotel.org.Models.Hotels
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -33,5 +34,37 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="d-flex align-items-center p-3 p-md-5 shadow-md" style="transform: translateY(-50%); z-index: 1000;">
+        <input class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted flex-grow-1" placeholder="Where Are You Going To?" />
+        <input type="date" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mx-2" placeholder="Check In Date" />
+        <input type="date" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mr-2" placeholder="Check Out Date" />
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownAdults" data-bs-toggle="dropdown" aria-expanded="false">
+                Adults
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownAdults">
+                @foreach (var value in Enum.GetValues(typeof(NumberOfAdultsEnum)))
+                {
+                    <li><button class="dropdown-item" type="button">@value</button></li>
+                }
+            </ul>
+        </div>
+        <div class="dropdown ml-2">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChildren" data-bs-toggle="dropdown" aria-expanded="false">
+                Children
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownChildren">
+                @foreach (var value in Enum.GetValues(typeof(NumberOfChildrenEnum)))
+                {
+                    <li><button class="dropdown-item" type="button">@value</button></li>
+                }
+            </ul>
+        </div>
+
+        <button class="btn btn-primary ml-2">Search</button>
     </div>
 </div>

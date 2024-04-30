@@ -18,7 +18,7 @@
             border: 1px solid #07689F;
             border-radius: 5px;
             color: #07689F;
-            padding: 6px 12px;
+            padding: 8px 20px;
             margin-left:10px;
         }
     </style>
@@ -27,7 +27,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a asp-action="Index" asp-controller="Home" class="navbar-brand d-flex flex-column align-items-center" style="margin-left:20px;">
-                <img src="~/Logos/Logo.png" alt="Logo" width="60" height="60" class="d-inline-block align-top img-fluid ml-4">
+                <img src="~/Logos/Logo.png" alt="Logo" width="70" height="70" class="d-inline-block align-top img-fluid ml-4">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -36,7 +36,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> <!-- Remove inline width style -->
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </li>
@@ -62,10 +62,10 @@
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="LogInPage" asp-controller="Account">Sign In</a>
+                            <a class="nav-link" asp-action="LogInPage" asp-controller="Account" style="color:#07689F; font-weight:bold;">Sign In</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="RegisterPage" asp-controller="Account">Register</a>
+                            <a class="nav-link" asp-action="RegisterPage" asp-controller="Account" style="color:#07689F; font-weight:bold;">Register</a>
                         </li>
                     }
                 </ul>
