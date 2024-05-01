@@ -33,5 +33,17 @@ namespace Hotel.org.Interface
         //gets all booked hotel for logged in user
 
         Task<List<BookedHotels>> GetAllBookedHotelsAsync();
+
+        //gets all of the hotels for dropdown on index page
+
+        Task<List<Hotels>> GetAllHotelsForDropDown();
+
+        //cancels hotels reservation
+
+        Task CancelReservation(int BookedHotelId);
+
+
+        //gets BookedHotelById and is used for reservation canceling
+        Task<BookedHotels> GetBookedHotelByIdUsedForReservationCanceling(int BookedHotelId);
     }
 }

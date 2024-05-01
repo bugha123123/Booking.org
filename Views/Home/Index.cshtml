@@ -41,7 +41,13 @@
     <div class="container-fluid">
         <form action="@Url.Action("HotelSearchPage", "Hotel")" method="GET">
             <div class="d-flex align-items-center p-3 p-md-5 shadow-md" style="transform: translateY(-50%); z-index: 1000;">
-                <input name="place" required class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted flex-grow-1" placeholder="Where Are You Going To?" />
+                <select name="place" required class="form-select rounded-md bg-background px-3 py-2 text-sm placeholder-muted flex-grow-1">
+                    <option value="" disabled selected>Select a hotel</option>
+                    @foreach (var hotel in await _hotelservice.GetAllHotelsForDropDown())
+                    {
+                        <option value="@hotel.City">@hotel.Name - @hotel.City</option>
+                    }
+                </select>
                 <input name="checkInDate" type="date" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mx-2" placeholder="Check In Date" />
                 <input name="checkOutDate" type="date" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mr-2" placeholder="Check Out Date" />
                 <div class="dropdown">

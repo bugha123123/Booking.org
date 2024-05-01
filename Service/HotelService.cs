@@ -101,11 +101,11 @@ namespace Hotel.org.Service
 
 
         //gets booked hotels by id and checks if that booked hotel is for logged in  user or not
-        public async Task<BookedHotels> GetBookedHotelById(int hotelId)
+        public async Task<BookedHotels> GetBookedHotelById(int BookedHotelId)
         {
             // Retrieve the logged-in user
             var user = await _accountService.GetLoggedInUserAsync();
-            var foundHotel = await GetHotelById(hotelId);
+            var bookedhotel = await GetBookedHotelById(BookedHotelId);
             // If user is null, handle the case appropriately (e.g., return null or throw an exception)
             if (user == null)
             {
@@ -113,7 +113,7 @@ namespace Hotel.org.Service
             }
 
             // Query the database for the booked hotel matching the hotelId and added by the logged-in user
-            var foundBookedHotel = await _appDbContext.bookedHotels.FirstOrDefaultAsync(bh => bh.HotelId == foundHotel.Id && bh.AddedBy == user.Email);
+            var foundBookedHotel = await _appDbContext.bookedHotels.FirstOrDefaultAsync(bh => bh.Id == bookedhotel.Id);
 
             // If no booked hotel is found, return null
             if (foundBookedHotel == null)
@@ -134,5 +134,45 @@ namespace Hotel.org.Service
 
             return FoundBookedHotels;
         }
+
+        public async Task<List<Hotels>> GetAllHotelsForDropDown()
+        {
+            var hotels = await _appDbContext.Hotels.ToListAsync();
+            return hotels;
+        }
+
+        public async Task CancelReservation(int BookedHotelId)
+        {
+            try
+            {
+                var user = await _accountService.GetLoggedInUserAsync();
+                var foundBookedHotel = await GetBookedHotelByIdUsedForReservationCanceling(BookedHotelId);
+
+                if (foundBookedHotel == null)
+                {
+                    // Log or handle the case where the booked hotel is not found
+                    return;
+                }
+
+                _appDbContext.bookedHotels.Remove(foundBookedHotel);
+                await _appDbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+            }
+        }
+
+        public async Task<BookedHotels> GetBookedHotelByIdUsedForReservationCanceling(int BookedHotelId)
+        {
+            // Retrieve the logged-in user
+            var user = await _accountService.GetLoggedInUserAsync();
+
+            // Retrieve the booked hotel based on the ID
+            var bookedHotel = await _appDbContext.bookedHotels.FirstOrDefaultAsync(bh => bh.Id == BookedHotelId);
+
+            return bookedHotel;
+        }
+
     }
 }

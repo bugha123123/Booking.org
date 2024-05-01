@@ -37,6 +37,8 @@ namespace Hotel.org.Controllers
             var reservedHotel = await _hotelService.GetBookedHotelById(HotelId);
             return View(reservedHotel);
         }
+
+        //books hotel
         [HttpPost("bookhotel")]
         public async Task<IActionResult> BookHotel(int HotelId)
         {
@@ -45,6 +47,28 @@ namespace Hotel.org.Controllers
 
             return RedirectToAction("HotelBookedSuccessPage", new { HotelId = HotelId });
         }
+
+
+        //removes reservation for user
+        [HttpPost("cancelreservation")]
+        public async Task<IActionResult> CancelReservation(int BookedHotelId)
+        {
+            // Book the hotel
+            try
+            {
+                await _hotelService.CancelReservation(BookedHotelId);
+                return RedirectToAction("ReservationsPage", "Hotel");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+
+           
+        }
+
 
 
     }
