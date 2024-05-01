@@ -41,6 +41,7 @@ namespace Hotel.org.Service
                 AddedBy = user.UserName,
                 HotelId = foundHotel.Id,
                 hotel = foundHotel,
+                BookedHotelImage = foundHotel.RoomImage,
             };
 
             await _appDbContext.bookedHotels.AddAsync(bookedHotel);
@@ -98,6 +99,31 @@ namespace Hotel.org.Service
             return await query.ToListAsync();
         }
 
+
+        //gets booked hotels by id and checks if that booked hotel is for logged in  user or not
+        public async Task<BookedHotels> GetBookedHotelById(int hotelId)
+        {
+            // Retrieve the logged-in user
+            var user = await _accountService.GetLoggedInUserAsync();
+            var foundHotel = await GetHotelById(hotelId);
+            // If user is null, handle the case appropriately (e.g., return null or throw an exception)
+            if (user == null)
+            {
+                throw new InvalidOperationException("Unable to retrieve logged in user.");
+            }
+
+            // Query the database for the booked hotel matching the hotelId and added by the logged-in user
+            var foundBookedHotel = await _appDbContext.bookedHotels.FirstOrDefaultAsync(bh => bh.HotelId == foundHotel.Id && bh.AddedBy == user.Email);
+
+            // If no booked hotel is found, return null
+            if (foundBookedHotel == null)
+            {
+                return null;
+            }
+
+            // Return the found booked hotel
+            return foundBookedHotel;
+        }
 
     }
 }

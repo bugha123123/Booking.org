@@ -84,14 +84,19 @@
                                                 <div class="text-2xl font-bold">@hotel.AveragePricePerNight/night</div>
 
                                                 <button type="submit" class="btn btn-primary"
-                                                @(await _hotelservice.IsHotelBookedAsync(hotel.Id) ? "disabled" : "")>
+                                                >
                                                     @if (await _hotelservice.IsHotelBookedAsync(hotel.Id))
                                                     {
-                                                        <span>Booked</span>
+                                                        <a asp-action="ViewReservationPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id">View Reservation</a>
                                                     }
                                                     else
                                                     {
-                                                        <span>Book Now</span>
+                                                        @if (User.Identity.IsAuthenticated)
+                                                        {
+                                                            <span>Book Now</span>
+                                                        }else{
+                                                            <a asp-action="RegisterPage" asp-controller="Account">Book Now</a>
+                                                        }
                                                     }
                                                 </button>
 

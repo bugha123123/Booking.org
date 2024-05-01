@@ -22,5 +22,11 @@ namespace Hotel.org.Interface
         //checks if hotel is booked or not by user
 
         Task<bool> IsHotelBookedAsync(int hotelId);
+
+
+
+        //gets booked hotel by id
+
+        Task<BookedHotels> GetBookedHotelById(int hotelId);
     }
 }

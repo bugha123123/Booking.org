@@ -13,5 +13,7 @@ namespace Hotel.org.Models
 
         public string AddedBy { get; set; }
 
+        public string BookedHotelImage { get; set; }
+
     }
 }

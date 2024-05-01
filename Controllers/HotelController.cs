@@ -23,7 +23,11 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
-
+        public async Task<IActionResult> ViewReservationPage(int HotelId)
+        {
+            var reservedHotel = await _hotelService.GetBookedHotelById(HotelId);
+            return View(reservedHotel);
+        }
         [HttpPost("bookhotel")]
         public async Task<IActionResult> BookHotel(int HotelId)
         {

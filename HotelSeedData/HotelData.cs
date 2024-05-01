@@ -32,7 +32,9 @@ namespace Hotel.org.HotelSeedData
                     CheckOutTime = TimeSpan.FromHours(12),
                     AveragePricePerNight = 300,
                     Rating = 5,
-                    Description = "Experience ultimate luxury and relaxation at our beachfront resort."
+                    Description = "Experience ultimate luxury and relaxation at our beachfront resort.",
+                    NumberOfAdults = Models.Hotels.NumberOfAdultsEnum.Two,
+                    NumberOfChildren = Models.Hotels.NumberOfChildrenEnum.Three,
                 },
                 new Hotel.org.Models.Hotels
                 {
