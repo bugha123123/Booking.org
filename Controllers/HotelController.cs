@@ -28,6 +28,8 @@ namespace Hotel.org.Controllers
         public async Task<IActionResult> ReservationsPage()
         {
             var bookedhotels = await _hotelService.GetAllBookedHotelsAsync();
+
+         
             return View(bookedhotels);
         }
 

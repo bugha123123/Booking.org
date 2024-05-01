@@ -105,7 +105,7 @@ namespace Hotel.org.Service
         {
             // Retrieve the logged-in user
             var user = await _accountService.GetLoggedInUserAsync();
-            var bookedhotel = await GetBookedHotelById(BookedHotelId);
+            var bookedhotel = await _appDbContext.bookedHotels.Include(x => x.hotel).FirstOrDefaultAsync(x => x.HotelId == BookedHotelId);
             // If user is null, handle the case appropriately (e.g., return null or throw an exception)
             if (user == null)
             {
