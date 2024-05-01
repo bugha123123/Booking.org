@@ -34,20 +34,20 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                    </li>
+                <ul class="navbar-nav mr-auto">
+                  @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="ReservationsPage" asp-controller="Hotel">Reservations</a>
+                        </li>
+                    }
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              @User.Identity.Name  <i class="bi bi-person"></i>
+                                @User.Identity.Name  <i class="bi bi-person"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">Payments</a></li>
@@ -73,6 +73,7 @@
             </div>
         </div>
     </nav>
+
 
 
 

@@ -33,7 +33,7 @@ namespace Hotel.org.Controllers
                 await _accountservice.RegisterUser(registerViewModel);
                 return RedirectToAction("Index", "Home");
             }
-         return View( "RegisterPage", registerViewModel);
+         return View("RegisterPage", registerViewModel);
 
         }
 

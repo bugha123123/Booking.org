@@ -28,5 +28,10 @@ namespace Hotel.org.Interface
         //gets booked hotel by id
 
         Task<BookedHotels> GetBookedHotelById(int hotelId);
+
+
+        //gets all booked hotel for logged in user
+
+        Task<List<BookedHotels>> GetAllBookedHotelsAsync();
     }
 }

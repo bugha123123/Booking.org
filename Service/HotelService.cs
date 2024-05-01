@@ -124,6 +124,15 @@ namespace Hotel.org.Service
             // Return the found booked hotel
             return foundBookedHotel;
         }
+        
 
+        //gets booked hotels for user that is logged in and shows them on ReservationsPage
+        public async Task<List<BookedHotels>> GetAllBookedHotelsAsync()
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+             var FoundBookedHotels = await _appDbContext.bookedHotels.Include(x => x.hotel).Where(bh => bh.AddedBy == user.Email).ToListAsync();
+
+            return FoundBookedHotels;
+        }
     }
 }

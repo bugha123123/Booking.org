@@ -72,13 +72,15 @@
                         }
                     </ul>
                 </div>
-               @if (User.Identity.IsAuthenticated)
+                @if (User.Identity.IsAuthenticated)
                 {
                     <button type="submit" class="btn btn-primary ml-2">Search</button>
-                }else{
-
-                    <button type="submit" class="btn btn-primary ml-2"><a asp-action="RegisterPage" asp-controller="Account">Search</a></button>
                 }
+                else
+                {
+                    <a href="@Url.Action("RegisterPage", "Account")" class="btn btn-primary ml-2">Search</a>
+                }
+
             </div>
         </form>
 

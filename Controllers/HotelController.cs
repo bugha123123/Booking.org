@@ -1,5 +1,6 @@
 ﻿using Hotel.org.Interface;
 using Hotel.org.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.org.Controllers
@@ -18,11 +19,19 @@ namespace Hotel.org.Controllers
             var result = await _hotelService.SearchForHotel(place, checkInDate, checkOutDate, AdultsCount, ChildrenCount);
             return View(result);
         }
-
+        [Authorize]
         public IActionResult HotelBookedSuccessPage()
         {
             return View();
         }
+        [Authorize]
+        public async Task<IActionResult> ReservationsPage()
+        {
+            var bookedhotels = await _hotelService.GetAllBookedHotelsAsync();
+            return View(bookedhotels);
+        }
+
+        [Authorize]
         public async Task<IActionResult> ViewReservationPage(int HotelId)
         {
             var reservedHotel = await _hotelService.GetBookedHotelById(HotelId);
