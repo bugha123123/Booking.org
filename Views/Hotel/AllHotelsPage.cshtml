@@ -1,0 +1,160 @@
+﻿@using Hotel.org.Models
+@model List<Hotels>
+
+<div class="grid md:grid-cols-2 gap-6 p-4 md:p-6">
+    <div class="bg-white rounded-lg shadow-md dark:bg-gray-950">
+        <div class="p-4 md:p-6 border-b dark:border-gray-800">
+            <h2 class="text-lg font-semibold">Filters</h2>
+        </div>
+        <div class="p-4 md:p-6 space-y-6">
+            <div>
+                <h3 class="text-base font-semibold mb-2">Location</h3>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                        <button type="button"
+                                role="checkbox"
+                                aria-checked="false"
+                                data-state="unchecked"
+                                value="on"
+                                class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                                id="location-new-york"></button>
+                        <label class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
+                               for="location-new-york">
+                            New York
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button"
+                                role="checkbox"
+                                aria-checked="false"
+                                data-state="unchecked"
+                                value="on"
+                                class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                                id="location-los-angeles"></button>
+                        <label class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
+                               for="location-los-angeles">
+                            Los Angeles
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button"
+                                role="checkbox"
+                                aria-checked="false"
+                                data-state="unchecked"
+                                value="on"
+                                class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                                id="location-chicago"></button>
+                        <label class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
+                               for="location-chicago">
+                            Chicago
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button"
+                                role="checkbox"
+                                aria-checked="false"
+                                data-state="unchecked"
+                                value="on"
+                                class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                                id="location-miami"></button>
+                        <label class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
+                               for="location-miami">
+                            Miami
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h3 class="text-base font-semibold mb-2">Price Range</h3>
+                    <div class="price-slider">
+                        <input type="range" min="0" max="1000" value="0" step="1" class="slider" id="priceRange">
+                        <input type="range" min="0" max="1000" value="0" step="1" class="slider" id="priceRange2">
+                        <div class="slider-values">
+                            <span id="priceStart">0</span>
+                            <span id="priceEnd">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h3 class="text-base font-semibold mb-2">Amenities</h3>
+                    <div class="space-y-2">
+                        <!-- Gym Checkbox -->
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="amenity-gym" onchange="handleCheckboxChange('amenity-gym')" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
+                            <label class="text-sm leading-none font-normal" for="amenity-gym">Gym</label>
+                        </div>
+                        <!-- Pool Checkbox -->
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="amenity-pool" onchange="handleCheckboxChange('amenity-pool')" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
+                            <label class="text-sm leading-none font-normal" for="amenity-pool">Pool</label>
+                        </div>
+                        <!-- Breakfast Checkbox -->
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="amenity-breakfast" onchange="handleCheckboxChange('amenity-breakfast')" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
+                            <label class="text-sm leading-none font-normal" for="amenity-breakfast">Breakfast</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid sm:grid-cols-2 md:grid-cols-2 gap-4 md:gap-6">
+       
+  @foreach (var hotel in Model)
+        {
+            <div class="bg-white rounded-lg shadow-md dark:bg-gray-950">
+                <a class="block" href="#" rel="ugc">
+                    <img src="@hotel.RoomImage"
+                         alt="Hotel Image"
+                         width="400"
+                         height="250"
+                         class="rounded-t-lg w-full aspect-[4/3] object-cover" />
+                </a>
+                <div class="p-4 md:p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-semibold">@hotel.City</h3>
+                        <div class="text-lg font-semibold">@hotel.AveragePricePerNight/night</div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <div class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md text-sm">
+                            @if (hotel.Wifi){
+                                <div class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md text-sm">Wifi</div>
+                              }
+                    </div>
+ <div class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md text-sm">
+                            @if (hotel.Pool){
+                                <div class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md text-sm">Pool</div>
+                              }
+                    </div>
+                    </div>
+                         
+                    </div>
+
+                        </div>
+           
+        }
+    </div>
+</div>
+
+
+<script>
+    // Get the elements
+    var priceRange = document.getElementById("priceRange");
+    var priceRange2 = document.getElementById("priceRange2");
+    var priceStart = document.getElementById("priceStart");
+    var priceEnd = document.getElementById("priceEnd");
+
+    // Update the current slider value (price range)
+    priceRange.oninput = function () {
+        priceStart.textContent = this.value;
+    }
+
+    priceRange2.oninput = function () {
+        priceEnd.textContent = this.value;
+    }
+
+
+</script>

@@ -174,5 +174,18 @@ namespace Hotel.org.Service
             return bookedHotel;
         }
 
+
+        //filters hotel on search page
+
+        public async Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice)
+        {
+            IQueryable<Hotels> query = _appDbContext.Hotels.AsQueryable();
+
+            // Filter hotels by price range
+            query = query.Where(h => h.AveragePricePerNight >= minPrice && h.AveragePricePerNight <= maxPrice);
+
+            return await query.ToListAsync();
+        }
+
     }
 }

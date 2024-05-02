@@ -40,6 +40,12 @@ namespace Hotel.org.Controllers
             return View(reservedHotel);
         }
 
+        public async Task<IActionResult> AllHotelsPage()
+        {
+            var hotels = await _hotelService.GetAllHotelsForDropDown();
+            return View(hotels);
+
+        }
         //books hotel
         [HttpPost("bookhotel")]
         public async Task<IActionResult> BookHotel(int HotelId)

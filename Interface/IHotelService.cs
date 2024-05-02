@@ -45,5 +45,9 @@ namespace Hotel.org.Interface
 
         //gets BookedHotelById and is used for reservation canceling
         Task<BookedHotels> GetBookedHotelByIdUsedForReservationCanceling(int BookedHotelId);
+
+
+        //filters hotels by prices
+        Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice);
     }
 }

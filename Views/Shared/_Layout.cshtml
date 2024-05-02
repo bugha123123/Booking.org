@@ -41,6 +41,9 @@
                             <a class="nav-link" asp-action="ReservationsPage" asp-controller="Hotel">Reservations</a>
                         </li>
                     }
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="AllHotelsPage" asp-controller="Hotel">Explore</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @if (User.Identity.IsAuthenticated)
