@@ -38,7 +38,9 @@ namespace Hotel.org.Service
             var user = new User
             {
                 UserName = registerViewModel.EmailAddress,
-                Email = registerViewModel.EmailAddress
+                Email = registerViewModel.EmailAddress,
+         
+                
             };
             //gets the result
             var result = await _userManager.CreateAsync(user, registerViewModel.Password);

@@ -11,7 +11,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     @foreach (var bookedHotel in Model)
                     {
-                        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col gap-2" onclick="showDetails('@bookedHotel.hotel.RoomImage', '@bookedHotel.hotel.Name', '@bookedHotel.hotel.CheckInTime', '@bookedHotel.hotel.City', '@bookedHotel.hotel.Gym', '@bookedHotel.hotel.Breakfast', '@bookedHotel.hotel.Pool', '@bookedHotel.hotel.Wifi')">
+                        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col gap-2 " style="cursor:pointer;" onclick="showDetails('@bookedHotel.hotel.RoomImage', '@bookedHotel.hotel.Name', '@bookedHotel.hotel.CheckInTime', '@bookedHotel.hotel.City', '@bookedHotel.hotel.Gym', '@bookedHotel.hotel.Breakfast', '@bookedHotel.hotel.Pool', '@bookedHotel.hotel.Wifi')">
                             <div class="font-medium">@bookedHotel.hotel.Name</div>
                             <div class="text-gray-500 dark:text-gray-400 text-sm">@bookedHotel.hotel.CheckInTime - @bookedHotel.hotel.CheckOutTime</div>
                             <div class="text-gray-500 dark:text-gray-400 text-sm">@bookedHotel.hotel.Address</div>

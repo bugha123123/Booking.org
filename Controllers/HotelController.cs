@@ -62,7 +62,7 @@ namespace Hotel.org.Controllers
                 {
                     await _hotelService.BookHotel(HotelId, cardNumber, cvc);
 
-                    return RedirectToAction("HotelBookedSuccessPage", "Hotel");
+                    return RedirectToAction("HotelBookedSuccessPage", new { HotelId = HotelId });
                 }
                 else
                 {

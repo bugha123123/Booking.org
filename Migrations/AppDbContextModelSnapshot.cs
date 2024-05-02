@@ -45,7 +45,7 @@ namespace Hotel.org.Migrations
 
                     b.HasIndex("HotelId");
 
-                    b.ToTable("bookedHotels");
+                    b.ToTable("bookedHotels", (string)null);
                 });
 
             modelBuilder.Entity("Hotel.org.Models.Hotels", b =>
@@ -134,7 +134,7 @@ namespace Hotel.org.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Hotels");
+                    b.ToTable("Hotels", (string)null);
 
                     b.HasData(
                         new
