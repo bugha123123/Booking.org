@@ -53,7 +53,7 @@
                                 @User.Identity.Name  <i class="bi bi-person"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Payments</a></li>
+                                <li><a class="dropdown-item" asp-action="ProfilePage" asp-controller="Account">Account</a></li>
                                 <li><a class="dropdown-item" href="#">Support</a></li>
                                 <li>
                                     <form asp-action="LogOutUser" method="post" asp-controller="Account">

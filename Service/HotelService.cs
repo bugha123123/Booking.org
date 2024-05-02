@@ -19,20 +19,27 @@ namespace Hotel.org.Service
 
 
         //books hotel for user
-        public async Task BookHotel(int hotelId)
+        public async Task BookHotel(int hotelId, string cardNumber, string cvc)
         {
             var user = await _accountService.GetLoggedInUserAsync();
             var foundHotel = await GetHotelById(hotelId);
 
             // Check if the user has already booked this hotel
             var existingBooking = await _appDbContext.bookedHotels
-                .FirstOrDefaultAsync(b => b.AddedBy == user.UserName && b.HotelId == foundHotel.Id);
+                .FirstOrDefaultAsync(b => b.AddedBy == user.Email && b.HotelId == foundHotel.Id);
 
             // If the user has already booked this hotel, return without booking again
             if (existingBooking != null)
             {
                 // You can handle this case as needed, such as throwing an exception or logging a message
                 return;
+            }
+
+            // Validate payment details
+            bool isValidPayment = await ValidatePaymentDetailsAsync(user, cardNumber, cvc);
+            if (!isValidPayment)
+            {
+                throw new ArgumentException("Invalid payment details.");
             }
 
             // Create a new booked hotel entry
@@ -47,6 +54,8 @@ namespace Hotel.org.Service
             await _appDbContext.bookedHotels.AddAsync(bookedHotel);
             await _appDbContext.SaveChangesAsync();
         }
+
+
 
 
         public Task<Hotels> GetHotelById(int id)
@@ -185,6 +194,12 @@ namespace Hotel.org.Service
             query = query.Where(h => h.AveragePricePerNight >= minPrice && h.AveragePricePerNight <= maxPrice);
 
             return await query.ToListAsync();
+        }
+
+        public async Task<bool> ValidatePaymentDetailsAsync(User user, string cardNumber, string cvc)
+        {
+            // Check if the provided card number and cvc match the user's stored values
+            return user.CardNumber.Trim() == cardNumber && user.CardCV.Trim() == cvc;
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using Hotel.org.DTO;
 using Hotel.org.Interface;
+using Hotel.org.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.org.Controllers
@@ -21,7 +22,15 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
+        public IActionResult ProfilePage()
+        {
+            return View();
+        }
 
+        public IActionResult Success()
+        {
+            return View();
+        }
 
         [HttpPost("registeruser")]
 
@@ -59,6 +68,31 @@ namespace Hotel.org.Controllers
 
             await _accountservice.SignOutUser();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost("saveusercarddetails")]
+
+        public async Task<IActionResult> SaveUserCardDetails(User user) {
+            if (ModelState.IsValid)
+            {
+                await _accountservice.SaveCardDetailsForUser(user);
+                return RedirectToAction("Success", "Account");
+            }
+                return View("ProfilePage", user);
+
+        }
+
+        [HttpPost("updateusercarddetails")]
+
+        public async Task<IActionResult> UpdateUserCardDetails(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                await _accountservice.UpdateCardDetailsForUser(user);
+                return RedirectToAction("Success", "Account");
+            }
+            return View("ProfilePage", user);
+
         }
     }
 }

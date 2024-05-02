@@ -1,4 +1,5 @@
-﻿using Hotel.org.DTO;
+﻿using Hotel.org.ApplicationDBContext;
+using Hotel.org.DTO;
 using Hotel.org.Interface;
 using Hotel.org.Models;
 using Microsoft.AspNetCore.Identity;
@@ -10,11 +11,13 @@ namespace Hotel.org.Service
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor)
+        private readonly AppDbContext _dbcontext;
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor, AppDbContext dbcontext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
+            _dbcontext = dbcontext;
         }
 
         public async Task<User> GetLoggedInUserAsync()
@@ -48,6 +51,19 @@ namespace Hotel.org.Service
             }
         }
 
+        public async Task SaveCardDetailsForUser(User user)
+        {
+            var LoggedInUser = await GetLoggedInUserAsync();
+
+            LoggedInUser.CardCV = user.CardCV;
+            LoggedInUser.CardNumber = user.CardNumber;
+            LoggedInUser.CardExpirationDate = user.CardExpirationDate;
+
+            await _dbcontext.SaveChangesAsync();
+
+
+        }
+
 
         //signs in user
         public async Task SignInUser(LoginViewModel loginViewModel)
@@ -59,6 +75,19 @@ namespace Hotel.org.Service
         public async Task SignOutUser()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task UpdateCardDetailsForUser(User user)
+        {
+            var LoggedInUser = await GetLoggedInUserAsync();
+
+            LoggedInUser.CardCV = user.CardCV;
+            LoggedInUser.CardNumber = user.CardNumber;
+            LoggedInUser.CardExpirationDate= user.CardExpirationDate;
+
+            await _dbcontext.SaveChangesAsync();
+
+
         }
     }
 }

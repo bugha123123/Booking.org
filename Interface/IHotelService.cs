@@ -9,15 +9,19 @@ namespace Hotel.org.Interface
 
         //searches for hotels using query
 
-        Task<List<Hotels>> SearchForHotel(string? place, string? checkInDate, string? checkOutDate, string? AdultsCount, string? ChildrenCount );
+        Task<List<Hotels>> SearchForHotel(string? place, string? checkInDate, string? checkOutDate, string? AdultsCount, string? ChildrenCount);
+
 
         //books a hotel for user
 
-        Task BookHotel(int HotelId);
+        Task BookHotel(int hotelId, string cardNumber, string cvc);
+
 
         //gets hotel by id
 
         Task<Hotels> GetHotelById(int id);
+
+
 
         //checks if hotel is booked or not by user
 
@@ -49,5 +53,10 @@ namespace Hotel.org.Interface
 
         //filters hotels by prices
         Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice);
+
+
+        // Checks if the provided card number and cvc match the user's stored values
+
+        Task<bool> ValidatePaymentDetailsAsync(User user, string cardNumber, string cvc);
     }
 }

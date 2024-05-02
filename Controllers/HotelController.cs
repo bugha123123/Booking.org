@@ -24,6 +24,12 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> CheckOutPage(int HotelId)
+        {
+            var hotel = await _hotelService.GetHotelById(HotelId);
+            return View(hotel);
+        }
         [Authorize]
         public async Task<IActionResult> ReservationsPage()
         {
@@ -48,13 +54,38 @@ namespace Hotel.org.Controllers
         }
         //books hotel
         [HttpPost("bookhotel")]
-        public async Task<IActionResult> BookHotel(int HotelId)
+        public async Task<IActionResult> BookHotel(int HotelId, string cardNumber, string cvc)
         {
-            // Book the hotel
-            await _hotelService.BookHotel(HotelId);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _hotelService.BookHotel(HotelId, cardNumber, cvc);
 
-            return RedirectToAction("HotelBookedSuccessPage", new { HotelId = HotelId });
+                    return RedirectToAction("HotelBookedSuccessPage", "Hotel");
+                }
+                else
+                {
+                    // If model state is not valid, return to the CheckOutPage with validation errors
+                    return RedirectToAction("CheckOutPage", new { HotelId = HotelId });
+                }
+            }
+            catch (ArgumentException)
+            {
+                // Handle the case of wrong card credentials
+                ViewData["WrongCardCredentials"] = "Wrong Card Credentials. Try again!";
+                return RedirectToAction("CheckOutPage", new { HotelId = HotelId });
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                ViewData["ErrorMessage"] = "An error occurred while booking the hotel. Please try again later.";
+                // Optionally log the exception for further investigation
+                return RedirectToAction("CheckOutPage", new { HotelId = HotelId });
+            }
         }
+
+
 
 
         //removes reservation for user

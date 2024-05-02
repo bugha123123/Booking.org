@@ -12,5 +12,16 @@ namespace Hotel.org.Interface
         Task SignOutUser();
 
         Task<User> GetLoggedInUserAsync();
+
+
+        //saves user card details for  payment
+
+        Task SaveCardDetailsForUser(User user);
+
+
+        //updates user card details
+
+        Task UpdateCardDetailsForUser(User user);
+        
     }
 }
