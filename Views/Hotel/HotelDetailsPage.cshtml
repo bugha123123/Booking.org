@@ -1,0 +1,411 @@
+﻿@using Hotel.org.Models
+@model Hotels
+<section class="w-full bg-gray-100 dark:bg-gray-800 py-12 md:py-24 lg:py-32">
+    <div class="container px-4 md:px-6">
+        <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-[1fr_550px]">
+            <img src="@Model.RoomImage"
+                 width="1200"
+                 height="400"
+                 alt="Hotel"
+                 class="mx-auto aspect-[3/1] overflow-hidden rounded-xl object-cover" />
+            <div class="flex flex-col justify-center space-y-4">
+                <div class="space-y-2">
+                    <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl">The Ritz-Carlton, Bali</h1>
+                    <p class="text-gray-500 md:text-xl dark:text-gray-400">Nusa Dua, Bali, Indonesia</p>
+                    <button class="btn btn-dark "><a asp-action="CheckOutPage" asp-controller="Hotel" asp-route-HotelId="@Model.Id" class="text-white">Book Your Stay</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-full py-12 md:py-24 lg:py-32">
+    <div class="container px-4 md:px-6">
+        <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold">Room Details</h2>
+                    <div class="mt-4 text-gray-500 dark:text-gray-400">
+                        <p>
+                            Our luxurious rooms feature private balconies with stunning ocean views, plush bedding, and modern
+                            amenities to ensur
+                        </p>
+                        <ul class="mt-4 space-y-2">
+                            <li class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="w-5 h-5">
+                                    <path d="M2 4v16"></path>
+                                    <path d="M2 8h18a2 2 0 0 1 2 2v10"></path>
+                                    <path d="M2 17h20"></path>
+                                    <path d="M6 8v9"></path>
+                                </svg>
+                                @Model.RoomTypes
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="w-5 h-5">
+                                    <path d="M12 20h.01"></path>
+                                    <path d="M2 8.82a15 15 0 0 1 20 0"></path>
+                                    <path d="M5 12.859a10 10 0 0 1 14 0"></path>
+                                    <path d="M8.5 16.429a5 5 0 0 1 7 0"></path>
+                                </svg>
+                                High-speed WiFi  - @Model.Wifi
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="w-5 h-5">
+                                    <rect width="20" height="15" x="2" y="7" rx="2" ry="2"></rect>
+                                    <polyline points="17 2 12 7 7 2"></polyline>
+                                </svg>
+                                BreakFast - @Model.Breakfast
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="w-5 h-5">
+                                    <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"></path>
+                                    <line x1="10" x2="8" y1="5" y2="7"></line>
+                                    <line x1="2" x2="22" y1="12" y2="12"></line>
+                                    <line x1="7" x2="7" y1="19" y2="21"></line>
+                                    <line x1="17" x2="17" y1="19" y2="21"></line>
+                                </svg>
+                               Gym - @Model.Breakfast
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold">Amenities</h2>
+                    <div class="mt-4 grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-5 h-5">
+                                <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path>
+                                <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
+                            </svg>
+                            Outdoor pool - @Model.Pool
+                        </div>
+                
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-5 h-5">
+                                <path d="M14.4 14.4 9.6 9.6"></path>
+                                <path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"></path>
+                                <path d="m21.5 21.5-1.4-1.4"></path>
+                                <path d="M3.9 3.9 2.5 2.5"></path>
+                                <path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"></path>
+                            </svg>
+                            Fitness center - @Model.Gym
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-5 h-5">
+                                <line x1="4" x2="20" y1="12" y2="12"></line>
+                                <line x1="4" x2="20" y1="6" y2="6"></line>
+                                <line x1="4" x2="20" y1="18" y2="18"></line>
+                            </svg>
+                           Free BreakFast -  @Model.Breakfast
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold">Pricing</h2>
+                    <div class="mt-4 text-gray-500 dark:text-gray-400">
+                        <p>
+                            Our nightly rates start at $@Model.AveragePricePerNight per night, with additional fees for taxes and services.
+                        </p>
+                        <div class="mt-4 flex items-center gap-2">
+                            <span class="text-4xl font-bold">$@Model.AveragePricePerNight</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">per night</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold">Customer Reviews</h2>
+                    <div class="mt-4 space-y-6">
+                        <div class="flex gap-4">
+                            <span class="relative flex shrink-0 overflow-hidden rounded-full w-11 h-11 border">
+                                <img class="aspect-square h-full w-full" src="/placeholder-user.jpg" />
+                            </span>
+                            <div class="grid gap-2">
+                                <div class="flex items-center gap-2 text-sm font-semibold">
+                                    <span>Sarah Johnson</span>
+                                    <div class="flex items-center gap-px">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-muted stroke-muted-foreground">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 dark:text-gray-400">
+                                    The Ritz-Carlton, Bali was an absolute dream. The views from our room were breathtaking, and the
+                                    service wa
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <span class="relative flex shrink-0 overflow-hidden rounded-full w-11 h-11 border">
+                                <img class="aspect-square h-full w-full"  src="/placeholder-user.jpg" />
+                            </span>
+                            <div class="grid gap-2">
+                                <div class="flex items-center gap-2 text-sm font-semibold">
+                                    <span>Alex Smith</span>
+                                    <div class="flex items-center gap-px">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-muted stroke-muted-foreground">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 dark:text-gray-400">
+                                    We had an amazing stay at the Ritz-Carlton, Bali. The amenities were top-notch,
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <span class="relative flex shrink-0 overflow-hidden rounded-full w-11 h-11 border">
+                                <img class="aspect-square h-full w-full"  src="/placeholder-user.jpg" />
+                            </span>
+                            <div class="grid gap-2">
+                                <div class="flex items-center gap-2 text-sm font-semibold">
+                                    <span>Emily Parker</span>
+                                    <div class="flex items-center gap-px">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-primary">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-muted stroke-muted-foreground">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="w-4 h-4 fill-muted stroke-muted-foreground">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 dark:text-gray-400">The Ritz-Carlton, Bali was a beautiful hotel, but we</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

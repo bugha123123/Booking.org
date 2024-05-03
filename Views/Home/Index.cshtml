@@ -101,19 +101,21 @@
             @foreach (var hotel in await _hotelservice.GetHotelsAsync())
             {
                 <div class="col">
-                    <div class="card position-relative" style="width: 288px; height: 367px; background: #FFFFFF; padding: 8px;">
-                        <div style="position: relative; height: 200px; overflow: hidden;">
-                            <img src="@hotel.RoomImage" class="img-fluid mx-auto d-block rounded-1" style="height: 100%; object-fit: cover;" />
-                            <span class="position-absolute bottom-0 end-0 p-2 bg-gradient text-white rounded-start border">@hotel.Rating</span>
+                    <a asp-action="HotelDetailsPage" asp-route-HotelId="@hotel.Id" asp-controller="Hotel">
+                        <div class="card position-relative" style="width: 288px; height: 367px; background: #FFFFFF; padding: 8px;">
+                            <div style="position: relative; height: 200px; overflow: hidden;">
+                                <img src="@hotel.RoomImage" class="img-fluid mx-auto d-block rounded-1" style="height: 100%; object-fit: cover;" />
+                                <span class="position-absolute bottom-0 end-0 p-2 bg-gradient text-white rounded-start border">@hotel.Rating</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@hotel.City</h5>
+                                <p>
+                                    <strong>From <span class="text-danger">@hotel.CheckInTime.ToString("hh\\:mm")</span> - to <span class="text-danger">@hotel.CheckOutTime.ToString("hh\\:mm")</span></strong>
+                                </p>
+                                <p class="hotel-description" style="color:#8f8f8f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@hotel.Description</p>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">@hotel.City</h5>
-                            <p>
-                                <strong>From <span class="text-danger">@hotel.CheckInTime.ToString("hh\\:mm")</span> - to <span class="text-danger">@hotel.CheckOutTime.ToString("hh\\:mm")</span></strong>
-                            </p>
-                            <p class="hotel-description" style="color:#8f8f8f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@hotel.Description</p>
-                        </div>
-                    </div>
+                    </a>
                 </div>
 
 

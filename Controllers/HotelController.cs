@@ -46,6 +46,11 @@ namespace Hotel.org.Controllers
             return View(reservedHotel);
         }
 
+        public async Task<IActionResult> HotelDetailsPage(int HotelId)
+        {
+            var hotelbyid = await _hotelService.GetHotelById(HotelId);
+            return View(hotelbyid);
+        }
         public async Task<IActionResult> AllHotelsPage()
         {
             var hotels = await _hotelService.GetAllHotelsForDropDown();
