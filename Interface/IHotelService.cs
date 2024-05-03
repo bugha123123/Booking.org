@@ -58,5 +58,9 @@ namespace Hotel.org.Interface
         // Checks if the provided card number and cvc match the user's stored values
 
         Task<bool> ValidatePaymentDetailsAsync(User user, string cardNumber, string cvc);
+
+
+        //adds review for hotel 
+        Task AddReviewForHotel(Reviews reviews, int hotelId);
     }
 }

@@ -9,6 +9,8 @@ namespace Hotel.org.ApplicationDBContext
     {
         public DbSet<Hotels> Hotels { get; set; }
         public DbSet<BookedHotels> bookedHotels { get; set; }
+
+        public DbSet<Reviews> reviews { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

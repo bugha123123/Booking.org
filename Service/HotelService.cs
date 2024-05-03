@@ -202,5 +202,27 @@ namespace Hotel.org.Service
             return user.CardNumber.Trim() == cardNumber && user.CardCV.Trim() == cvc;
         }
 
+
+        // adds review for hotel 
+        public async Task AddReviewForHotel(Reviews reviews, int hotelId)
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+            var FoundHotel = await GetHotelById(hotelId);
+
+            var NewReview = new Reviews()
+            {
+                AddedBy = user.UserName,
+                Comment = reviews.Comment,
+                Stars = reviews.Stars,
+                AddedForHotel = FoundHotel.Id
+
+
+            };
+
+
+            await _appDbContext.reviews.AddAsync(NewReview);
+            await _appDbContext.SaveChangesAsync();
+
+        }
     }
 }

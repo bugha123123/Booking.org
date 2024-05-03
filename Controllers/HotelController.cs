@@ -51,6 +51,11 @@ namespace Hotel.org.Controllers
             var hotelbyid = await _hotelService.GetHotelById(HotelId);
             return View(hotelbyid);
         }
+        public async Task<IActionResult> ReviewPage(int HotelId)
+        {
+            var hotelbyid = await _hotelService.GetHotelById(HotelId);
+            return View(hotelbyid);
+        }
         public async Task<IActionResult> AllHotelsPage()
         {
             var hotels = await _hotelService.GetAllHotelsForDropDown();
@@ -111,6 +116,19 @@ namespace Hotel.org.Controllers
             
 
            
+        }
+
+        [HttpPost("addreviewforhotel")]
+
+        public async Task<IActionResult> AddReviewForHotel(Reviews reviews, int hotelId)
+        {
+            if (ModelState.IsValid)
+            {
+                await _hotelService.AddReviewForHotel(reviews, hotelId);
+                return RedirectToAction("ReviewSuccess", "Hotel");
+            }
+
+            return View("ReviewPage", reviews);
         }
 
 
