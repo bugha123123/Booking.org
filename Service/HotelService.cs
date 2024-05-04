@@ -186,12 +186,29 @@ namespace Hotel.org.Service
 
         //filters hotel on search page
 
-        public async Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice)
+        public async Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast)
         {
             IQueryable<Hotels> query = _appDbContext.Hotels.AsQueryable();
 
-            // Filter hotels by price range
-            query = query.Where(h => h.AveragePricePerNight >= minPrice && h.AveragePricePerNight <= maxPrice);
+            // Filter hotels by price range if provided
+            if (minPrice != null && maxPrice != null)
+            {
+                query = query.Where(h => h.AveragePricePerNight >= minPrice && h.AveragePricePerNight <= maxPrice);
+            }
+
+            // Filter hotels by amenities
+            if (hasGym != null)
+            {
+                query = query.Where(h => h.Gym == hasGym);
+            }
+            if (hasPool != null)
+            {
+                query = query.Where(h => h.Pool == hasPool);
+            }
+            if (hasBreakfast != null)
+            {
+                query = query.Where(h => h.Breakfast == hasBreakfast);
+            }
 
             return await query.ToListAsync();
         }

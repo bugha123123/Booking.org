@@ -56,11 +56,16 @@ namespace Hotel.org.Controllers
             var hotelbyid = await _hotelService.GetHotelById(HotelId);
             return View(hotelbyid);
         }
-        public async Task<IActionResult> AllHotelsPage()
+        public async Task<IActionResult> AllHotelsPage(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast)
         {
-            var hotels = await _hotelService.GetAllHotelsForDropDown();
-            return View(hotels);
+            // If no price range is provided, set default values to show all hotels
+            if (minPrice == null && maxPrice == null)
+            {
+                return View(await _hotelService.GetAllHotelsForDropDown());
+            }
 
+            var filteredHotels = await _hotelService.GetFilteredHotelsByPrice(minPrice, maxPrice, hasGym, hasPool, hasBreakfast);
+            return View(filteredHotels);
         }
         //books hotel
         [HttpPost("bookhotel")]
