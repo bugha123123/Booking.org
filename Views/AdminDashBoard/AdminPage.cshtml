@@ -1,0 +1,270 @@
+﻿@using Hotel.org.Interface
+@inject IAdminService _adminservice;
+
+<div class="flex min-h-screen w-full flex-col mt-5">
+   
+    <main class="flex-1 p-6 md:p-10">
+        <div class="grid gap-6">
+            <section>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold">Booked Hotels</h2>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                        View All
+                    </button>
+                </div>
+                <div class="mt-4 overflow-auto">
+                    <div class="relative w-full overflow-auto">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead class="[&amp;_tr]:border-b">
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Guest
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Check-in
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Check-out
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Total
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Hotel
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="[&amp;_tr:last-child]:border-0">
+                             
+                            @foreach (var item in await _adminservice.GetBookedHotelsForEveryUser())
+                                {
+                                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                            <div class="flex items-center gap-2">
+                                                <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
+                                                    <img class="aspect-square h-full w-full" src="@item.hotel.RoomImage" />
+                                                </span>
+                                                <div>
+                                                    <div class="font-medium">@item.AddedBy.Substring(0, Math.Min(6, @item.AddedBy.Length))</div>
+
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">@item.AddedBy</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">@item.hotel.CheckInTime</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">@item.hotel.CheckOutTime</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">@item.hotel.AveragePricePerNight</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">@item.hotel.Name</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+         <section>
+    <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold">User Reviews</h2>
+        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+            View All
+        </button>
+    </div>
+    <div class="mt-4 grid gap-4">
+        @foreach (var review in await _adminservice.GetReviewsForEveryUser())
+        {
+            <div class="flex items-start gap-4">
+                <span class="relative flex shrink-0 overflow-hidden rounded-full h-10 w-10">
+                    <img class="aspect-square h-full w-full" src="/placeholder-user.jpg" />
+                </span>
+                <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                        <div class="font-medium">@review.AddedBy</div>
+                        <div class="flex items-center gap-1 text-xs font-semibold">
+                            @foreach (var star in Enumerable.Range(1, 5))
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            }
+                        </div>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">@review.Comment</p>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+            <section>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold">User Data</h2>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                        View All
+                    </button>
+                </div>
+                <div class="mt-4 overflow-auto">
+                    <div class="relative w-full overflow-auto">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead class="[&amp;_tr]:border-b">
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Name
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Email
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Phone
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Joined
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="[&amp;_tr:last-child]:border-0">
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                        <div class="flex items-center gap-2">
+                                            <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
+                                                <img class="aspect-square h-full w-full"  src="/placeholder-user.jpg" />
+                                            </span>
+                                            <div class="font-medium">John Doe</div>
+                                        </div>
+                                    </td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">john@example.com</td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">555-1234</td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">May 1, 2023</td>
+                                </tr>
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                        <div class="flex items-center gap-2">
+                                            <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
+                                                <img class="aspect-square h-full w-full"  src="/placeholder-user.jpg" />
+                                            </span>
+                                            <div class="font-medium">Jane Appleseed</div>
+                                        </div>
+                                    </td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">jane@example.com</td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">555-5678</td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">June 15, 2023</td>
+                                </tr>
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                        <div class="flex items-center gap-2">
+                                            <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
+                                                <img class="aspect-square h-full w-full"  src="/placeholder-user.jpg" />
+                                            </span>
+                                            <div class="font-medium">Sarah Miller</div>
+                                        </div>
+                                    </td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">sarah@example.com</td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">555-9012</td>
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">July 1, 2023</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold">Hotel Metrics</h2>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                        View All
+                    </button>
+                </div>
+                <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Bookings</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-4 h-4 text-gray-500 dark:text-gray-400">
+                                <line x1="12" x2="12" y1="2" y2="22"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-2xl font-bold">1,234</div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Revenue</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-4 h-4 text-gray-500 dark:text-gray-400">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-2xl font-bold">$250,000</div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">+180.1% from last month</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Average Rating</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-4 h-4 text-gray-500 dark:text-gray-400">
+                                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                                <line x1="2" x2="22" y1="10" y2="10"></line>
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-2xl font-bold">4.8</div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">+19% from last month</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Active Users</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-4 h-4 text-gray-500 dark:text-gray-400">
+                                <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-2xl font-bold">2,573</div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">+201 since last hour</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>

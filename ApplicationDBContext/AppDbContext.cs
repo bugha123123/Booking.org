@@ -21,6 +21,9 @@ namespace Hotel.org.ApplicationDBContext
 
             
             modelBuilder.ApplyConfiguration(new HotelData());
+       
+
+
         }
     }
 }

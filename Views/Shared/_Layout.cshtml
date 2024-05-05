@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -47,6 +49,11 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-action="ReviewPage" asp-controller="Hotel">Add Review</a>
                     </li>
+                  
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="AdminPage" asp-controller="AdminDashBoard">Admin DashBoard</a>
+                        </li>
+                 
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @if (User.Identity.IsAuthenticated)

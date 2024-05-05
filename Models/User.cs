@@ -18,5 +18,6 @@ namespace Hotel.org.Models
         [Required(ErrorMessage = "Card CV is required.")]
         [RegularExpression("^[0-9]{3}$", ErrorMessage = "Card CV must be a 3-digit number.")]
         public string? CardCV { get; set; } = string.Empty;
+
     }
 }
