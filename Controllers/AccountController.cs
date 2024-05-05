@@ -94,5 +94,13 @@ namespace Hotel.org.Controllers
             return View("ProfilePage", user);
 
         }
+
+
+        [HttpPost("updateuserprofile")]
+        public async Task<IActionResult> UpdateProfileCredentials(IFormFile profileImage)
+        {
+            await _accountservice.UpdateUserProfile(profileImage);
+            return RedirectToAction("ProfilePage", "Account");
+        }
     }
 }

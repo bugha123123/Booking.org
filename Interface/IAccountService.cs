@@ -22,6 +22,9 @@ namespace Hotel.org.Interface
         //updates user card details
 
         Task UpdateCardDetailsForUser(User user);
-        
+
+        //changes user profile
+        Task UpdateUserProfile(IFormFile profileImage);
+
     }
 }

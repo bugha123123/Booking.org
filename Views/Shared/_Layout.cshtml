@@ -1,4 +1,8 @@
-﻿
+﻿@using Hotel.org.Interface
+@inject IAccountService _accountService;
+@{
+    var user = await _accountService.GetLoggedInUserAsync();
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +22,6 @@
 
     <style>
         .navbar-nav .nav-link {
-            border: 1px solid #07689F;
             border-radius: 5px;
             color: #07689F;
             padding: 8px 20px;
@@ -58,11 +61,20 @@
                 <ul class="navbar-nav ml-auto">
                     @if (User.Identity.IsAuthenticated)
                     {
+
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                @User.Identity.Name  <i class="bi bi-person"></i>
+                            <a class="nav-link" href="#" id="profileDropdownToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @if (!string.IsNullOrEmpty(user.ProfileImageFileName))
+                                {
+                                    <img src="@Url.Content("~/ProfileImage/" + user.ProfileImageFileName)" alt="Profile Image" class="rounded-full h-10 w-10">
+                                }
+                                else
+                                {
+                                    <i class="bi bi-person"></i>
+                                }
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdownToggle">
                                 <li><a class="dropdown-item" asp-action="ProfilePage" asp-controller="Account">Account</a></li>
                                 <li><a class="dropdown-item" href="#">Support</a></li>
                                 <li>
@@ -72,6 +84,7 @@
                                 </li>
                             </ul>
                         </li>
+
                     }
                     else
                     {

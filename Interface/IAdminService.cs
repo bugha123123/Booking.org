@@ -10,5 +10,10 @@ namespace Hotel.org.Interface
 
         //gets reviews for user
         Task<List<Reviews>> GetReviewsForEveryUser();
+
+
+        //gets all users
+
+        Task<List<User>> GetUsers();
     }
 }

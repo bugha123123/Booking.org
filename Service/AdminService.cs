@@ -27,5 +27,10 @@ namespace Hotel.org.Service
             var Reviews = await _appDbContext.reviews.Take(3).ToListAsync();
             return Reviews;
         }
+
+        public async Task<List<User>> GetUsers()
+        {
+            return await _appDbContext.Users.Take(3).ToListAsync();
+        }
     }
 }

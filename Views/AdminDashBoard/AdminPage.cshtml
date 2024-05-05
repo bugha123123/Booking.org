@@ -1,6 +1,10 @@
 ﻿@using Hotel.org.Interface
 @inject IAdminService _adminservice;
+@inject IAccountService _accountService;
 
+@{
+    var LoggedInUser = await _accountService.GetLoggedInUserAsync();
+}
 <div class="flex min-h-screen w-full flex-col mt-5">
    
     <main class="flex-1 p-6 md:p-10">
@@ -42,7 +46,7 @@
                                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                             <div class="flex items-center gap-2">
                                                 <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
-                                                    <img class="aspect-square h-full w-full" src="@item.hotel.RoomImage" />
+                                                    <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + LoggedInUser.ProfileImageFileName)" />
                                                 </span>
                                                 <div>
                                                     <div class="font-medium">@item.AddedBy.Substring(0, Math.Min(6, @item.AddedBy.Length))</div>
@@ -74,8 +78,8 @@
         {
             <div class="flex items-start gap-4">
                 <span class="relative flex shrink-0 overflow-hidden rounded-full h-10 w-10">
-                    <img class="aspect-square h-full w-full" src="/placeholder-user.jpg" />
-                </span>
+                                <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + LoggedInUser.ProfileImageFileName)" />
+                            </span>
                 <div class="flex-1">
                     <div class="flex items-center justify-between">
                         <div class="font-medium">@review.AddedBy</div>
@@ -114,7 +118,7 @@
                                         Email
                                     </th>
                                     <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                        Phone
+                                        Card number
                                     </th>
                                     <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                                         Joined
@@ -122,45 +126,23 @@
                                 </tr>
                             </thead>
                             <tbody class="[&amp;_tr:last-child]:border-0">
-                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                        <div class="flex items-center gap-2">
-                                            <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
-                                                <img class="aspect-square h-full w-full"  src="/placeholder-user.jpg" />
-                                            </span>
-                                            <div class="font-medium">John Doe</div>
-                                        </div>
-                                    </td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">john@example.com</td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">555-1234</td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">May 1, 2023</td>
-                                </tr>
-                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                        <div class="flex items-center gap-2">
-                                            <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
-                                                <img class="aspect-square h-full w-full"  src="/placeholder-user.jpg" />
-                                            </span>
-                                            <div class="font-medium">Jane Appleseed</div>
-                                        </div>
-                                    </td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">jane@example.com</td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">555-5678</td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">June 15, 2023</td>
-                                </tr>
-                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                        <div class="flex items-center gap-2">
-                                            <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
-                                                <img class="aspect-square h-full w-full"  src="/placeholder-user.jpg" />
-                                            </span>
-                                            <div class="font-medium">Sarah Miller</div>
-                                        </div>
-                                    </td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">sarah@example.com</td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">555-9012</td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">July 1, 2023</td>
-                                </tr>
+                              @foreach (var user in await _adminservice.GetUsers())
+                                {
+                                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                            <div class="flex items-center gap-2">
+                                                <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
+                                                    <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + LoggedInUser.ProfileImageFileName)" />
+                                                </span>
+                                                <div class="font-medium">@user.UserName.Substring(0, Math.Min(6, @user.UserName.Length))...</div>
+                                            </div>
+                                        </td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">@user.Email</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">@user.CardNumber</td>
+
+                                    </tr>
+                                }
+                               
                             </tbody>
                         </table>
                     </div>
@@ -192,56 +174,20 @@
                             </svg>
                         </div>
                         <div class="p-6">
-                            <div class="text-2xl font-bold">1,234</div>
+                            <div class="text-2xl font-bold">
+                                
+                                @{
+                                    var bookedhotels =  
+                                        await _adminservice.GetBookedHotelsForEveryUser();
+                                    }
+                            @bookedhotels.Count()
+                            
+                            </div>
                             <p class="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
                         </div>
                     </div>
-                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-                        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-                            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Revenue</h3>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 width="24"
-                                 height="24"
-                                 viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 stroke-width="2"
-                                 stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 class="w-4 h-4 text-gray-500 dark:text-gray-400">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                        </div>
-                        <div class="p-6">
-                            <div class="text-2xl font-bold">$250,000</div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">+180.1% from last month</p>
-                        </div>
-                    </div>
-                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-                        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-                            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Average Rating</h3>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 width="24"
-                                 height="24"
-                                 viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 stroke-width="2"
-                                 stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 class="w-4 h-4 text-gray-500 dark:text-gray-400">
-                                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-                                <line x1="2" x2="22" y1="10" y2="10"></line>
-                            </svg>
-                        </div>
-                        <div class="p-6">
-                            <div class="text-2xl font-bold">4.8</div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">+19% from last month</p>
-                        </div>
-                    </div>
+                 
+                 
                     <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                             <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Active Users</h3>
@@ -259,8 +205,13 @@
                             </svg>
                         </div>
                         <div class="p-6">
-                            <div class="text-2xl font-bold">2,573</div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">+201 since last hour</p>
+                            <div class="text-2xl font-bold">
+                                @{
+                                    var users = await _adminservice.GetUsers();
+
+                                }
+                                @users.Count()
+                                <div>
                         </div>
                     </div>
                 </div>
