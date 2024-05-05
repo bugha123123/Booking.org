@@ -24,6 +24,6 @@ namespace Hotel.org.Models
         [Required(ErrorMessage = "Rating is required")]
         public Rating Stars { get; set; }
 
-        public int AddedForHotel { get; set; }
+        public string AddedForHotel { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace Hotel.org.Interface
 
         //searches for hotels using query
 
-        Task<List<Hotels>> SearchForHotel(string? place, string? checkInDate, string? checkOutDate, string? AdultsCount, string? ChildrenCount);
+        Task<List<Hotels>> SearchForHotel(string? place, string? checkInTime, string? checkOutTime, string? AdultsCount, string? ChildrenCount);
 
 
         //books a hotel for user
@@ -61,6 +61,6 @@ namespace Hotel.org.Interface
 
 
         //adds review for hotel 
-        Task AddReviewForHotel(Reviews reviews, int hotelId);
+        Task AddReviewForHotel(Reviews reviews);
     }
 }

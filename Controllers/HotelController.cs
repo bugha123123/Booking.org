@@ -14,9 +14,9 @@ namespace Hotel.org.Controllers
             _hotelService = hotelService;
         }
 
-        public async Task<IActionResult> HotelSearchPage(string? place, string? checkInDate, string? checkOutDate, string? AdultsCount, string? ChildrenCount)
+        public async Task<IActionResult> HotelSearchPage(string? place, string? checkInTime, string? checkOutTime, string? AdultsCount, string? ChildrenCount)
         {
-            var result = await _hotelService.SearchForHotel(place, checkInDate, checkOutDate, AdultsCount, ChildrenCount);
+            var result = await _hotelService.SearchForHotel(place, checkInTime, checkOutTime, AdultsCount, ChildrenCount);
             return View(result);
         }
         [Authorize]
@@ -51,10 +51,13 @@ namespace Hotel.org.Controllers
             var hotelbyid = await _hotelService.GetHotelById(HotelId);
             return View(hotelbyid);
         }
-        public async Task<IActionResult> ReviewPage(int HotelId)
+        public IActionResult ReviewPage()
         {
-            var hotelbyid = await _hotelService.GetHotelById(HotelId);
-            return View(hotelbyid);
+            return View();
+        }
+        public IActionResult ReviewSuccessPage()
+        {
+            return View();
         }
         public async Task<IActionResult> AllHotelsPage(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast)
         {
@@ -125,15 +128,14 @@ namespace Hotel.org.Controllers
 
         [HttpPost("addreviewforhotel")]
 
-        public async Task<IActionResult> AddReviewForHotel(Reviews reviews, int hotelId)
+        public async Task<IActionResult> AddReviewForHotel(Reviews reviews )
         {
-            if (ModelState.IsValid)
-            {
-                await _hotelService.AddReviewForHotel(reviews, hotelId);
-                return RedirectToAction("ReviewSuccess", "Hotel");
-            }
+          
+                await _hotelService.AddReviewForHotel(reviews);
+                return RedirectToAction("ReviewSuccessPage", "Hotel");
+            
 
-            return View("ReviewPage", reviews);
+       
         }
 
 

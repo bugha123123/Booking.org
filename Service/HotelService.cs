@@ -83,25 +83,34 @@ namespace Hotel.org.Service
         }
 
         //searches for hotel using query
-        public async Task<List<Hotels>> SearchForHotel(string? place, string? checkInDate, string? checkOutDate, string? AdultsCount, string? ChildrenCount)
+        public async Task<List<Hotels>> SearchForHotel(string? place, string? checkInTime, string? checkOutTime, string? adultsCount, string? childrenCount)
         {
             var query = _appDbContext.Hotels.AsQueryable();
 
+            // Filter by place
             if (!string.IsNullOrEmpty(place))
             {
                 query = query.Where(hotel => hotel.City.ToLower().Contains(place.ToLower()));
             }
 
-         
-
-            if (!string.IsNullOrEmpty(AdultsCount) && Enum.TryParse<NumberOfAdultsEnum>(AdultsCount, out var adults))
+            // Filter by number of adults
+            if (!string.IsNullOrEmpty(adultsCount) && Enum.TryParse(adultsCount, out NumberOfAdultsEnum adults))
             {
                 query = query.Where(hotel => hotel.NumberOfAdults == adults);
             }
 
-            if (!string.IsNullOrEmpty(ChildrenCount) && Enum.TryParse<NumberOfChildrenEnum>(ChildrenCount, out var children))
+            // Filter by number of children
+            if (!string.IsNullOrEmpty(childrenCount) && Enum.TryParse(childrenCount, out NumberOfChildrenEnum children))
             {
                 query = query.Where(hotel => hotel.NumberOfChildren == children);
+            }
+
+            // Filter by check-in and check-out times
+            if (!string.IsNullOrEmpty(checkInTime) && TimeSpan.TryParse(checkInTime, out TimeSpan checkIn) &&
+                !string.IsNullOrEmpty(checkOutTime) && TimeSpan.TryParse(checkOutTime, out TimeSpan checkOut))
+            {
+                // Filter hotels where the stay period overlaps with the specified range
+                query = query.Where(hotel => !(hotel.CheckOutTime <= checkIn || hotel.CheckInTime >= checkOut));
             }
 
             // Execute the query and return the filtered hotels
@@ -221,17 +230,16 @@ namespace Hotel.org.Service
 
 
         // adds review for hotel 
-        public async Task AddReviewForHotel(Reviews reviews, int hotelId)
+        public async Task AddReviewForHotel(Reviews reviews)
         {
             var user = await _accountService.GetLoggedInUserAsync();
-            var FoundHotel = await GetHotelById(hotelId);
 
             var NewReview = new Reviews()
             {
                 AddedBy = user.UserName,
                 Comment = reviews.Comment,
                 Stars = reviews.Stars,
-                AddedForHotel = FoundHotel.Id
+                AddedForHotel = reviews.AddedForHotel
 
 
             };
