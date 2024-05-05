@@ -51,13 +51,15 @@
   @foreach (var hotel in Model)
         {
             <div class="bg-white rounded-lg shadow-md dark:bg-gray-950">
-                <a class="block" href="#" rel="ugc">
-                    <img src="@hotel.RoomImage"
-                         alt="Hotel Image"
-                         width="400"
-                         height="250"
-                         class="rounded-t-lg w-full aspect-[4/3] object-cover" />
-                </a>
+
+                <a class="block" asp-action="HotelDetailsPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id" rel="ugc">
+    <img src="@hotel.RoomImage"
+         alt="Hotel Image"
+         width="400"
+         height="300" 
+         class="rounded-t-lg w-full h-full object-cover img-fluid" />
+</a>
+
                 <div class="p-4 md:p-6">
                     <div class="flex justify-between items-start mb-2">
                         <h3 class="text-lg font-semibold">@hotel.City</h3>

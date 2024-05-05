@@ -11,16 +11,7 @@
       <h2 class="text-2xl font-bold">Leave a Review</h2>
       <p class="mt-4 text-gray-500 dark:text-gray-400">Share your experience with other travelers.</p>
             <form id="addReviewForm" asp-action="AddReviewForHotel" asp-controller="Hotel" method="post" class="mt-6 space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label for="name" class="text-sm font-medium leading-none">Name</label>
-                        <input id="name" type="text" class="flex h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm" placeholder="Enter your name" required>
-                    </div>
-                    <div>
-                        <label for="email" class="text-sm font-medium leading-none">Email</label>
-                        <input id="email" type="email" class="flex h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm" placeholder="Enter your email" required>
-                    </div>
-                </div>
+              
                 <div>
                     <label for="hotel" class="text-sm font-medium leading-none">Select Hotel</label>
                     <select id="hotel" name="hotelId" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm" required>

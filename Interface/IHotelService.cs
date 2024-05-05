@@ -62,5 +62,9 @@ namespace Hotel.org.Interface
 
         //adds review for hotel 
         Task AddReviewForHotel(Reviews reviews);
+
+        //gets reviews for particular hotel 
+
+        Task<List<Reviews>> GetReviewsForHotelAsync( int HotelId);
     }
 }

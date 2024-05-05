@@ -200,7 +200,7 @@ namespace Hotel.org.Service
             IQueryable<Hotels> query = _appDbContext.Hotels.AsQueryable();
 
             // Filter hotels by price range if provided
-            if (minPrice != null && maxPrice != null)
+            if (minPrice != 0 && maxPrice != 0)
             {
                 query = query.Where(h => h.AveragePricePerNight >= minPrice && h.AveragePricePerNight <= maxPrice);
             }
@@ -247,6 +247,16 @@ namespace Hotel.org.Service
 
             await _appDbContext.reviews.AddAsync(NewReview);
             await _appDbContext.SaveChangesAsync();
+
+        }
+
+        public async Task<List<Reviews>> GetReviewsForHotelAsync( int HotelId)
+        {
+            var FoundeHotel = await GetHotelById(HotelId);
+
+            var foundReviews = await _appDbContext.reviews.Where(r => r.AddedForHotel == FoundeHotel.Name).ToListAsync();
+
+            return foundReviews;
 
         }
     }
