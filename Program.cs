@@ -46,7 +46,24 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapGet("/", (HttpContext context) =>
+{
+    if (!context.User.Identity.IsAuthenticated)
+    {
+        // Redirect unauthenticated users to the login page
+        context.Response.Redirect("/Account/LogInPage");
+        return Task.CompletedTask;
+    }
+    else
+    {
+        context.Response.Redirect("/Home/Index");
+        return Task.CompletedTask;
+    }
 
+    // If the user is already authenticated, return 404 or another appropriate response
+    context.Response.StatusCode = 404;
+    return Task.CompletedTask;
+});
 
 
 app.Run();

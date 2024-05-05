@@ -4,6 +4,7 @@
 @inject IAccountService _accountservice;
 @{
     var user = await _accountservice.GetLoggedInUserAsync();
+   
 }
 
 <h1 class="text-center  text-dark font-monospace mt-5">Welcome @user.UserName!</h1>

@@ -24,7 +24,7 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public async Task<IActionResult> CheckOutPage(int HotelId)
         {
             var hotel = await _hotelService.GetHotelById(HotelId);
@@ -46,19 +46,24 @@ namespace Hotel.org.Controllers
             return View(reservedHotel);
         }
 
+        [Authorize]
         public async Task<IActionResult> HotelDetailsPage(int HotelId)
         {
             var hotelbyid = await _hotelService.GetHotelById(HotelId);
             return View(hotelbyid);
         }
+        [Authorize]
         public IActionResult ReviewPage()
         {
             return View();
         }
+        [Authorize]
         public IActionResult ReviewSuccessPage()
         {
             return View();
         }
+
+        [Authorize]
         public async Task<IActionResult> AllHotelsPage(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast)
         {
             // If no price range is provided, set default values to show all hotels

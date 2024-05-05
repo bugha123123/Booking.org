@@ -24,10 +24,25 @@ namespace Hotel.org.Service
             _dbcontext = dbcontext;
             _hostingEnvironment = hostingEnvironment;
         }
-
-        public async Task<User> GetLoggedInUserAsync()
+        public async Task<User?> GetLoggedInUserAsync()
         {
-            string userName = _httpContextAccessor.HttpContext.User.Identity.Name!;
+            // Check if the user is authenticated and has a name
+            if (_httpContextAccessor.HttpContext.User.Identity?.IsAuthenticated != true)
+            {
+                // User is not authenticated, return null or handle the case accordingly
+                return null;
+            }
+
+            // Get the user name
+            string? userName = _httpContextAccessor.HttpContext.User.Identity?.Name;
+
+            // Check if the user name is null
+            if (userName == null)
+            {
+                // Handle the case where the user name is null
+                // You can return null or throw an exception, depending on your requirements
+                return null;
+            }
 
             // Find the user by username
             var user = await _userManager.FindByNameAsync(userName);

@@ -2,6 +2,11 @@
 @using Hotel.org.Models
 @model Hotels
 @inject IHotelService _hotelservice;
+@inject IAccountService _accountService;
+
+@{
+    var LoggedInUser = await _accountService.GetLoggedInUserAsync();
+}
 <section class="w-full bg-gray-100 dark:bg-gray-800 py-12 md:py-24 lg:py-32 mt-5 rounded-3">
     <div class="container px-4 md:px-6">
         <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-[1fr_550px]">
@@ -225,6 +230,14 @@
                                     {
                                         <div class="grid gap-2">
                                             <div class="flex items-center gap-2 text-sm font-semibold">
+                                                @if (!string.IsNullOrEmpty(LoggedInUser.ProfileImageFileName))
+                                                {
+                                                    <img src="@Url.Content("~/ProfileImage/" + LoggedInUser.ProfileImageFileName)" alt="User Image" class="rounded-full h-8 w-8">
+                                                }
+                                                else
+                                                {
+                                                    <i class="bi bi-person"></i>
+                                                }
                                                 <span>@review.AddedBy</span>
                                             </div>
                                             <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
@@ -233,6 +246,7 @@
                                         </div>
                                     }
                                 </div>
+
 
                             }
 

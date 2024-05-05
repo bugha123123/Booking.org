@@ -20,5 +20,7 @@ namespace Hotel.org.Models
         public string? CardCV { get; set; } = string.Empty;
 
         public string? ProfileImageFileName { get; set; }
+
+        public string? UserRole { get; set; } = "USER";
     }
 }

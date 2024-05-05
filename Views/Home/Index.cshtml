@@ -5,54 +5,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-<style>
-    .full-width-img {
-        position: relative;
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-    }
-
-    .overlay-text {
-        position: absolute;
-        top: 70%;
-        left: -17.5%;
-        color: white;
-        text-align: center;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        width: 90%;
-    }
-</style>
 
 <div class="container mx-auto">
-    <div class="container-fluid mt-5 p-0">
-        <div class="row">
-            <div class="col-12 p-0">
-                <div class="full-width-img">
-                    <img src="~/Images/Image.png" class="img-fluid rounded-3" alt="Your Image">
-                    <div class="overlay-text">
-                        <h1 style="font-weight:bold;">Discover Your Trips Worldwide</h1>
-                    </div>
-                </div>
+    <div class="container mt-5">
+        <div class="relative">
+            <img src="~/Images/Image.png" class="w-full rounded-3 object-cover" alt="Your Image">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <h1 class="text-white text-center font-bold text-4xl sm:text-5xl lg:text-6xl">Discover Your Trips Worldwide</h1>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container mt-5">
         <form action="@Url.Action("HotelSearchPage", "Hotel")" method="GET">
-            <div class="d-flex align-items-center p-3 p-md-5 shadow-md" style="transform: translateY(-50%); z-index: 1000;">
-                <select name="place" required class="form-select rounded-md bg-background px-3 py-2 text-sm placeholder-muted flex-grow-1">
+            <div class="flex flex-col md:flex-row items-center p-3 md:p-5 shadow-md -mt-16 md:mt-0 z-10 bg-white">
+                <select name="place" required class="form-select rounded-md bg-background px-3 py-2 text-sm placeholder-muted flex-grow-1 mb-2 md:mb-0 md:mr-2">
                     <option value="" disabled selected>Select a hotel</option>
                     @foreach (var hotel in await _hotelservice.GetAllHotelsForDropDown())
                     {
                         <option value="@hotel.City">@hotel.Name - @hotel.City</option>
                     }
                 </select>
-                <input name="checkInTime" type="time" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mx-2" placeholder="Check In Time" />
-                <input name="checkOutTime" type="time" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mr-2" placeholder="Check Out Time" />
+                <input name="checkInTime" type="time" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mb-2 md:mb-0 md:mr-2" placeholder="Check In Time" />
+                <input name="checkOutTime" type="time" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mb-2 md:mb-0 md:mr-2" placeholder="Check Out Time" />
 
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" style="margin-left:10px; margin-right:10px;" type="button" id="dropdownAdults" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown mb-2 md:mb-0">
+                    <button class="btn btn-secondary dropdown-toggle bg-white border border-gray-300 px-4 py-2 rounded-md text-sm" type="button" id="dropdownAdults" data-bs-toggle="dropdown" aria-expanded="false">
                         Adults
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownAdults">
@@ -66,7 +44,7 @@
                     </ul>
                 </div>
                 <div class="dropdown ml-2">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChildren" style="margin-right:10px;" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle bg-white border border-gray-300 px-4 py-2 rounded-md text-sm" type="button" id="dropdownChildren" data-bs-toggle="dropdown" aria-expanded="false">
                         Children
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownChildren">
@@ -81,55 +59,42 @@
                 </div>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <button type="submit" class="btn btn-primary ml-2">Search</button>
+                    <button type="submit" class="btn btn-primary bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm ml-2">Search</button>
                 }
                 else
                 {
-                    <a href="@Url.Action("RegisterPage", "Account")" class="btn btn-primary ml-2">Search</a>
+                    <a href="@Url.Action("RegisterPage", "Account")" class="btn btn-primary bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm ml-2">Search</a>
                 }
-
             </div>
         </form>
-
-
-     
     </div>
-    <div class="container-fluid">
-        <h3 style="color:#000000; margin-bottom:20px;font-weight:bold;">Explore Stays In Trending Destinations</h3>
 
-        <div class="row row-cols-1 row-cols-md-5 gap-5 rounder-2">
+    <div class="container mt-5">
+        <h3 class="text-black mb-5 text-xl font-bold">Explore Stays In Trending Destinations</h3>
 
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-5 rounder-2">
             @foreach (var hotel in await _hotelservice.GetHotelsAsync())
             {
-                <div class="col">
+                <div class="flex flex-col">
                     <a asp-action="HotelDetailsPage" asp-route-HotelId="@hotel.Id" asp-controller="Hotel">
-                        <div class="card position-relative" style="width: 288px; height: 367px; background: #FFFFFF; padding: 8px;">
-                            <div style="position: relative; height: 200px; overflow: hidden;">
-                                <img src="@hotel.RoomImage" class="img-fluid mx-auto d-block rounded-1" style="height: 100%; object-fit: cover;" />
-                                <span class="position-absolute bottom-0 end-0 p-2 bg-gradient text-white rounded-start border">@hotel.Rating</span>
+                        <div class="card mb-5" style="width: 288px;">
+                            <div class="relative h-48 overflow-hidden rounded-t-md">
+                                <img src="@hotel.RoomImage" class="w-full h-full object-cover" alt="@hotel.Name" />
+                                <span class="absolute bottom-0 right-0 p-2 bg-gradient text-white rounded-l-md border">@hotel.Rating</span>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title">@hotel.City</h5>
+                            <div class="p-4">
+                                <h5 class="card-title text-black text-xl font-semibold mb-2">@hotel.City</h5>
                                 <p>
-                                    <strong>From <span class="text-danger">@hotel.CheckInTime.ToString("hh\\:mm")</span> - to <span class="text-danger">@hotel.CheckOutTime.ToString("hh\\:mm")</span></strong>
+                                    <strong class="text-danger">From @hotel.CheckInTime.ToString("hh\\:mm") - to @hotel.CheckOutTime.ToString("hh\\:mm")</strong>
                                 </p>
-                                <p class="hotel-description" style="color:#8f8f8f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@hotel.Description</p>
+                                <p class="text-gray-600 mb-2 truncate">@hotel.Description</p>
                             </div>
                         </div>
                     </a>
                 </div>
-
-
-
-
             }
         </div>
     </div>
-
-    <div>
-
-    </div>
-
 </div>
 
 <script>
@@ -137,3 +102,4 @@
         document.getElementById(dropdownId).innerText = value;
     }
 </script>
+

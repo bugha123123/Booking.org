@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240505203304_aduhawhdawd")]
+    partial class aduhawhdawd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -511,20 +514,20 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "abcde569-1394-4c9a-8674-c311dc234782",
+                            Id = "1",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "208fd052-3988-4447-9858-9a3dc0408446",
+                            ConcurrencyStamp = "47397d27-d305-466f-aa8f-5bd73cca8c9e",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJzJXfLTuOXNla1y1xEkRYW+tRBZCHr/QRA+O5VqSQXpU1ziu3n3VX1LRFoYmp5ZYg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELazrztoSnOUxPESJgmeoYTboqD/0W3hi0+q+RYL/K/tUbuVxFEFLbZpYrE66C4Z2w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5da22c66-375d-4cba-885f-03e95a6357b3",
+                            SecurityStamp = "677bb2ac-a5cb-4ce6-920b-bb5293bb7951",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN"

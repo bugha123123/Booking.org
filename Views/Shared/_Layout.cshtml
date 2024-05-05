@@ -53,9 +53,12 @@
                         <a class="nav-link" asp-action="ReviewPage" asp-controller="Hotel">Add Review</a>
                     </li>
                   
-                        <li class="nav-item">
+                    @if (user != null && user.UserRole == "ADMIN")
+                    {
+                            <li class="nav-item">
                             <a class="nav-link" asp-action="AdminPage" asp-controller="AdminDashBoard">Admin DashBoard</a>
                         </li>
+                    }
                  
                 </ul>
                 <ul class="navbar-nav ml-auto">

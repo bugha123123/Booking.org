@@ -79,7 +79,7 @@ namespace Hotel.org.Service
         //takes 8 hotels and returns them 
         public async Task<List<Hotels>> GetHotelsAsync()
         {
-        return    await _appDbContext.Hotels.Take(8).ToListAsync(); 
+        return    await _appDbContext.Hotels.Take(10).ToListAsync(); 
         }
 
         //searches for hotel using query

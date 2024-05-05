@@ -1,5 +1,6 @@
 ﻿using Hotel.org.HotelSeedData;
 using Hotel.org.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,9 +22,21 @@ namespace Hotel.org.ApplicationDBContext
 
             
             modelBuilder.ApplyConfiguration(new HotelData());
-       
 
 
+            modelBuilder.Entity<User>().HasData(
+        new User
+        {
+            
+            UserName = "admin@example.com", // Set the username
+            NormalizedUserName = "ADMIN@EXAMPLE.COM", // Set the normalized username
+            Email = "admin@example.com", // Set the email
+            NormalizedEmail = "ADMIN@EXAMPLE.COM", // Set the normalized email
+            EmailConfirmed = true, // Set email confirmed flag
+            PasswordHash = new PasswordHasher<User>().HashPassword(null, "Admin"),
+            UserRole = "ADMIN"
+        }
+    );
         }
     }
 }

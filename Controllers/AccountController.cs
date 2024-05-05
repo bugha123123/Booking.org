@@ -22,6 +22,8 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
+
+
         public IActionResult ProfilePage()
         {
             return View();
