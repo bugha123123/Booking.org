@@ -70,7 +70,7 @@
     </div>
 
     <div class="container mt-5">
-        <h3 class="text-black mb-5 text-xl font-bold">Explore Stays In Trending Destinations</h3>
+        <h1 class="text-black mb-5 text-xl font-bold">Explore Stays In Trending Destinations</h1>
 
         <div class="grid grid-cols-1 md:grid-cols-5 gap-5 rounder-2">
             @foreach (var hotel in await _hotelservice.GetHotelsAsync())
@@ -95,6 +95,31 @@
             }
         </div>
     </div>
+    <div class="container mt-5">
+        <h3 class="text-black mb-5 text-2xl font-bold">Top Hotels: </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 rounded-lg">
+            @foreach (var hotel in await _hotelservice.GetHotelsByRating())
+            {
+                <div class="flex flex-col bg-white shadow-lg rounded-lg">
+                    <a asp-action="HotelDetailsPage" asp-route-HotelId="@hotel.Id" asp-controller="Hotel">
+                        <div class="relative h-64 overflow-hidden rounded-t-lg">
+                            <img src="@hotel.RoomImage" class="w-full h-full object-cover" alt="@hotel.Name" />
+                            <span class="absolute top-0 right-0 p-2 bg-gradient-to-l from-transparent to-white text-black rounded-tl-lg">@hotel.Rating</span>
+                        </div>
+                        <div class="p-4">
+                            <h5 class="text-black text-xl font-semibold mb-2">@hotel.City</h5>
+                            <p>
+                                <strong class="text-red-600">From @hotel.CheckInTime.ToString("hh\\:mm") - to @hotel.CheckOutTime.ToString("hh\\:mm")</strong>
+                            </p>
+                            <p class="text-gray-700 mb-2 truncate">@hotel.Description</p>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+
 </div>
 
 <script>

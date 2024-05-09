@@ -1,5 +1,5 @@
-﻿@using Hotel.org.DTO
-@model LoginViewModel
+﻿@model LoginViewModel
+@using Hotel.org.DTO
 
 <div class="RegisterContainer container-fluid bg-light rounded mt-5 p-5">
     <form asp-action="LogInUser" asp-controller="Account" method="post">
@@ -40,30 +40,31 @@
     </form>
 </div>
 
-    <script>
-        // JavaScript to toggle password visibility
-        document.addEventListener('DOMContentLoaded', function () {
-            const togglePassword = document.querySelector('#togglePassword');
-            const password = document.querySelector('#Password');
-            const eyeIcon = document.querySelector('#eyeIcon');
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<!-- You can adjust the link to point to your local Bootstrap JavaScript file if you prefer -->
+<script>
+    // JavaScript to toggle password visibility
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#Password');
+        const eyeIcon = document.querySelector('#eyeIcon');
 
-            togglePassword.addEventListener('click', function () {
-                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                password.setAttribute('type', type);
-                eyeIcon.classList.toggle('bi-eye');
-                eyeIcon.classList.toggle('bi-eye-slash');
-            });
-
-            const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
-            const confirmPassword = document.querySelector('#ConfirmPassword');
-            const eyeIconConfirm = document.querySelector('#eyeIconConfirm');
-
-            toggleConfirmPassword.addEventListener('click', function () {
-                const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                confirmPassword.setAttribute('type', type);
-                eyeIconConfirm.classList.toggle('bi-eye');
-                eyeIconConfirm.classList.toggle('bi-eye-slash');
-            });
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            eyeIcon.classList.toggle('bi-eye');
+            eyeIcon.classList.toggle('bi-eye-slash');
         });
-    </script>
 
+        const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+        const confirmPassword = document.querySelector('#ConfirmPassword');
+        const eyeIconConfirm = document.querySelector('#eyeIconConfirm');
+
+        toggleConfirmPassword.addEventListener('click', function () {
+            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', type);
+            eyeIconConfirm.classList.toggle('bi-eye');
+            eyeIconConfirm.classList.toggle('bi-eye-slash');
+        });
+    });
+</script>

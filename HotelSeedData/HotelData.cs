@@ -57,7 +57,7 @@ namespace Hotel.org.HotelSeedData
                     RoomImage = "/Images/mountain_lodge.jpg",
                     CheckOutTime = TimeSpan.FromHours(11),
                     AveragePricePerNight = 200,
-                    Rating = 4,
+                    Rating = 5,
                     Description = "Escape to the mountains and enjoy cozy accommodations and breathtaking views."
                 },
                 new Hotel.org.Models.Hotels
@@ -81,7 +81,7 @@ namespace Hotel.org.HotelSeedData
                     RoomImage = "/Images/city_center_hotel.jpg",
                     CheckOutTime = TimeSpan.FromHours(10),
                     AveragePricePerNight = 250,
-                    Rating = 4,
+                    Rating = 2,
                     Description = "Stay in the heart of the city and explore all that Metropolis has to offer."
                 },
                 new Hotel.org.Models.Hotels
@@ -177,7 +177,7 @@ namespace Hotel.org.HotelSeedData
                     RoomImage = "/Images/historic_inn.jpg",
                     CheckOutTime = TimeSpan.FromHours(11),
                     AveragePricePerNight = 170,
-                    Rating = 4,
+                    Rating = 3,
                     Description = "Step back in time and stay in a charming historic inn in the heart of Old Town."
                 },
                 new Hotel.org.Models.Hotels
@@ -201,7 +201,7 @@ namespace Hotel.org.HotelSeedData
                     RoomImage = "/Images/ski_lodge.jpg",
                     CheckOutTime = TimeSpan.FromHours(11),
                     AveragePricePerNight = 220,
-                    Rating = 4,
+                    Rating = 1,
                     Description = "Hit the slopes and cozy up by the fire at our charming ski lodge."
                 },
                 new Hotel.org.Models.Hotels
@@ -249,7 +249,7 @@ namespace Hotel.org.HotelSeedData
                     RoomImage = "/Images/lakefront_lodge.jpg",
                     CheckOutTime = TimeSpan.FromHours(11),
                     AveragePricePerNight = 190,
-                    Rating = 4,
+                    Rating = 2,
                     Description = "Escape to the serene beauty of the lake and relax at our charming lakefront lodge."
                 }
                 // Add more hotels as needed

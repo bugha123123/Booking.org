@@ -23,7 +23,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 // Registering services
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
-builder.Services.AddScoped<IAdminService, AdminService>(); 
+builder.Services.AddScoped<IAdminService, AdminService>();
 // Registration ends here
 
 builder.Services.AddControllersWithViews();

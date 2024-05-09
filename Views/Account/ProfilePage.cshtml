@@ -71,28 +71,7 @@
             </div>
         </div>
     </form>
-    <form asp-action="UpdateProfileCredentials" asp-controller="Account" method="post" enctype="multipart/form-data">
-    <div class="mt-8">
-        <h2 class="text-2xl font-bold mb-4">Profile Picture</h2>
-        <div class="flex items-center">
-            <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden mr-4">
-                    @{
-                        var FoundUser = await _accountservice.GetLoggedInUserAsync();
-                        var imagePath = $"~/ProfileImage/{FoundUser.ProfileImageFileName}";
-
-                    }
-                    <img id="profile-picture-preview" src="@Url.Content(imagePath)" class="object-cover w-full h-full">
-            </div>
-                <label asp-for="ProfileImageFileName" for="profileImage" class="cursor-pointer inline-block py-2 px-4 bg-primary-600 text-black rounded-md shadow-sm transition duration-300 hover:bg-primary-700">
-                Upload Picture
-            </label>
-               
-                <input asp-for="ProfileImageFileName" id="profileImage" name="profileImage" type="file" accept="image/*" class="hidden">
-        </div>
-        <p class="mt-2 text-gray-500 text-sm">Supported formats: JPG, PNG. Maximum file size: 5MB</p>
-        <button type="submit" class="btn btn-dark mt-3">Save</button>
-    </div>
-    </form>
+   
 
     <form id="editForm" asp-action="UpdateUserCardDetails" asp-controller="Account" method="post" style="display: none;">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -166,7 +145,28 @@
             </div>
         </div>
     </form>
+    <form asp-action="UpdateProfileCredentials" asp-controller="Account" method="post" enctype="multipart/form-data">
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-4">Profile Picture</h2>
+            <div class="flex items-center">
+                <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden mr-4">
+                    @{
+                        var FoundUser = await _accountservice.GetLoggedInUserAsync();
+                        var imagePath = $"~/ProfileImage/{FoundUser.ProfileImageFileName}";
 
+                    }
+                    <img id="profile-picture-preview" src="@Url.Content(imagePath)" class="object-cover w-full h-full">
+                </div>
+                <label asp-for="ProfileImageFileName" for="profileImage" class="cursor-pointer inline-block py-2 px-4 bg-primary-600 text-black rounded-md shadow-sm transition duration-300 hover:bg-primary-700">
+                    Upload Picture
+                </label>
+
+                <input asp-for="ProfileImageFileName" id="profileImage" name="profileImage" type="file" accept="image/*" class="hidden">
+            </div>
+            <p class="mt-2 text-gray-500 text-sm">Supported formats: JPG, PNG. Maximum file size: 5MB</p>
+            <button type="submit" class="btn btn-dark mt-3">Save</button>
+        </div>
+    </form>
 </div>
 
 <script>

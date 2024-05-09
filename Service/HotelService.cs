@@ -55,6 +55,11 @@ namespace Hotel.org.Service
             await _appDbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> ValidatePaymentDetailsAsync(User user, string cardNumber, string cvc)
+        {
+            // Check if the provided card number and cvc match the user's stored values
+            return user.CardNumber.Trim() == cardNumber && user.CardCV.Trim() == cvc;
+        }
 
 
 
@@ -222,12 +227,7 @@ namespace Hotel.org.Service
             return await query.ToListAsync();
         }
 
-        public async Task<bool> ValidatePaymentDetailsAsync(User user, string cardNumber, string cvc)
-        {
-            // Check if the provided card number and cvc match the user's stored values
-            return user.CardNumber.Trim() == cardNumber && user.CardCV.Trim() == cvc;
-        }
-
+      
 
         // adds review for hotel 
         public async Task AddReviewForHotel(Reviews reviews)
@@ -258,6 +258,11 @@ namespace Hotel.org.Service
 
             return foundReviews;
 
+        }
+
+        public async Task<List<Hotels>> GetHotelsByRating()
+        {
+           return await _appDbContext.Hotels.Where(x => x.Rating >= 4).ToListAsync();
         }
     }
 }

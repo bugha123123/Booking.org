@@ -66,5 +66,9 @@ namespace Hotel.org.Interface
         //gets reviews for particular hotel 
 
         Task<List<Reviews>> GetReviewsForHotelAsync( int HotelId);
+
+        //gets top hotels by rating
+
+        Task<List<Hotels>> GetHotelsByRating();   
     }
 }

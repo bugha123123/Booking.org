@@ -1,36 +1,50 @@
-﻿@using Hotel.org.DTO
-@model RegisterViewModel
-<div class="RegisterContainer container-fluid bg-light rounded mt-5 p-5">
-    <form asp-action="RegisterUser" asp-controller="Account" method="post">
-        <div class="row">
-            <div class="col-md-5">
-                <img src="~/Images/travel photo.png" class="img-fluid" style="max-width: 100%; height: auto;">
-            </div>
-            <div class="col-md-7">
-                <h3 class="fw-bold mb-4">Register</h3>
-
-                <div class="mb-3">
-                    <input asp-for="EmailAddress" type="text" class="form-control" placeholder="Email Address">
-                    <span asp-validation-for="EmailAddress" type="Email" class="text-danger"></span>
+﻿@model RegisterViewModel
+@using Hotel.org.DTO
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- You can adjust the link to point to your local Bootstrap CSS file if you prefer -->
+</head>
+<body>
+    <div class="RegisterContainer container-fluid bg-light rounded mt-5 p-5">
+        <form asp-action="RegisterUser" asp-controller="Account" method="post">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="~/Images/travel photo.png" class="img-fluid" style="max-width: 100%; height: auto;">
                 </div>
+                <div class="col-md-7">
+                    <h3 class="fw-bold mb-4">Register</h3>
 
-                <div class="input-group mb-3">
-                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password">
-                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                        <i id="eyeIcon" class="bi bi-eye"></i>
-                    </button>
+                    <div class="mb-3">
+                        <input asp-for="EmailAddress" type="text" class="form-control" placeholder="Email Address">
+                        <span asp-validation-for="EmailAddress" type="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i id="eyeIcon" class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
+                    <a asp-action="LogInPage" asp-controller="Account" class="text-decoration-underline text-info">Log in</a>
+                    <br />
+                    <br />
+                    <button type="submit" style="background:#07689f;color:white;" class="btn btn-lg btn-block">Register Now</button>
                 </div>
-                <span asp-validation-for="Password" class="text-danger"></span>
-
-                <a asp-action="LogInPage" asp-controller="Account" class="text-decoration-underline text-info">Log in</a>
-                <br />
-                <br />
-                <button type="submit" style="background:#07689f;color:white;" class="btn btn-lg btn-block">Register Now</button>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- You can adjust the link to point to your local Bootstrap JavaScript file if you prefer -->
     <script>
         // JavaScript to toggle password visibility
         document.addEventListener('DOMContentLoaded', function () {
@@ -46,3 +60,5 @@
             });
         });
     </script>
+</body>
+</html>

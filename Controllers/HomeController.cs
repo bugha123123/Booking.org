@@ -13,6 +13,10 @@ namespace Hotel.org.Controllers
             return View();
         }
 
-    
+        public IActionResult SupportPage()
+        {
+            return View();
+        }
+
     }
 }
