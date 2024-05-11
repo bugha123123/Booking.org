@@ -41,9 +41,15 @@ namespace Hotel.org.Migrations
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("bookedHotels");
                 });
@@ -422,7 +428,13 @@ namespace Hotel.org.Migrations
                     b.Property<int>("Stars")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("reviews");
                 });
@@ -542,20 +554,20 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1676a73d-b7a9-4df9-8988-695558455696",
+                            Id = "4713d681-15cc-44f2-bb72-0e40a4a2d26c",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "a4f9d083-d5a3-4911-9c84-62f7a86335f2",
+                            ConcurrencyStamp = "d3f632d8-5c7c-4e95-a588-c4dd706ef88a",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG/L6AMqJknIBwgZhEP46UxtcxGktZqY+T7LixREF8i28QB6tRaJSEg0kKqqoazXaQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENT3EacSm3rPs3AZoadTGLhA1vuNiBdiJ10ZurIv7JrsLVeAPK94N4EOtFYvHeHPrw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6171ae19-7ffd-40c2-ac2a-dc54a0575ffc",
+                            SecurityStamp = "8b453f94-2951-4ca9-a6b8-072bd5dffcbe",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN"
@@ -703,7 +715,26 @@ namespace Hotel.org.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Hotel.org.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("hotel");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Reviews", b =>
+                {
+                    b.HasOne("Hotel.org.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Hotel.org.Models.Support", b =>

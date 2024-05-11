@@ -13,24 +13,28 @@ namespace Hotel.org.Service
         {
             _appDbContext = appDbContext;
         }
-        
+
 
 
         //gets 3 hotels for admin
         public async Task<List<BookedHotels>> GetBookedHotelsForEveryUser()
         {
-            return await _appDbContext.bookedHotels.Include(bh => bh.hotel).Take(3).ToListAsync();
+            return await _appDbContext.bookedHotels
+                .Include(bh => bh.hotel)
+                .Include(bh => bh.user)
+                .Take(3)
+                .ToListAsync();
         }
 
         public async Task<List<Reviews>> GetReviewsForEveryUser()
         {
-            var Reviews = await _appDbContext.reviews.Take(3).ToListAsync();
+            var Reviews = await _appDbContext.reviews.Include(u => u.user).Take(3).ToListAsync();
             return Reviews;
         }
 
         public async Task<List<User>> GetUsers()
         {
-            return await _appDbContext.Users.Take(3).ToListAsync();
+            return await _appDbContext.Users.Take(3).Where(u => u.Email != "admin@example.com").ToListAsync();
         }
     }
 }

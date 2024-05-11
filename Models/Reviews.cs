@@ -25,5 +25,11 @@ namespace Hotel.org.Models
         public Rating Stars { get; set; }
 
         public string AddedForHotel { get; set; }
+
+    
+
+        public User user { get; set; }
+
+        public string UserId { get; set; }
     }
 }

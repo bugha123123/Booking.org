@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Hotel.org.Migrations
 {
     /// <inheritdoc />
-    public partial class asbgdhawd : Migration
+    public partial class djadhjawd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,12 +14,12 @@ namespace Hotel.org.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "42873ce2-7c1f-4d18-ac18-2e6e55782b1d");
+                keyValue: "f8970a4c-9b68-4024-9b12-00100408e0ad");
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "CardCV", "CardExpirationDate", "CardNumber", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfileImageFileName", "SecurityStamp", "TwoFactorEnabled", "UserName", "UserRole" },
-                values: new object[] { "d7820f2f-0a73-40e4-a6b5-97e2cb7e6f33", 0, "", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "cd6b272a-ff92-455d-8f6c-bbf54cc6a8b7", "admin@example.com", true, false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEK7JM5wsDLLevl77tQ5cTMbPgKIFb+syiRpekcM7P21IjY0OOOrjdr/+U/WMUrlGXw==", null, false, null, "7686e5cb-8abe-400a-b999-7b90a78e6bca", false, "admin@example.com", "ADMIN" });
+                values: new object[] { "4713d681-15cc-44f2-bb72-0e40a4a2d26c", 0, "", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "d3f632d8-5c7c-4e95-a588-c4dd706ef88a", "admin@example.com", true, false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAENT3EacSm3rPs3AZoadTGLhA1vuNiBdiJ10ZurIv7JrsLVeAPK94N4EOtFYvHeHPrw==", null, false, null, "8b453f94-2951-4ca9-a6b8-072bd5dffcbe", false, "admin@example.com", "ADMIN" });
         }
 
         /// <inheritdoc />
@@ -28,12 +28,12 @@ namespace Hotel.org.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "d7820f2f-0a73-40e4-a6b5-97e2cb7e6f33");
+                keyValue: "4713d681-15cc-44f2-bb72-0e40a4a2d26c");
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "CardCV", "CardExpirationDate", "CardNumber", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfileImageFileName", "SecurityStamp", "TwoFactorEnabled", "UserName", "UserRole" },
-                values: new object[] { "42873ce2-7c1f-4d18-ac18-2e6e55782b1d", 0, "", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "5a537b7e-cec5-48ac-9391-9b2b42e932b8", "admin@example.com", true, false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEDASjfX56HWhCD64JCJUNrhwZAgBehIfHPkx9RdECLTN6LcVP/n2rH7akxSnYyHWsA==", null, false, null, "36f6d296-0ffc-4f94-93a7-7bb6012cf3cf", false, "admin@example.com", "ADMIN" });
+                values: new object[] { "f8970a4c-9b68-4024-9b12-00100408e0ad", 0, "", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "ce2f6935-42c8-4b57-9351-6f308b38fa6f", "admin@example.com", true, false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEDgJhrvIC/NRZjRYKCECoJly+dJgv6xXd88JtBUwL9Sc3NTXTFG3YuKB8zuy0ml6pA==", null, false, null, "7c78bcb7-6c0d-464c-bcfa-51c6f8204990", false, "admin@example.com", "ADMIN" });
         }
     }
 }

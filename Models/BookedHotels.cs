@@ -15,5 +15,9 @@ namespace Hotel.org.Models
 
         public string BookedHotelImage { get; set; }
 
+        public string UserId { get; set; }
+
+        public User user { get; set; }
+
     }
 }

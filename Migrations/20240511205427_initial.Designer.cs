@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240501073442_fixing")]
-    partial class fixing
+    [Migration("20240511205427_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,12 +37,22 @@ namespace Hotel.org.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BookedHotelImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("bookedHotels");
                 });
@@ -183,7 +193,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "98765",
-                            Rating = 4,
+                            Rating = 5,
                             RoomImage = "/Images/mountain_lodge.jpg",
                             RoomTypes = "Standard, Chalet, Cabin",
                             Wifi = true
@@ -209,7 +219,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "12345",
-                            Rating = 4,
+                            Rating = 2,
                             RoomImage = "/Images/city_center_hotel.jpg",
                             RoomTypes = "Standard, Executive, Suite",
                             Wifi = true
@@ -313,7 +323,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "97531",
-                            Rating = 4,
+                            Rating = 3,
                             RoomImage = "/Images/historic_inn.jpg",
                             RoomTypes = "Classic Room, Suite",
                             Wifi = true
@@ -339,7 +349,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "36984",
-                            Rating = 4,
+                            Rating = 1,
                             RoomImage = "/Images/ski_lodge.jpg",
                             RoomTypes = "Standard, Chalet",
                             Wifi = true
@@ -366,7 +376,7 @@ namespace Hotel.org.Migrations
                             Pool = true,
                             PostalCode = "75319",
                             Rating = 3,
-                            RoomImage = "desert_oasis.jpg",
+                            RoomImage = "/Images/desert_oasis.jpg",
                             RoomTypes = "Standard Tent, Deluxe Tent",
                             Wifi = false
                         },
@@ -391,11 +401,76 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "58204",
-                            Rating = 4,
-                            RoomImage = "lakefront_lodge.jpg",
+                            Rating = 2,
+                            RoomImage = "/Images/lakefront_lodge.jpg",
                             RoomTypes = "Standard, Lakeside Suite",
                             Wifi = true
                         });
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Reviews", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddedForHotel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stars")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("reviews");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Support", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Supports");
                 });
 
             modelBuilder.Entity("Hotel.org.Models.User", b =>
@@ -406,7 +481,15 @@ namespace Hotel.org.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("BookedHotelRooms")
+                    b.Property<string>("CardCV")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CardExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -443,6 +526,9 @@ namespace Hotel.org.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfileImageFileName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -452,6 +538,9 @@ namespace Hotel.org.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("UserRole")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -464,6 +553,28 @@ namespace Hotel.org.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "f8970a4c-9b68-4024-9b12-00100408e0ad",
+                            AccessFailedCount = 0,
+                            CardCV = "",
+                            CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CardNumber = "",
+                            ConcurrencyStamp = "ce2f6935-42c8-4b57-9351-6f308b38fa6f",
+                            Email = "admin@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDgJhrvIC/NRZjRYKCECoJly+dJgv6xXd88JtBUwL9Sc3NTXTFG3YuKB8zuy0ml6pA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7c78bcb7-6c0d-464c-bcfa-51c6f8204990",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@example.com",
+                            UserRole = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -607,7 +718,37 @@ namespace Hotel.org.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Hotel.org.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("hotel");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Reviews", b =>
+                {
+                    b.HasOne("Hotel.org.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Support", b =>
+                {
+                    b.HasOne("Hotel.org.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

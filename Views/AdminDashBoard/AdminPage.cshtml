@@ -1,9 +1,8 @@
 ﻿@using Hotel.org.Interface
 @inject IAdminService _adminservice;
-@inject IAccountService _accountService;
 
 @{
-    var LoggedInUser = await _accountService.GetLoggedInUserAsync();
+    var users = await _adminservice.GetUsers();
 }
 <div class="flex min-h-screen w-full flex-col mt-5">
    
@@ -46,7 +45,10 @@
                                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                             <div class="flex items-center gap-2">
                                                 <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
-                                                    <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + LoggedInUser.ProfileImageFileName)" />
+                                                   
+                                                        <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + item.user.ProfileImageFileName)" />
+                                                  
+                                                    
                                                 </span>
                                                 <div>
                                                     <div class="font-medium">@item.AddedBy.Substring(0, Math.Min(6, @item.AddedBy.Length))</div>
@@ -77,10 +79,13 @@
         @foreach (var review in await _adminservice.GetReviewsForEveryUser())
         {
             <div class="flex items-start gap-4">
-                <span class="relative flex shrink-0 overflow-hidden rounded-full h-10 w-10">
-                                <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + LoggedInUser.ProfileImageFileName)" />
+                            <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
+
+                                <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + review.user.ProfileImageFileName)" />
+
+
                             </span>
-                <div class="flex-1">
+                            <div class="flex-1">
                     <div class="flex items-center justify-between">
                         <div class="font-medium">@review.AddedBy</div>
                         <div class="flex items-center gap-1 text-xs font-semibold">
@@ -132,7 +137,10 @@
                                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                             <div class="flex items-center gap-2">
                                                 <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
-                                                    <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + LoggedInUser.ProfileImageFileName)" />
+
+                                                    <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + user.ProfileImageFileName)" />
+
+
                                                 </span>
                                                 <div class="font-medium">@user.UserName.Substring(0, Math.Min(6, @user.UserName.Length))...</div>
                                             </div>
@@ -206,10 +214,7 @@
                         </div>
                         <div class="p-6">
                             <div class="text-2xl font-bold">
-                                @{
-                                    var users = await _adminservice.GetUsers();
-
-                                }
+                            
                                 @users.Count()
                                 <div>
                         </div>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240505133553_bbbbb")]
-    partial class bbbbb
+    [Migration("20240511210009_djadhjawd")]
+    partial class djadhjawd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,9 +44,15 @@ namespace Hotel.org.Migrations
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("bookedHotels");
                 });
@@ -187,7 +193,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "98765",
-                            Rating = 4,
+                            Rating = 5,
                             RoomImage = "/Images/mountain_lodge.jpg",
                             RoomTypes = "Standard, Chalet, Cabin",
                             Wifi = true
@@ -213,7 +219,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "12345",
-                            Rating = 4,
+                            Rating = 2,
                             RoomImage = "/Images/city_center_hotel.jpg",
                             RoomTypes = "Standard, Executive, Suite",
                             Wifi = true
@@ -317,7 +323,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "97531",
-                            Rating = 4,
+                            Rating = 3,
                             RoomImage = "/Images/historic_inn.jpg",
                             RoomTypes = "Classic Room, Suite",
                             Wifi = true
@@ -343,7 +349,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "36984",
-                            Rating = 4,
+                            Rating = 1,
                             RoomImage = "/Images/ski_lodge.jpg",
                             RoomTypes = "Standard, Chalet",
                             Wifi = true
@@ -395,7 +401,7 @@ namespace Hotel.org.Migrations
                             Parking = true,
                             Pool = false,
                             PostalCode = "58204",
-                            Rating = 4,
+                            Rating = 2,
                             RoomImage = "/Images/lakefront_lodge.jpg",
                             RoomTypes = "Standard, Lakeside Suite",
                             Wifi = true
@@ -425,9 +431,46 @@ namespace Hotel.org.Migrations
                     b.Property<int>("Stars")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("reviews");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Support", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Supports");
                 });
 
             modelBuilder.Entity("Hotel.org.Models.User", b =>
@@ -483,6 +526,9 @@ namespace Hotel.org.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfileImageFileName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -492,6 +538,9 @@ namespace Hotel.org.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("UserRole")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -504,6 +553,28 @@ namespace Hotel.org.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4713d681-15cc-44f2-bb72-0e40a4a2d26c",
+                            AccessFailedCount = 0,
+                            CardCV = "",
+                            CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CardNumber = "",
+                            ConcurrencyStamp = "d3f632d8-5c7c-4e95-a588-c4dd706ef88a",
+                            Email = "admin@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENT3EacSm3rPs3AZoadTGLhA1vuNiBdiJ10ZurIv7JrsLVeAPK94N4EOtFYvHeHPrw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "8b453f94-2951-4ca9-a6b8-072bd5dffcbe",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@example.com",
+                            UserRole = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -647,7 +718,37 @@ namespace Hotel.org.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Hotel.org.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("hotel");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Reviews", b =>
+                {
+                    b.HasOne("Hotel.org.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Support", b =>
+                {
+                    b.HasOne("Hotel.org.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

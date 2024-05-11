@@ -49,6 +49,8 @@ namespace Hotel.org.Service
                 HotelId = foundHotel.Id,
                 hotel = foundHotel,
                 BookedHotelImage = foundHotel.RoomImage,
+                user = user,
+                UserId = user.Id
             };
 
             await _appDbContext.bookedHotels.AddAsync(bookedHotel);
@@ -252,7 +254,9 @@ namespace Hotel.org.Service
                 AddedBy = user.UserName,
                 Comment = reviews.Comment,
                 Stars = reviews.Stars,
-                AddedForHotel = reviews.AddedForHotel
+                AddedForHotel = reviews.AddedForHotel,
+                user = user,
+                UserId = user.Id
 
 
             };
