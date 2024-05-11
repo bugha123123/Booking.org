@@ -64,18 +64,20 @@ namespace Hotel.org.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> AllHotelsPage(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast)
+        public async Task<IActionResult> AllHotelsPage(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast, int rating, int numberOfRooms)
         {
-            // If no price range is provided, set default values to show all hotels
-            if (minPrice == null && maxPrice == null)
+            // If no filters are provided, return all hotels without applying any filters
+            if (minPrice == null && maxPrice == null && hasGym == null && hasPool == null && hasBreakfast == null && rating == 0 && numberOfRooms == 0)
             {
                 return View(await _hotelService.GetAllHotelsForDropDown());
             }
 
-            var filteredHotels = await _hotelService.GetFilteredHotelsByPrice(minPrice, maxPrice, hasGym, hasPool, hasBreakfast);
+            // Otherwise, apply the provided filters
+            var filteredHotels = await _hotelService.GetFilteredHotelsByPrice(minPrice, maxPrice, hasGym, hasPool, hasBreakfast, rating, numberOfRooms);
             return View(filteredHotels);
         }
-        //books hotel
+
+
         [HttpPost("bookhotel")]
         public async Task<IActionResult> BookHotel(int HotelId, string cardNumber, string cvc)
         {

@@ -200,17 +200,17 @@ namespace Hotel.org.Service
 
         //filters hotel on search page
 
-        public async Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast)
+        public async Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast, int rating, int numberOfRooms)
         {
             IQueryable<Hotels> query = _appDbContext.Hotels.AsQueryable();
 
             // Filter hotels by price range if provided
-            if (minPrice != 0 && maxPrice != 0)
+            if (minPrice != null && maxPrice != null)
             {
                 query = query.Where(h => h.AveragePricePerNight >= minPrice && h.AveragePricePerNight <= maxPrice);
             }
 
-            // Filter hotels by amenities
+            // Filter hotels by amenities if provided
             if (hasGym != null)
             {
                 query = query.Where(h => h.Gym == hasGym);
@@ -224,10 +224,23 @@ namespace Hotel.org.Service
                 query = query.Where(h => h.Breakfast == hasBreakfast);
             }
 
+            // Filter hotels by rating if provided
+            if (rating != 0)
+            {
+                query = query.Where(h => h.Rating == rating);
+            }
+
+            // Filter hotels by number of rooms if provided
+            if (numberOfRooms != 0)
+            {
+                query = query.Where(h => h.NumberOfRooms == numberOfRooms);
+            }
+
             return await query.ToListAsync();
         }
 
-      
+
+
 
         // adds review for hotel 
         public async Task AddReviewForHotel(Reviews reviews)

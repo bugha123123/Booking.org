@@ -52,7 +52,7 @@ namespace Hotel.org.Interface
 
 
         //filters hotels by prices
-        Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast);
+        Task<List<Hotels>> GetFilteredHotelsByPrice(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast, int rating, int numberOfRooms);
 
 
         // Checks if the provided card number and cvc match the user's stored values

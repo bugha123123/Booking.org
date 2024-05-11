@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240511201730_asbgdhawd")]
+    partial class asbgdhawd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -435,15 +438,15 @@ namespace Hotel.org.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AddedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -542,20 +545,20 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1676a73d-b7a9-4df9-8988-695558455696",
+                            Id = "d7820f2f-0a73-40e4-a6b5-97e2cb7e6f33",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "a4f9d083-d5a3-4911-9c84-62f7a86335f2",
+                            ConcurrencyStamp = "cd6b272a-ff92-455d-8f6c-bbf54cc6a8b7",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG/L6AMqJknIBwgZhEP46UxtcxGktZqY+T7LixREF8i28QB6tRaJSEg0kKqqoazXaQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK7JM5wsDLLevl77tQ5cTMbPgKIFb+syiRpekcM7P21IjY0OOOrjdr/+U/WMUrlGXw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6171ae19-7ffd-40c2-ac2a-dc54a0575ffc",
+                            SecurityStamp = "7686e5cb-8abe-400a-b999-7b90a78e6bca",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN"

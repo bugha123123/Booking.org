@@ -38,6 +38,34 @@
                                 <input type="checkbox" id="amenity-breakfast" name="hasBreakfast" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
                                 <label class="text-sm leading-none font-normal" for="amenity-breakfast">Breakfast</label>
                             </div>
+                            <div class="flex items-center gap-2">
+                                <label class="text-sm leading-none font-normal" for="rating">Rating:</label>
+                                <select id="rating" name="rating" class="peer h-8 w-16 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                    <option value=""></option>
+
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <label class="text-sm leading-none font-normal" for="numberOfRooms">Number of Rooms:</label>
+                                <select id="numberOfRooms" name="numberOfRooms" class="peer h-8 w-16 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                    <!-- You can adjust the range as needed -->
+                                    <option value=""></option>
+
+                                    @for (int i = 1; i <= 120; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+
+
+                                </select>
+                            </div>
+
                         </div>
                     </div>
 

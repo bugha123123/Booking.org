@@ -29,34 +29,7 @@
                 <input name="checkInTime" type="time" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mb-2 md:mb-0 md:mr-2" placeholder="Check In Time" />
                 <input name="checkOutTime" type="time" class="form-control rounded-md bg-background px-3 py-2 text-sm placeholder-muted mb-2 md:mb-0 md:mr-2" placeholder="Check Out Time" />
 
-                <div class="dropdown mb-2 md:mb-0">
-                    <button class="btn btn-secondary dropdown-toggle bg-white border border-gray-300 px-4 py-2 rounded-md text-sm" type="button" id="dropdownAdults" data-bs-toggle="dropdown" aria-expanded="false">
-                        Adults
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownAdults">
-                        @foreach (var value in Enum.GetValues(typeof(NumberOfAdultsEnum)))
-                        {
-                            <li>
-                                <input class="dropdown-item" name="AdultsCount" type="radio" value="@value" id="@($"adult_{value}")" onclick="updateDropdownText('dropdownAdults', '@value')" />
-                                <label for="@($"adult_{value}")">@value</label>
-                            </li>
-                        }
-                    </ul>
-                </div>
-                <div class="dropdown ml-2">
-                    <button class="btn btn-secondary dropdown-toggle bg-white border border-gray-300 px-4 py-2 rounded-md text-sm" type="button" id="dropdownChildren" data-bs-toggle="dropdown" aria-expanded="false">
-                        Children
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownChildren">
-                        @foreach (var value in Enum.GetValues(typeof(NumberOfChildrenEnum)))
-                        {
-                            <li>
-                                <input class="dropdown-item" name="ChildrenCount" type="radio" value="@value" id="@($"child_{value}")" />
-                                <label for="@($"child_{value}")">@value</label>
-                            </li>
-                        }
-                    </ul>
-                </div>
+           
                 @if (User.Identity.IsAuthenticated)
                 {
                     <button type="submit" class="btn btn-primary bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm ml-2">Search</button>
