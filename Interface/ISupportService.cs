@@ -6,5 +6,9 @@ namespace Hotel.org.Interface
     {
 
         Task AddSupportMessage(Support support);
+
+
+        //gets support list for logged in user
+        Task<List<Support>> GetSupportList();
     }
 }

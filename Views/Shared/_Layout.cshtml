@@ -52,7 +52,12 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-action="ReviewPage" asp-controller="Hotel">Add Review</a>
                     </li>
-                  
+                  @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="SupportListPage" asp-controller="Home">Support Messages</a>
+                        </li>
+                    }
                     @if (user != null && user.UserRole == "ADMIN")
                     {
                             <li class="nav-item">

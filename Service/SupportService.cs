@@ -1,6 +1,7 @@
 ﻿using Hotel.org.ApplicationDBContext;
 using Hotel.org.Interface;
 using Hotel.org.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hotel.org.Service
 {
@@ -35,6 +36,19 @@ namespace Hotel.org.Service
                 await _appDbContext.Supports.AddAsync(SupportMessage);
                 await _appDbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<Support>> GetSupportList()
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+
+            if (user == null)
+            {
+                return null;
+            };
+
+            var SupportList = await _appDbContext.Supports.Where(u => u.AddedBy == user.Email).ToListAsync();
+            return SupportList;
         }
     }
 }

@@ -25,6 +25,11 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> SupportListPage()
+        {
+            var SupportList = await _supportService.GetSupportList();
+            return View(SupportList);
+        }
 
 
         [HttpPost("savesupportmessage")]

@@ -22,5 +22,7 @@ namespace Hotel.org.Models
         public string? ProfileImageFileName { get; set; }
 
         public string? UserRole { get; set; } = "USER";
+
+      
     }
 }
