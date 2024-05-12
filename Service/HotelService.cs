@@ -271,7 +271,7 @@ namespace Hotel.org.Service
         {
             var FoundeHotel = await GetHotelById(HotelId);
 
-            var foundReviews = await _appDbContext.reviews.Where(r => r.AddedForHotel == FoundeHotel.Name).ToListAsync();
+            var foundReviews = await _appDbContext.reviews.Include(u => u.user).Where(r => r.AddedForHotel == FoundeHotel.Name).ToListAsync();
 
             return foundReviews;
 

@@ -230,14 +230,10 @@
                                     {
                                         <div class="grid gap-2">
                                             <div class="flex items-center gap-2 text-sm font-semibold">
-                                                @if (!string.IsNullOrEmpty(LoggedInUser.ProfileImageFileName))
-                                                {
-                                                    <img src="@Url.Content("~/ProfileImage/" + LoggedInUser.ProfileImageFileName)" alt="User Image" class="rounded-full h-8 w-8">
-                                                }
-                                                else
-                                                {
-                                                    <i class="bi bi-person"></i>
-                                                }
+                                              
+                                                    <img src="@Url.Content("~/ProfileImage/" + review.user.ProfileImageFileName)" alt="User Image" class="rounded-full h-8 w-8">
+                                               
+                                             
                                                 <span>@review.AddedBy</span>
                                             </div>
                                             <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
