@@ -10,5 +10,15 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
+
+        public IActionResult AllUserReviewsPage()
+        {
+            return View();
+        }
+
+        public IActionResult AllUserDataPage()
+        {
+            return View();
+        }
     }
 }

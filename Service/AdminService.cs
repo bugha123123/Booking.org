@@ -8,12 +8,28 @@ namespace Hotel.org.Service
     public class AdminService : IAdminService
     {
         private readonly AppDbContext _appDbContext;
-
-        public AdminService(AppDbContext appDbContext)
+        private readonly IAccountService _accountService;
+        public AdminService(AppDbContext appDbContext, IAccountService accountService)
         {
             _appDbContext = appDbContext;
+            _accountService = accountService;
         }
 
+        public async Task<List<Reviews>> GetAllReviewsForEveryUser()
+        {
+            return await _appDbContext.reviews
+                .Include(bh => bh.user).ToListAsync();
+
+
+
+        }
+        public async Task<List<User>> GetUserDataForEveryUser()
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+            return await _appDbContext.Users.Where(u => u.Email != user.Email).ToListAsync();
+
+
+        }
 
 
         //gets 3 hotels for admin
@@ -34,7 +50,8 @@ namespace Hotel.org.Service
 
         public async Task<List<User>> GetUsers()
         {
-            return await _appDbContext.Users.Take(3).Where(u => u.Email != "admin@example.com").ToListAsync();
+            var user = await _accountService.GetLoggedInUserAsync();
+            return await _appDbContext.Users.Take(3).Where(u => u.Email != user.Email).ToListAsync();
         }
     }
 }

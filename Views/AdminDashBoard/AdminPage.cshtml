@@ -72,7 +72,7 @@
     <div class="flex items-center justify-between">
         <h2 class="text-xl font-bold">User Reviews</h2>
         <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-            View All
+                        <a asp-action="AllUserReviewsPage" asp-controller="AdminDashBoard">View All</a>
         </button>
     </div>
     <div class="mt-4 grid gap-4">
@@ -89,12 +89,7 @@
                     <div class="flex items-center justify-between">
                         <div class="font-medium">@review.AddedBy</div>
                         <div class="flex items-center gap-1 text-xs font-semibold">
-                            @foreach (var star in Enumerable.Range(1, 5))
-                            {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                </svg>
-                            }
+                          <button class="btn btn-danger">Delete</button>
                         </div>
                     </div>
                     <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">@review.Comment</p>
@@ -108,7 +103,7 @@
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl font-bold">User Data</h2>
                     <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-                        View All
+                        <a asp-action="AllUserDataPage" asp-controller="AdminDashBoard">View All</a>
                     </button>
                 </div>
                 <div class="mt-4 overflow-auto">
@@ -163,8 +158,8 @@
                         View All
                     </button>
                 </div>
-                <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" >
                         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                             <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Bookings</h3>
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -185,18 +180,18 @@
                             <div class="text-2xl font-bold">
                                 
                                 @{
-                                    var bookedhotels =  
-                                        await _adminservice.GetBookedHotelsForEveryUser();
+                                    var bookedhotels = await _adminservice.GetBookedHotelsForEveryUser();
+                                        
                                     }
                             @bookedhotels.Count()
                             
                             </div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{Show financialy situtation }</p>
                         </div>
                     </div>
                  
                  
-                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                             <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Active Users</h3>
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -219,8 +214,40 @@
                                 <div>
                         </div>
                     </div>
+                    </div>
+
                 </div>
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" >
+                        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Submited Reviews</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-4 h-4 text-gray-500 dark:text-gray-400">
+                                <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-2xl font-bold">
+
+                                @{
+                                    var reviews = await _adminservice.GetAllReviewsForEveryUser();
+
+                                }
+                                @reviews.Count()
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
             </section>
+
         </div>
     </main>
 </div>

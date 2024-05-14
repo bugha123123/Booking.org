@@ -8,12 +8,21 @@ namespace Hotel.org.Interface
         Task<List<BookedHotels>> GetBookedHotelsForEveryUser();
 
 
-        //gets reviews for user
+        //gets 3  reviews for user
         Task<List<Reviews>> GetReviewsForEveryUser();
+
+
+        //gets all revies by user
+
+        Task<List<Reviews>> GetAllReviewsForEveryUser();
+
+        //gets 3 users
+
+        Task<List<User>> GetUsers();
 
 
         //gets all users
 
-        Task<List<User>> GetUsers();
+        Task<List<User>> GetUserDataForEveryUser();
     }
 }

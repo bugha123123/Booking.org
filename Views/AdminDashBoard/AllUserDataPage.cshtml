@@ -1,0 +1,54 @@
+﻿@using Hotel.org.Interface
+@inject IAdminService _adminservice;
+
+
+<section class="mt-5">
+    <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold">User Data</h2>
+  
+    </div>
+    <div class="mt-4 overflow-auto">
+        <div class="relative w-full overflow-auto">
+            <table class="w-full caption-bottom text-sm">
+                <thead class="[&amp;_tr]:border-b">
+                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Name
+                        </th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Email
+                        </th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Card number
+                        </th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Joined
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="[&amp;_tr:last-child]:border-0">
+                    @foreach (var user in await _adminservice.GetUserDataForEveryUser())
+                    {
+                        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                <div class="flex items-center gap-2">
+                                    <span class="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
+
+                                        <img class="aspect-square h-full w-full" src="@Url.Content("~/ProfileImage/" + user.ProfileImageFileName)" />
+
+
+                                    </span>
+                                    <div class="font-medium">@user.UserName.Substring(0, Math.Min(6, @user.UserName.Length))...</div>
+                                </div>
+                            </td>
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">@user.Email</td>
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">@user.CardNumber</td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

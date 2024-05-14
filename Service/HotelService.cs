@@ -256,7 +256,8 @@ namespace Hotel.org.Service
                 Stars = reviews.Stars,
                 AddedForHotel = reviews.AddedForHotel,
                 user = user,
-                UserId = user.Id
+                UserId = user.Id,
+                
 
 
             };

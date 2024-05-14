@@ -26,7 +26,7 @@ namespace Hotel.org.Models
 
         public string AddedForHotel { get; set; }
 
-    
+      
 
         public User user { get; set; }
 
