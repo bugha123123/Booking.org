@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240514190828_addingfavouritesz")]
+    partial class addingfavouritesz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,15 +166,10 @@ namespace Hotel.org.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Wifi")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Hotels");
 
@@ -587,20 +585,20 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d5d63206-d433-4469-80ca-29204093b3a8",
+                            Id = "70ab6754-3d2e-4cb5-9c4c-6cf10565e8c8",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "367a0c02-66e5-42eb-907a-74fb3dacd081",
+                            ConcurrencyStamp = "f83d39d5-4fda-4c94-96d5-e99d5f1bcf92",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENZ5iImOv/3moUB7nuMZO9qzFmhJOVXTdcGoh36nPBgY7avKqv3p/0NSjOozAVjwCA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKwERdgnDguxxRk+qSK/WZh4R7t6wGWgQz92XHlF9yQYjLs6PHVBHsvuYVoYADeLRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "78f8f17d-7548-493f-b197-0c9a43c94384",
+                            SecurityStamp = "bed1aa8b-2b70-44bd-b3a8-cd06475602f4",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN"
@@ -774,15 +772,6 @@ namespace Hotel.org.Migrations
                         .IsRequired();
 
                     b.Navigation("hotel");
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("Hotel.org.Models.Hotels", b =>
-                {
-                    b.HasOne("Hotel.org.Models.User", "user")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.Navigation("user");
                 });

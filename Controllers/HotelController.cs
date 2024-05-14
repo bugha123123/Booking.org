@@ -63,6 +63,13 @@ namespace Hotel.org.Controllers
             return View();
         }
 
+        public async Task<IActionResult> FavouritedHotelsPage()
+        {
+            var favouritedHotels = await _hotelService.GetFavouriteHotelsForUser();
+            return View(favouritedHotels);
+        }
+
+
         [Authorize]
         public async Task<IActionResult> AllHotelsPage(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast, int rating, int numberOfRooms)
         {
@@ -145,6 +152,23 @@ namespace Hotel.org.Controllers
        
         }
 
+
+        [HttpPost("addhoteltofavourites")]
+
+        public async Task<IActionResult> AddHotelToFavorites(int HotelId)
+        {
+            try
+            {
+                await _hotelService.AddHotelToFavourites(HotelId);
+                return RedirectToAction("FavouritedHotelsPage", "Hotel");
+            }
+            catch (Exception)
+            {
+
+                ViewData["HotelAlreadyBooked"] = "You have already booked this hotel";
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
 
     }

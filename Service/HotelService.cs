@@ -86,7 +86,7 @@ namespace Hotel.org.Service
         //takes 8 hotels and returns them 
         public async Task<List<Hotels>> GetHotelsAsync()
         {
-        return    await _appDbContext.Hotels.Take(10).ToListAsync(); 
+        return    await _appDbContext.Hotels.Include(u => u.user).Take(10).ToListAsync(); 
         }
 
         //searches for hotel using query
@@ -281,6 +281,63 @@ namespace Hotel.org.Service
         public async Task<List<Hotels>> GetHotelsByRating()
         {
            return await _appDbContext.Hotels.Where(x => x.Rating >= 4).ToListAsync();
+        }
+
+        public async Task AddHotelToFavourites(int HotelId)
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+            var FoundHotel = await GetHotelById(HotelId);
+            if (user != null && FoundHotel != null )
+            {
+
+                if (await IsHotelAlreadyFavouritedByUser(user,FoundHotel))
+                {
+                    throw new Exception("hotel already booked.");
+                }
+                var FavaouritedHotel = new Favourites()
+                {
+                    FavoutiredHotelName = FoundHotel.Name,
+                    hotel = FoundHotel,
+                    HotelId = FoundHotel.Id,
+                    user = user,
+                    UserId = user.Id
+
+
+                };
+
+                await _appDbContext.Favourites.AddAsync(FavaouritedHotel);
+                await _appDbContext.SaveChangesAsync();
+            }
+
+        }
+
+        public async Task<bool> IsHotelAlreadyFavouritedByUser(User user, Hotels hotel)
+        {
+            if (user == null || hotel == null)
+            {
+                // Handle the case where either user or hotel is null
+                return false;
+            }
+
+            var ExistingFavouritedHotel = await _appDbContext.Favourites
+                .Include(fh => fh.user)
+                .FirstOrDefaultAsync(fh => fh.user.Email == user.Email && fh.hotel.Name == hotel.Name);
+
+            if (ExistingFavouritedHotel == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<List<Favourites>> GetFavouriteHotelsForUser()
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+
+            var favouritedHotel = await _appDbContext.Favourites.Include(x => x.hotel).Include(x => x.user).Where(u => u.UserId == user.Id).ToListAsync();
+
+                return favouritedHotel;
         }
     }
 }

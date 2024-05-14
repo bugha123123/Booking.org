@@ -14,6 +14,8 @@ namespace Hotel.org.ApplicationDBContext
         public DbSet<Reviews> reviews { get; set; }
 
         public DbSet<Support> Supports { get; set; }
+
+        public DbSet<Favourites> Favourites { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

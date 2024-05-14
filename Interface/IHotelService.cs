@@ -69,6 +69,20 @@ namespace Hotel.org.Interface
 
         //gets top hotels by rating
 
-        Task<List<Hotels>> GetHotelsByRating();   
+        Task<List<Hotels>> GetHotelsByRating();
+
+
+        //adds hotel to favourites for particular user
+
+        Task AddHotelToFavourites(int HotelId);
+
+        Task<bool> IsHotelAlreadyFavouritedByUser(User user, Hotels hotel);
+
+        Task<List<Favourites>> GetFavouriteHotelsForUser();
+
+        //////////////////
+       
+
+
     }
 }

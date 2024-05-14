@@ -119,5 +119,9 @@ namespace Hotel.org.Models
 
         [Display(Name = "Description")]
         public string Description { get; set; }
+
+        public User? user  { get; set; }
+
+        public string? UserId { get; set; }
     }
 }

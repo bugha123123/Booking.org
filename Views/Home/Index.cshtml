@@ -1,8 +1,10 @@
 ﻿@using Hotel.org.Interface
 @using static Hotel.org.Models.Hotels
 @inject IHotelService _hotelservice;
+@inject IAccountService _accountService;
 @{
     ViewData["Title"] = "Home Page";
+    var user = await  _accountService.GetLoggedInUserAsync();
 }
 
 
@@ -49,24 +51,35 @@
             @foreach (var hotel in await _hotelservice.GetHotelsAsync())
             {
                 <div class="flex flex-col">
-                    <a asp-action="HotelDetailsPage" asp-route-HotelId="@hotel.Id" asp-controller="Hotel">
-                        <div class="card mb-5" style="width: 288px;">
+                    <div class="card mb-5" style="width: 288px;">
+                        <a asp-action="HotelDetailsPage" asp-route-HotelId="@hotel.Id" asp-controller="Hotel">
                             <div class="relative h-48 overflow-hidden rounded-t-md">
                                 <img src="@hotel.RoomImage" class="w-full h-full object-cover" alt="@hotel.Name" />
                                 <span class="absolute bottom-0 right-0 p-2 bg-gradient text-white rounded-l-md border">@hotel.Rating</span>
                             </div>
-                            <div class="p-4">
-                                <h5 class="card-title text-black text-xl font-semibold mb-2">@hotel.City</h5>
-                                <p>
-                                    <strong class="text-danger">From @hotel.CheckInTime.ToString("hh\\:mm") - to @hotel.CheckOutTime.ToString("hh\\:mm")</strong>
-                                </p>
-                                <p class="text-gray-600 mb-2 truncate">@hotel.Description</p>
-                            </div>
+                        </a>
+                        <div class="p-4">
+                            <h5 class="card-title text-black text-xl font-semibold mb-2">@hotel.City</h5>
+                            <p>
+                                <strong class="text-danger">From @hotel.CheckInTime.ToString("hh\\:mm") - to @hotel.CheckOutTime.ToString("hh\\:mm")</strong>
+                            </p>
+                            <p class="text-gray-600 mb-2 truncate">@hotel.Description</p>
+                            <!-- Add to favorites button -->
+                            
+                            @if (!await _hotelservice.IsHotelAlreadyFavouritedByUser(user, hotel))
+                            {
+                                <form asp-action="AddHotelToFavorites" asp-route-HotelId="@hotel.Id" asp-controller="Hotel" method="post">
+                                    <button type="submit" class="btn btn-primary">Add to favourites</button>
+                                </form>
+                            }else{
+                                <a asp-action="FavouritedHotelsPage" asp-controller="Hotel"><button  class="btn btn-primary"> Favourited</button></a>
+                            }
                         </div>
-                    </a>
+                    </div>
                 </div>
             }
         </div>
+
     </div>
     <div class="container mt-5">
         <h3 class="text-black mb-5 text-2xl font-bold">Top Hotels: </h3>
