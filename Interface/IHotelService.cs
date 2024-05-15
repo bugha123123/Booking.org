@@ -80,9 +80,13 @@ namespace Hotel.org.Interface
 
         Task<List<Favourites>> GetFavouriteHotelsForUser();
 
-        //////////////////
-       
+        Task RemoveHotelFromFavourites(int HotelId);
 
+        //////////////////
+
+        //gets most expensive hotels
+
+        Task<List<Hotels>> GetExpensiveHotels();
 
     }
 }

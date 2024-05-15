@@ -31,7 +31,10 @@ namespace Hotel.org.Controllers
             return View(SupportList);
         }
 
-
+        public IActionResult Flight()
+        {
+            return View();
+        }
         [HttpPost("savesupportmessage")]
 
         public async Task<IActionResult> SaveSupportMessage(Support support)

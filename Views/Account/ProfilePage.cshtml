@@ -10,6 +10,7 @@
 <h1 class="text-center  text-dark font-monospace mt-5">Welcome @user.UserName!</h1>
 
 <div class="container mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 flex">
+
     <form id="currentForm" asp-action="SaveUserCardDetails" asp-controller="Account" method="post">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div>
@@ -167,6 +168,7 @@
             <button type="submit" class="btn btn-dark mt-3">Save</button>
         </div>
     </form>
+
 </div>
 
 <script>

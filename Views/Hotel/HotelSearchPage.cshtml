@@ -2,42 +2,9 @@
 @inject IHotelService _hotelservice;
 
 <section class="container-fluid flex flex-col md:flex-row gap-4 p-6 md:p-10">
-    <div class="md:w-1/3">
-        <div class="space-y-6">
-            <div class="grid gap-4">
-                <h2 class="text-2xl font-bold">Filters</h2>
-                <div class="form-group">
-                    <label>Amenities:</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="wifiCheckbox" name="amenities" value="wifi">
-                        <label class="form-check-label" for="wifiCheckbox">Wifi</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="parkingCheckbox" name="amenities" value="parking">
-                        <label class="form-check-label" for="parkingCheckbox">Parking</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="breakfastCheckbox" name="amenities" value="breakfast">
-                        <label class="form-check-label" for="breakfastCheckbox">Breakfast</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gymCheckbox" name="amenities" value="gym">
-                        <label class="form-check-label" for="gymCheckbox">Gym</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="poolCheckbox" name="amenities" value="pool">
-                        <label class="form-check-label" for="poolCheckbox">Pool</label>
-                    </div>
-                </div>
-            </div>
 
-            <div class=" flex justify-center">
-                <button class="btn btn-primary">
-                    Clear Filters
-                </button>
-            </div>
-        </div>
-    </div>
+    <div id="map" style="height: 400px;"></div>
+
     <div class="md:w-2/3">
         <div class="grid gap-6">
             <div class="d-flex justify-between align-items-center">
@@ -83,7 +50,7 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="text-2xl font-bold">@hotel.AveragePricePerNight/night</div>
 
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-primary mt-2"
                                                 >
                                                     @if (await _hotelservice.IsHotelBookedAsync(hotel.Id))
                                                     {
@@ -124,3 +91,5 @@
     </div>
 
 </section>
+
+

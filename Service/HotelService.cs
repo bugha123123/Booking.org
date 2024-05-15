@@ -11,6 +11,7 @@ namespace Hotel.org.Service
 
         private readonly AppDbContext _appDbContext;
         private readonly IAccountService _accountService;
+        private int MIN_PRICE = 250;
         public HotelService(AppDbContext appDbContext, IAccountService accountService)
         {
             _appDbContext = appDbContext;
@@ -338,6 +339,29 @@ namespace Hotel.org.Service
             var favouritedHotel = await _appDbContext.Favourites.Include(x => x.hotel).Include(x => x.user).Where(u => u.UserId == user.Id).ToListAsync();
 
                 return favouritedHotel;
+        }
+
+        public async Task RemoveHotelFromFavourites(int HotelId)
+        {
+            var foundHotel =await  GetHotelById(HotelId);
+            var user = await _accountService.GetLoggedInUserAsync();
+            var HotelToRemove = await _appDbContext.Favourites.FirstOrDefaultAsync(f => f.hotel.Id == foundHotel.Id && f.user.Id == user.Id);
+
+            if (HotelToRemove == null)
+            {
+                return;
+            }
+
+            _appDbContext.Favourites.Remove(HotelToRemove);
+          await  _appDbContext.SaveChangesAsync();
+
+        }
+
+        public async Task<List<Hotels>> GetExpensiveHotels()
+        {
+            var ExpensiveHotels = await _appDbContext.Hotels.Where(h => h.AveragePricePerNight > MIN_PRICE).ToListAsync();
+
+            return ExpensiveHotels;
         }
     }
 }

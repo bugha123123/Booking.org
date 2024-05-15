@@ -24,6 +24,7 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
+       
         [Authorize]
         public async Task<IActionResult> CheckOutPage(int HotelId)
         {
@@ -170,6 +171,16 @@ namespace Hotel.org.Controllers
             }
         }
 
+
+        [HttpPost("removehotelfromfavourites")]
+
+        public async Task<IActionResult> RemoveHotelFromFavorites(int HotelId)
+        {
+           
+                await _hotelService.RemoveHotelFromFavourites(HotelId);
+                return RedirectToAction("FavouritedHotelsPage", "Hotel");
+       
+        }
 
     }
 }
