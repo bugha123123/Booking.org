@@ -16,5 +16,8 @@
 
         public int HotelId { get; set; } 
         public Hotels Hotel { get; set; }
+
+        public string? UserId { get; set; }
+        public User? User { get; set; }
     }
 }

@@ -10,5 +10,8 @@ namespace Hotel.org.Interface
 
         // used for searching flights on main flights page
         Task<List<Flights>> SearchForFlight(string? departureLocation, string? destination, string? departureTime, string? arrivalTime);
+
+
+        Task<List<Flights>> GetFlightsAsync();
     }
 }

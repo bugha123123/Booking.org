@@ -84,22 +84,22 @@
     </div>
 
         <!-- Explore Flights Section -->
-      @*   <div class="container mt-5">
+         <div class="container mt-5">
             <h1 class="text-black mb-5 text-xl font-bold">Explore Flights to Popular Destinations</h1>
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                @foreach (var flight in await _flightService.GetPopularFlightsAsync())
+                @foreach (var flight in await _flightService.GetFlightsAsync())
                 {
                     <div class="flex flex-col bg-white shadow-md rounded-lg overflow-hidden">
                         <a asp-action="FlightDetailsPage" asp-route-flightId="@flight.Id" asp-controller="Flight">
                             <div class="relative h-48 overflow-hidden">
-                                <img src="@flight.Image" class="w-full h-full object-cover" alt="@flight.Destination">
+                                <img src="@flight.Image" class="w-full h-full object-cover" alt="@flight.To">
                                 <span class="absolute top-0 right-0 p-2 bg-gradient-to-l from-transparent to-white text-black rounded-tl-md">@flight.Price.ToString("C")</span>
                             </div>
                         </a>
                         <div class="p-4">
-                            <h5 class="text-black text-xl font-semibold mb-2">@flight.Destination</h5>
+                            <h5 class="text-black text-xl font-semibold mb-2">@flight.To</h5>
                             <p class="text-gray-600 mb-2 truncate">@flight.Description</p>
-                            @if (!await _flightService.IsFlightFavouritedByUser(user, flight))
+                          @*   @if (!await _flightService.IsFlightFavouritedByUser(user, flight))
                             {
                                 <form asp-action="AddFlightToFavorites" asp-route-flightId="@flight.Id" asp-controller="Flight" method="post">
                                     <button type="submit" class="btn btn-dark">Add to Favourites</button>
@@ -108,14 +108,14 @@
                             else
                             {
                                 <a asp-action="FavouritedFlightsPage" asp-controller="Flight"><button class="btn btn-primary">Favourited</button></a>
-                            }
+                            } *@
                         </div>
                     </div>
                 }
             </div>
         </div>
 
-        <!-- Top Rated Flights Section -->
+      @*    <!-- Top Rated Flights Section -->
         <div class="container mt-5">
             <h3 class="text-black mb-5 text-2xl font-bold">Top Rated Flights</h3>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -186,5 +186,5 @@
         <div class="container mx-auto px-4 text-center">
             &copy; 2024 Flight Booking. All rights reserved.
         </div>
-    </footer>
- *@
+    </footer> *@
+ 

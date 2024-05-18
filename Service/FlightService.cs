@@ -20,6 +20,10 @@ namespace Hotel.org.Service
                 
         }
 
+        public async Task<List<Flights>> GetFlightsAsync()
+        {
+            return await _appDbContext.Flights.Include(u => u.Hotel).Include(x => x.User).Take(8).ToListAsync();
+        }
 
         public async Task<List<Flights>> SearchForFlight(string? departureLocation, string? destination, string? departureTime, string? arrivalTime)
         {
