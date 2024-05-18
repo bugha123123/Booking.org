@@ -1,4 +1,5 @@
-﻿using Hotel.org.HotelSeedData;
+﻿using Hotel.org.FlightSeedDATA;
+using Hotel.org.HotelSeedData;
 using Hotel.org.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,6 +17,8 @@ namespace Hotel.org.ApplicationDBContext
         public DbSet<Support> Supports { get; set; }
 
         public DbSet<Favourites> Favourites { get; set; }
+
+        public DbSet<Flights> Flights { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -27,16 +30,17 @@ namespace Hotel.org.ApplicationDBContext
             
             modelBuilder.ApplyConfiguration(new HotelData());
 
+            modelBuilder.ApplyConfiguration(new FlightSeedData());
 
             modelBuilder.Entity<User>().HasData(
         new User
         {
             
-            UserName = "admin@example.com", // Set the username
-            NormalizedUserName = "ADMIN@EXAMPLE.COM", // Set the normalized username
-            Email = "admin@example.com", // Set the email
-            NormalizedEmail = "ADMIN@EXAMPLE.COM", // Set the normalized email
-            EmailConfirmed = true, // Set email confirmed flag
+            UserName = "admin@example.com",
+            NormalizedUserName = "ADMIN@EXAMPLE.COM",
+            Email = "admin@example.com",
+            NormalizedEmail = "ADMIN@EXAMPLE.COM",
+            EmailConfirmed = true,
             PasswordHash = new PasswordHasher<User>().HashPassword(null, "Admin"),
             UserRole = "ADMIN"
         }

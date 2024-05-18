@@ -25,6 +25,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<ISupportService, SupportService>();
+builder.Services.AddScoped<IFlightService, FlightService>();
 // Registration ends here
 
 builder.Services.AddControllersWithViews();

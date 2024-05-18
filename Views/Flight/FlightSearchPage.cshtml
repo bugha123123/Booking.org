@@ -1,0 +1,97 @@
+﻿@using Hotel.org.Interface
+@using Hotel.org.Models
+@inject IFlightService _FlightService;
+@model List<Flights>
+
+<section class="container-fluid flex flex-col md:flex-row gap-4 p-6 md:p-10">
+
+    <div id="map" style="height: 400px;"></div>
+
+    <div class="md:w-2/3">
+        <div class="grid gap-6">
+            <div class="d-flex justify-between align-items-center">
+                <h2 class="text-2xl font-bold">Search Results</h2>
+                <!-- Sort by dropdown here -->
+            </div>
+            <div class="grid gap-6">
+                @if (Model.Count == 0)
+                {
+
+
+                    <div class="flex flex-col items-center justify-center h-[100dvh] px-4 text-center mt-5">
+                        <div class="max-w-md space-y-4">
+                            <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">Flight Not Found</h1>
+                            <p class="text-gray-500 dark:text-gray-400 md:text-xl">
+                                We couldn't find the flight you were looking for. Please check the details and try again or go back to the
+                                homepage.
+                            </p>
+                            <a class="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-6 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                               asp-action="Index" asp-controller="Home">
+                                Go to Homepage
+                            </a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var flight in Model)
+                    {
+
+                        <input hidden value="@flight.Id" name="FlightId" />
+                        <div class="card">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="@flight.Image" alt="Flight Image" class="card-img" />
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+
+                                        <p class="card-text">Located In @flight.Airline</p>
+                                        <p class="card-text">@flight.Description</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="text-2xl font-bold">@flight.Price</div>
+
+                                        @*     <button type="button" class="btn btn-primary mt-2">
+                                                @if (await _FlightService.IsHotelBookedAsync(hotel.Id))
+                                                {
+                                                    <a asp-action="ViewReservationPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id">View Reservation</a>
+                                                }
+                                                else
+                                                {
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <a asp-action="CheckOutPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id">Book Now</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="RegisterPage" asp-controller="Account">Book Now</a>
+                                                    }
+                                                }
+                                            </button> *@
+
+                                        </div>
+                                        <div class="rating">
+                                            @for (int i = 0; i < flight.Rating; i++)
+                                            {
+                                                <span class="bi bi-star checked"></span>
+                                            }
+                                            @for (int i = 0; i < (5 - flight.Rating); i++)
+                                            {
+                                                <span class="bi bi-star"></span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
