@@ -3,54 +3,108 @@
 @using Hotel.org.Service
 @model Reviews
 @inject IHotelService _hotelservice;
+@inject IFlightService _flightService;
 <main class="max-w-4xl mx-auto px-4 py-12 md:px-6 md:py-16">
-  <div class="space-y-8">
- 
-  
-    <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-      <h2 class="text-2xl font-bold">Leave a Review</h2>
-      <p class="mt-4 text-gray-500 dark:text-gray-400">Share your experience with other travelers.</p>
-            <form id="addReviewForm" asp-action="AddReviewForHotel" asp-controller="Hotel" method="post" class="mt-6 space-y-4">
-              
-                <div>
-                    <label for="hotel" class="text-sm font-medium leading-none">Select Hotel</label>
-                    <select id="hotel" name="hotelId" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm" required>
-                        <option value="">Select a hotel</option>
-                        @foreach (var hotel in await _hotelservice.GetAllHotelsForDropDown())
-                        {
-                            <option value="@hotel.Id">@hotel.Name</option>
-                        }
-                    </select>
-                </div>
+    <div class="space-y-8">
+        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+        
 
-                <div>
-                    <label for="hotelInput" class="text-sm font-medium leading-none">Selected Hotel</label>
-                    <input asp-for="AddedForHotel" id="hotelInput" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm" readonly />
-                </div>
-            
-                <div>
-                    <label for="review" class="text-sm font-medium leading-none">Review</label>
-                    <textarea asp-for="Comment" id="review" class="flex min-h-[80px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm" placeholder="Share your thoughts" required></textarea>
-                </div>
-                <button id="submitReview" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-white hover:bg-primary-dark h-10 px-4 py-2" type="submit">Submit</button>
-            </form>
-
-
+            <div class="d-flex justify-content-between">
+                <h2 class="text-2xl font-bold">Leave a Review</h2>
+               <div>
+                    <button id="showHotelForm" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-white hover:bg-primary-dark h-10 px-4 py-2">Leave a Hotel Review</button>
+                    <button id="showFlightForm" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-white hover:bg-primary-dark h-10 px-4 py-2">Leave a Flight Review</button>
+               </div>
+            </div>
+            <p class="mt-4 text-gray-500 dark:text-gray-400">Share your experience with other travelers.</p>
+            <div id="hotelForm" style="display: none;">
+                <!-- Hotel Review Form -->
+                <form id="addHotelReviewForm" asp-action="AddReviewForHotel" asp-controller="Hotel" method="post" class="mt-6 space-y-4">
+                    <div>
+                        <label for="hotel" class="text-sm font-medium leading-none">Select Hotel</label>
+                        <select id="hotel" name="hotelId" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm" required>
+                           
+                            @foreach (var hotel in await _hotelservice.GetAllHotelsForDropDown())
+                            {
+                                <option value="@hotel.Id">@hotel.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label for="hotelInput" class="text-sm font-medium leading-none">Selected Hotel</label>
+                        <input asp-for="AddedForHotel" id="hotelInput" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm" readonly />
+                    </div>
+                    <div>
+                        <label for="hotelReview" class="text-sm font-medium leading-none">Review</label>
+                        <textarea asp-for="Comment" id="hotelReview" class="flex min-h-[80px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm" placeholder="Share your thoughts" required></textarea>
+                    </div>
+                    <button id="submitHotelReview" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-white hover:bg-primary-dark h-10 px-4 py-2" type="submit">Submit Hotel Review</button>
+                </form>
+            </div>
+            <div id="flightForm" style="display: none;">
+                <!-- Flight Review Form -->
+                <form id="addFlightReviewForm" asp-action="AddReviewForFlight" asp-controller="Flight" method="post" class="mt-6 space-y-4">
+                    <div>
+                        <label for="flight" class="text-sm font-medium leading-none">Select Flight</label>
+                        <select id="flight" name="flightId" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm" required>
+                            
+                            @foreach (var flight in await _flightService.GetAllFlightsForDropDown())
+                            {
+                                <option value="@flight.Id">@flight.To</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label for="flightInput" class="text-sm font-medium leading-none">Selected Flight</label>
+                        <input asp-for="AddedForFlight" id="flightInput" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm" readonly />
+                    </div>
+                    <div>
+                        <label for="flightReview" class="text-sm font-medium leading-none">Review</label>
+                        <textarea asp-for="Comment" id="flightReview" class="flex min-h-[80px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm" placeholder="Share your thoughts" required></textarea>
+                    </div>
+                    <button id="submitFlightReview" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-white hover:bg-primary-dark h-10 px-4 py-2" type="submit">Submit Flight Review</button>
+                </form>
+            </div>
+      
+        </div>
     </div>
-  </div>
 </main>
 
 <script>
-    // Get the select element
+    // Get the hotel form and flight form elements
+    const hotelForm = document.getElementById('hotelForm');
+    const flightForm = document.getElementById('flightForm');
+
+    // Get the buttons to show hotel and flight forms
+    const showHotelFormButton = document.getElementById('showHotelForm');
+    const showFlightFormButton = document.getElementById('showFlightForm');
+
+    // Show hotel form and hide flight form when "Leave a Hotel Review" button is clicked
+    showHotelFormButton.addEventListener('click', function () {
+        hotelForm.style.display = 'block';
+        flightForm.style.display = 'none';
+    });
+
+    // Show flight form and hide hotel form when "Leave a Flight Review" button is clicked
+    showFlightFormButton.addEventListener('click', function () {
+        hotelForm.style.display = 'none';
+        flightForm.style.display = 'block';
+    });
+    const selectFlight = document.getElementById('flight');
+    const flightInput = document.getElementById('flightInput');
+
+    // Add change event listener to select element for flight
+    selectFlight.addEventListener('change', function () {
+        const selectedOption = selectFlight.options[selectFlight.selectedIndex]; // Get the value of the selected option
+        flightInput.value = selectedOption.text; // Set the value of the flight input to the selected flight's ID
+    });
+
     const selectHotel = document.getElementById('hotel');
-    // Get the input element
     const hotelInput = document.getElementById('hotelInput');
 
-    // Add change event listener to select element
+    // Add change event listener to select element for hotel
     selectHotel.addEventListener('change', function () {
-        // Get the selected option
         const selectedOption = selectHotel.options[selectHotel.selectedIndex];
-        // Update the input value with the selected hotel name
         hotelInput.value = selectedOption.text;
     });
 </script>

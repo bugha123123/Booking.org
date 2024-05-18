@@ -12,7 +12,7 @@ namespace Hotel.org.FlightSeedDATA
                 {
                     Id = 1,
                     From = "City A",
-                    To = "",
+                    To = "Luxury Resort",
                     DepartureTime = new DateTime(2024, 6, 1, 8, 0, 0),
                     ArrivalTime = new DateTime(2024, 6, 1, 10, 0, 0),
                     Price = 150.00M,

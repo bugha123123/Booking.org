@@ -8,16 +8,25 @@ namespace Hotel.org.Service
     public class FlightService : IFlightService
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IAccountService _accountService;
 
-        public FlightService(AppDbContext appDbContext)
+        public FlightService(AppDbContext appDbContext, IAccountService accountService)
         {
             _appDbContext = appDbContext;
+            _accountService = accountService;
         }
+
+
 
         public async Task<List<Flights>> GetAllFlightsForDropDown()
         {
             return await _appDbContext.Flights.Include(x => x.Hotel).ToListAsync();
                 
+        }
+
+        public async Task<Flights> GetFlightById(int Id)
+        {
+            return await _appDbContext.Flights.FirstOrDefaultAsync(x => x.Id == Id);
         }
 
         public async Task<List<Flights>> GetFlightsAsync()
@@ -58,5 +67,42 @@ namespace Hotel.org.Service
 
             return await query.ToListAsync();
         }
+
+
+        public async Task AddReviewForFlight(Reviews reviews)
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+
+            var NewReview = new Reviews()
+            {
+                AddedBy = user.UserName,
+                Comment = reviews.Comment,
+                Stars = reviews.Stars,
+AddedForFlight = reviews.AddedForFlight,
+                user = user,
+                UserId = user.Id,
+                Type = Reviews.ReviewType.Flight,
+
+
+
+
+            };
+
+
+            await _appDbContext.reviews.AddAsync(NewReview);
+            await _appDbContext.SaveChangesAsync();
+
+        }
+
+        public async Task<List<Reviews>> GetReviewsForFlight(int HotelId)
+        {
+            var FoundeFlight = await GetFlightById(HotelId);
+
+            var foundReviews = await _appDbContext.reviews.Include(u => u.user).Where(r => r.AddedForFlight == FoundeFlight.To).ToListAsync();
+
+            return foundReviews;
+
+        }
+
     }
 }

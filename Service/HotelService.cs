@@ -258,6 +258,8 @@ namespace Hotel.org.Service
                 AddedForHotel = reviews.AddedForHotel,
                 user = user,
                 UserId = user.Id,
+               Type = Reviews.ReviewType.Hotel,
+               
                 
 
 
@@ -269,7 +271,7 @@ namespace Hotel.org.Service
 
         }
 
-        public async Task<List<Reviews>> GetReviewsForHotelAsync( int HotelId)
+        public async Task<List<Reviews>> GetReviewsForHotelAsync(int HotelId)
         {
             var FoundeHotel = await GetHotelById(HotelId);
 

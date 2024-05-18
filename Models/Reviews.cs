@@ -12,6 +12,12 @@ namespace Hotel.org.Models
             Four = 4,
             Five = 5
         }
+        public enum ReviewType
+        {
+            Flight,
+            Hotel
+        }
+
 
         [Key]
         public int Id { get; set; }
@@ -24,9 +30,11 @@ namespace Hotel.org.Models
         [Required(ErrorMessage = "Rating is required")]
         public Rating Stars { get; set; }
 
-        public string AddedForHotel { get; set; }
+        public ReviewType Type { get; set; }
 
-      
+        public string? AddedForHotel { get; set; }
+
+        public string? AddedForFlight { get; set; }
 
         public User user { get; set; }
 

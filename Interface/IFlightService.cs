@@ -13,5 +13,11 @@ namespace Hotel.org.Interface
 
 
         Task<List<Flights>> GetFlightsAsync();
+
+        Task<Flights> GetFlightById(int Id);
+
+        Task AddReviewForFlight(Reviews reviews);
+
+        Task<List<Reviews>> GetReviewsForFlight(int FlightId);
     }
 }

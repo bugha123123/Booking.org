@@ -1,0 +1,144 @@
+﻿@using Hotel.org.Interface
+@using Hotel.org.Models
+@model Flights
+@inject IFlightService _flightService;
+@inject IAccountService _accountService;
+
+@{
+    var LoggedInUser = await _accountService.GetLoggedInUserAsync();
+}
+<section class="w-full bg-gray-100 dark:bg-gray-800 py-12 md:py-24 lg:py-32 mt-5 rounded-3">
+    <div class="container px-4 md:px-6">
+        <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-[1fr_550px]">
+            <img src="@Model.Image"
+                 width="1200"
+                 height="400"
+                 alt="Flight"
+                 class="mx-auto aspect-[3/1] overflow-hidden rounded-xl object-cover" />
+            <div class="flex flex-col justify-center space-y-4">
+                <div class="space-y-2">
+                    <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl">@Model.Airline - @Model.From to @Model.To</h1>
+                    <p class="text-gray-500 md:text-xl dark:text-gray-400">Departure: @Model.DepartureTime.ToShortTimeString() - Arrival: @Model.ArrivalTime.ToShortTimeString()</p>
+                    <p class="text-gray-500 md:text-xl dark:text-gray-400">Price: $@Model.Price</p>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button class="btn btn-dark">Book Now</button>
+                }
+                else
+                {
+                    <a href="@Url.Action("LoginPage", "Account")" class="btn btn-dark">Login to Book</a>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-full py-12 md:py-24 lg:py-32">
+    <div class="container px-4 md:px-6">
+        <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold">Flight Details</h2>
+                    <div class="mt-4 text-gray-500 dark:text-gray-400">
+                        <p>@Model.Description</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold">Amenities</h2>
+                    <div class="mt-4 grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-5 h-5">
+                                <line x1="4" x2="20" y1="12" y2="12"></line>
+                                <line x1="4" x2="20" y1="6" y2="6"></line>
+                                <line x1="4" x2="20" y1="18" y2="18"></line>
+                            </svg>
+                            WiFi Available
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="w-5 h-5">
+                                <path d="M17 20H7a5.917 5.917 0 0 1-4.483-2H21.5A5.5 5.5 0 0 0 16 12.5v-.233a5.917 5.917 0 0 1 1 0v.233A5.5 5.5 0 0 0 21.5 18H17"></path>
+                                <path d="M3 20v-1a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v1"></path>
+                            </svg>
+                            In-flight Entertainment
+                        </div>
+                        <!-- Add more amenities -->
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold">Customer Reviews</h2>
+                    <div class="flex gap-4">
+                        @if ((await _flightService.GetReviewsForFlight(Model.Id)).Count() == 0)
+                        {
+
+                            // No reviews found
+
+
+                            <div class="flex flex-col items-center justify-center gap-4 py-12 md:py-24 bg-gray-100 dark:bg-gray-800 w-100 rounded-3">
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-50">No Reviews Found</h3>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="h-12 w-12 text-gray-500 dark:text-gray-400">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                                    <line x1="9" x2="9.01" y1="9" y2="9"></line>
+                                    <line x1="15" x2="15.01" y1="9" y2="9"></line>
+                                </svg>
+                            </div>
+                        }
+                        else
+                        {
+                            // Reviews found
+                            <div class="flex flex-col gap-3">
+                                @foreach (var review in await _flightService.GetReviewsForFlight(Model.Id))
+                                {
+                                    <div class="grid gap-2">
+                                        <div class="flex items-center gap-2 text-sm font-semibold">
+
+                                            <img src="@Url.Content("~/ProfileImage/" + review.user.ProfileImageFileName)" alt="User Image" class="rounded-full h-8 w-8">
+
+
+                                            <span>@review.AddedBy</span>
+                                        </div>
+                                        <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+                                            <p class="text-gray-700 dark:text-gray-300">@review.Comment</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

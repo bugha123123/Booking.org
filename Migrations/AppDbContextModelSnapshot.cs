@@ -661,8 +661,10 @@ namespace Hotel.org.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AddedForFlight")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AddedForHotel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Comment")
@@ -670,6 +672,9 @@ namespace Hotel.org.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Stars")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -798,20 +803,20 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "aed7c804-2268-46f9-a164-a057d78e8adc",
+                            Id = "5796b4e0-69ce-4eda-9606-a4835f3377d2",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "b52a48c8-40be-4d65-9ba9-5973e227c467",
+                            ConcurrencyStamp = "d7e9749a-708a-4ff3-b37f-8917036502ca",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECajX+xY2GDYpcBkWLgRaikrUjtBvfHDqZyj2lRvQnciuQ5NAn4Ss9pyaPQOQeAS3w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMxdEcxmSom8/8cB+Lox05y6jJH779QtIHRH56kJSkVmNnbaa70ciLLqH8SV2idLjA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aa0218e0-6a7e-4363-a002-18657e6d6432",
+                            SecurityStamp = "e3435916-589a-4406-bef2-ecb0c1ef6acc",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN"

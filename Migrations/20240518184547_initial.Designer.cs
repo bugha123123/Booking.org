@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240511205427_initial")]
+    [Migration("20240518184547_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -55,6 +55,245 @@ namespace Hotel.org.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("bookedHotels");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Favourites", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FavoutiredHotelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HotelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favourites");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Flights", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Airline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ArrivalTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DepartureTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FlightNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HotelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Flights");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Airline = "Airline A",
+                            ArrivalTime = new DateTime(2024, 6, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 6, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City A to Paradise City",
+                            FlightNumber = "AA123",
+                            From = "City A",
+                            HotelId = 1,
+                            Image = "/Images/flight1.jpg",
+                            Price = 150.00m,
+                            Rating = 4.5,
+                            To = ""
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Airline = "Airline B",
+                            ArrivalTime = new DateTime(2024, 7, 1, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 7, 1, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City C to Mountain Village",
+                            FlightNumber = "BB234",
+                            From = "City C",
+                            HotelId = 2,
+                            Image = "/Images/flight2.jpg",
+                            Price = 200.00m,
+                            Rating = 4.0,
+                            To = "Mountain Village"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Airline = "Airline C",
+                            ArrivalTime = new DateTime(2024, 8, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 8, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City E to Paradise City",
+                            FlightNumber = "CC345",
+                            From = "City E",
+                            HotelId = 3,
+                            Image = "/Images/flight3.jpg",
+                            Price = 250.00m,
+                            Rating = 4.2999999999999998,
+                            To = "Paradise City"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Airline = "Airline D",
+                            ArrivalTime = new DateTime(2024, 9, 1, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 9, 1, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City G to Oceanfront Town",
+                            FlightNumber = "DD456",
+                            From = "City G",
+                            HotelId = 4,
+                            Image = "/Images/flight4.jpg",
+                            Price = 220.00m,
+                            Rating = 4.7000000000000002,
+                            To = "Oceanfront Town"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Airline = "Airline E",
+                            ArrivalTime = new DateTime(2024, 10, 1, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 10, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City H to Ruralville",
+                            FlightNumber = "EE567",
+                            From = "City H",
+                            HotelId = 5,
+                            Image = "/Images/flight5.jpg",
+                            Price = 180.00m,
+                            Rating = 3.8999999999999999,
+                            To = "Ruralville"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Airline = "Airline F",
+                            ArrivalTime = new DateTime(2024, 11, 1, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 11, 1, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City I to Hipsterville",
+                            FlightNumber = "FF678",
+                            From = "City I",
+                            HotelId = 6,
+                            Image = "/Images/flight6.jpg",
+                            Price = 190.00m,
+                            Rating = 4.0999999999999996,
+                            To = "Hipsterville"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Airline = "Airline G",
+                            ArrivalTime = new DateTime(2024, 12, 1, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 12, 1, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City J to Old Town",
+                            FlightNumber = "GG789",
+                            From = "City J",
+                            HotelId = 7,
+                            Image = "/Images/flight7.jpg",
+                            Price = 210.00m,
+                            Rating = 4.4000000000000004,
+                            To = "Old Town"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Airline = "Airline H",
+                            ArrivalTime = new DateTime(2024, 12, 15, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 12, 15, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City K to Snowy Peaks",
+                            FlightNumber = "HH890",
+                            From = "City K",
+                            HotelId = 8,
+                            Image = "/Images/flight8.jpg",
+                            Price = 230.00m,
+                            Rating = 4.2000000000000002,
+                            To = "Snowy Peaks"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Airline = "Airline I",
+                            ArrivalTime = new DateTime(2024, 12, 20, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 12, 20, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City L to Sandy Valley",
+                            FlightNumber = "II901",
+                            From = "City L",
+                            HotelId = 9,
+                            Image = "/Images/flight9.jpg",
+                            Price = 240.00m,
+                            Rating = 4.5999999999999996,
+                            To = "Sandy Valley"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Airline = "Airline J",
+                            ArrivalTime = new DateTime(2024, 12, 25, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2024, 12, 25, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Non-stop flight from City M to Lakeland",
+                            FlightNumber = "JJ012",
+                            From = "City M",
+                            HotelId = 10,
+                            Image = "/Images/flight10.jpg",
+                            Price = 250.00m,
+                            Rating = 4.7999999999999998,
+                            To = "Lakeland"
+                        });
                 });
 
             modelBuilder.Entity("Hotel.org.Models.Hotels", b =>
@@ -138,10 +377,15 @@ namespace Hotel.org.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("Wifi")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Hotels");
 
@@ -420,8 +664,10 @@ namespace Hotel.org.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AddedForFlight")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AddedForHotel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Comment")
@@ -429,6 +675,9 @@ namespace Hotel.org.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Stars")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -557,20 +806,20 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f8970a4c-9b68-4024-9b12-00100408e0ad",
+                            Id = "5796b4e0-69ce-4eda-9606-a4835f3377d2",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "ce2f6935-42c8-4b57-9351-6f308b38fa6f",
+                            ConcurrencyStamp = "d7e9749a-708a-4ff3-b37f-8917036502ca",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDgJhrvIC/NRZjRYKCECoJly+dJgv6xXd88JtBUwL9Sc3NTXTFG3YuKB8zuy0ml6pA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMxdEcxmSom8/8cB+Lox05y6jJH779QtIHRH56kJSkVmNnbaa70ciLLqH8SV2idLjA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7c78bcb7-6c0d-464c-bcfa-51c6f8204990",
+                            SecurityStamp = "e3435916-589a-4406-bef2-ecb0c1ef6acc",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN"
@@ -725,6 +974,51 @@ namespace Hotel.org.Migrations
                         .IsRequired();
 
                     b.Navigation("hotel");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Favourites", b =>
+                {
+                    b.HasOne("Hotel.org.Models.Hotels", "hotel")
+                        .WithMany()
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hotel.org.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("hotel");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Flights", b =>
+                {
+                    b.HasOne("Hotel.org.Models.Hotels", "Hotel")
+                        .WithMany()
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hotel.org.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Hotel");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Hotel.org.Models.Hotels", b =>
+                {
+                    b.HasOne("Hotel.org.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("user");
                 });
