@@ -46,12 +46,15 @@
 
                 <!-- Select destination -->
                 <select name="destination" required class="form-select rounded-md bg-background px-3 py-2 text-sm placeholder-muted flex-grow-1 mb-2 md:mb-0 md:mr-2">
+                    <!-- Placeholder option -->
                     <option value="" disabled selected>Select a destination</option>
+                    <!-- Dynamically populated options -->
                     @foreach (var flight in await _flightService.GetAllFlightsForDropDown())
                     {
                         <option value="@flight.To">@flight.To</option>
                     }
                 </select>
+
 
                 <!-- Select departure time -->
                 <select name="departureTime" class="form-select rounded-md bg-background px-3 py-2 text-sm placeholder-muted mb-2 md:mb-0 md:mr-2">

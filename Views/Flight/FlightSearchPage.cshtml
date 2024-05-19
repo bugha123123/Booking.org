@@ -41,7 +41,7 @@
                         <div class="card">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
-                                    <img src="@flight.Image" alt="Flight Image" class="card-img" />
+                                    <a asp-action="FlightDetailsPage" asp-controller="Flight" asp-route-FLightId="@flight.Id"><img src="@flight.Image" alt="Flight Image" class="card-img" /></a>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
