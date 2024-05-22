@@ -60,7 +60,7 @@
                                                     {
                                                         @if (User.Identity.IsAuthenticated)
                                                         {
-                                                            <a asp-action="CheckOutPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id">Book Now</a>
+                                                            <a asp-action="CheckOutPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id" class="text-white">Book Now</a>
                                                         }else{
                                                             <a asp-action="RegisterPage" asp-controller="Account">Book Now</a>
                                                         }
