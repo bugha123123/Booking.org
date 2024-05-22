@@ -22,7 +22,7 @@
         <!-- Hero Section -->
     <div class="container mt-5">
         <div class="relative">
-            <img src="~/PlaceHolderImages/Flight-image.jpeg" height="150" class="w-full rounded-3" alt="Discover Your Trips Worldwide">
+            <img src="~/PlaceHolderImages/Flight-image.jpeg" class="w-full rounded-3" alt="Discover Your Trips Worldwide">
             <div class="absolute inset-0 flex items-center justify-center">
                 <h1 class="text-white text-center font-bold text-4xl sm:text-5xl lg:text-6xl">Discover Your Trips Worldwide</h1>
             </div>
@@ -103,7 +103,7 @@
                         <div class="p-4">
                             <h5 class="text-black text-xl font-semibold mb-2">@flight.To</h5>
                             <p class="text-gray-600 mb-2 truncate">@flight.Description</p>
-                          @*   @if (!await _flightService.IsFlightFavouritedByUser(user, flight))
+                             @if (!await _flightService.IsFlightAlreadyFavouritedByUser(user, flight))
                             {
                                 <form asp-action="AddFlightToFavorites" asp-route-flightId="@flight.Id" asp-controller="Flight" method="post">
                                     <button type="submit" class="btn btn-dark">Add to Favourites</button>
@@ -111,8 +111,8 @@
                             }
                             else
                             {
-                                <a asp-action="FavouritedFlightsPage" asp-controller="Flight"><button class="btn btn-primary">Favourited</button></a>
-                            } *@
+                                <a asp-action="FavouritedHotelsPage" asp-controller="Hotel"><button class="btn btn-primary">Favourited</button></a>
+                            }
                         </div>
                     </div>
                 }

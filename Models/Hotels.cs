@@ -123,5 +123,7 @@ namespace Hotel.org.Models
         public User? user  { get; set; }
 
         public string? UserId { get; set; }
+
+
     }
 }

@@ -142,6 +142,98 @@ AddedForFlight = reviews.AddedForFlight,
             await _appDbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> IsFlightBookedAsync(int FlightId)
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+            var foundHotel = await GetFlightById(FlightId);
+            if (user == null)
+            {
+                return false; // User not logged in, so the hotel is not booked
+            }
 
+            return await _appDbContext.bookedHotels.AnyAsync(b => b.AddedBy == user.UserName && b.HotelId == foundHotel.Id);
+        }
+
+        public async Task<List<Hotels>> GetHotelsAssociatedToFlight(int FlightId)
+        {
+            var FoundFlight = await GetFlightById(FlightId);
+
+            return await _appDbContext.Hotels.Where(f => f.Name == FoundFlight.To).ToListAsync(); 
+        }
+
+
+        public async Task AddFlightToFavourites(int FlightId)
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+            var FoundFlight = await GetFlightById(FlightId);
+            if (user != null && FoundFlight != null)
+            {
+
+                if (await IsFlightAlreadyFavouritedByUser(user, FoundFlight))
+                {
+                    throw new Exception("hotel already booked.");
+                }
+                var FavaouritedFlight = new FavouritedFlights()
+                {
+                    flight = FoundFlight,
+                    FlightId = FoundFlight.Id,
+                    user = user,
+                    UserId = user.Id
+
+
+                };
+
+                await _appDbContext.FavouritedFlights.AddAsync(FavaouritedFlight);
+                await _appDbContext.SaveChangesAsync();
+            }
+
+        }
+
+        public async Task<bool> IsFlightAlreadyFavouritedByUser(User user, Flights flight)
+        {
+            if (user == null || flight == null)
+            {
+                // Handle the case where either user or hotel is null
+                return false;
+            }
+
+            var ExistingFavouritedFlight = await _appDbContext.FavouritedFlights
+                .Include(fh => fh.user)
+                .FirstOrDefaultAsync(ff => ff.user.Email == user.Email && ff.flight.To == flight.To);
+
+            if (ExistingFavouritedFlight == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<List<FavouritedFlights>> GetFavouriteFlightsForUser()
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+
+            var favouritedFLight = await _appDbContext.FavouritedFlights.Include(x => x.flight).Include(x => x.user).Where(u => u.UserId == user.Id).ToListAsync();
+
+            return favouritedFLight;
+        }
+
+        public async Task RemoveFlightsFromFavourites(int FlightId)
+        {
+            var foundFlight = await GetFlightById(FlightId);
+            var user = await _accountService.GetLoggedInUserAsync();
+            var FlightToRemove = await _appDbContext.FavouritedFlights.FirstOrDefaultAsync(f => f.flight.Id == foundFlight.Id && f.user.Id == user.Id);
+
+            if (FlightToRemove == null)
+            {
+                return;
+            }
+
+            _appDbContext.FavouritedFlights.Remove(FlightToRemove);
+            await _appDbContext.SaveChangesAsync();
+
+        }
+
+       
     }
 }

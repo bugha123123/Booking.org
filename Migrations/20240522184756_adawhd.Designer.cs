@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522184756_adawhd")]
+    partial class adawhd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,30 +82,6 @@ namespace Hotel.org.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("bookedHotels");
-                });
-
-            modelBuilder.Entity("Hotel.org.Models.FavouritedFlights", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FlightId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("FavouritedFlights");
                 });
 
             modelBuilder.Entity("Hotel.org.Models.Favourites", b =>
@@ -854,20 +833,20 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5d34b917-2ac1-44d1-9ef0-5850e97af717",
+                            Id = "d707397b-75d9-409c-8ee4-4ad54e57c26d",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "26556e9f-67ac-4011-b894-714fe55e87f9",
+                            ConcurrencyStamp = "a751e8a4-6869-479e-9930-37b9b990f56a",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFMPrSYHj7WSiqVZLn882SdpRG66/E+CtwTAbhKRbdSODLFNQ+qY3pwBrTa2PML34A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIeTauXnBcAZUBcU9OHbmPknfJVXoPfrzrSI33Ix+PTYgsApUJb87Oy2oMx3bMRv5Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eff5cf11-6f60-454e-b6ed-5f5170a90902",
+                            SecurityStamp = "30d82648-78b5-4fb6-9ddd-4851053d0b65",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN"
@@ -1041,25 +1020,6 @@ namespace Hotel.org.Migrations
                         .IsRequired();
 
                     b.Navigation("hotel");
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("Hotel.org.Models.FavouritedFlights", b =>
-                {
-                    b.HasOne("Hotel.org.Models.Flights", "flight")
-                        .WithMany()
-                        .HasForeignKey("FlightId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hotel.org.Models.User", "user")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("flight");
 
                     b.Navigation("user");
                 });

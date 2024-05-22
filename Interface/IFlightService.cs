@@ -22,5 +22,18 @@ namespace Hotel.org.Interface
 
 
         Task BookFlight(int FlightId, string cardNumber, string cvc);
+
+
+        Task<bool> IsFlightBookedAsync(int FlightId);
+
+        Task<List<Hotels>> GetHotelsAssociatedToFlight(int FlightId);
+
+        Task AddFlightToFavourites(int FlightId);
+
+        Task<bool> IsFlightAlreadyFavouritedByUser(User user, Flights flight);
+
+        Task<List<FavouritedFlights>> GetFavouriteFlightsForUser();
+
+        Task RemoveFlightsFromFavourites(int HotelId);
     }
 }

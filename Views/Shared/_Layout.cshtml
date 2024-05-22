@@ -42,13 +42,26 @@
                 <ul class="navbar-nav mr-auto">
                   @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="ReservationsPage" asp-controller="Hotel">Reservations</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  id="exploreDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Reservations
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="exploreDropdown">
+                                <a class="dropdown-item text-dark" href="@Url.Action("ReservationsPage", "Hotel")">Hotels</a>
+                                <a class="dropdown-item text-dark" href="@Url.Action("FlightReservationsPage", "Flight")">Flights</a>
+                            </div>
                         </li>
                     }
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="AllHotelsPage" asp-controller="Hotel">Explore</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="exploreDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Explore
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="exploreDropdown">
+                            <a class="dropdown-item text-dark" asp-action="AllHotelsPage" asp-controller="Hotel">Hotels</a>
+                            <a class="dropdown-item text-dark" asp-action="AllFlightsPage" asp-controller="Flight">Flights</a>
+                        </div>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" asp-action="ReviewPage" asp-controller="Hotel">Add Review</a>
                     </li>
