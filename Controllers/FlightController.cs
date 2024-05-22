@@ -30,7 +30,12 @@ namespace Hotel.org.Controllers
             return View(flights);
         }
 
+        public async Task<IActionResult> FlightCheckOutPage(int FlightId)
+        {
+            var FlightById = await _flightService.GetFlightById(FlightId);
 
+            return View(FlightById);
+        }
 
         [HttpPost("addreviewforflight")]
 
@@ -42,6 +47,39 @@ namespace Hotel.org.Controllers
 
 
 
+        }
+
+
+        [HttpPost("bookflight")]
+        public async Task<IActionResult> BookFlight(int FlightId, string cardNumber, string cvc)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _flightService.BookFlight(FlightId, cardNumber, cvc);
+
+                    return RedirectToAction("HotelBookedSuccessPage", new { FlightId = FlightId });
+                }
+                else
+                {
+                    // If model state is not valid, return to the CheckOutPage with validation errors
+                    return RedirectToAction("CheckOutPage", new { FlightId = FlightId });
+                }
+            }
+            catch (ArgumentException)
+            {
+                // Handle the case of wrong card credentials
+                ViewData["WrongCardCredentials"] = "Wrong Card Credentials. Try again!";
+                return RedirectToAction("CheckOutPage", new { FlightId = FlightId });
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                ViewData["ErrorMessage"] = "An error occurred while booking the hotel. Please try again later.";
+                // Optionally log the exception for further investigation
+                return RedirectToAction("CheckOutPage", new { FlightId = FlightId });
+            }
         }
     }
 }

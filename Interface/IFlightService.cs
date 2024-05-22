@@ -19,5 +19,8 @@ namespace Hotel.org.Interface
         Task AddReviewForFlight(Reviews reviews);
 
         Task<List<Reviews>> GetReviewsForFlight(int FlightId);
+
+
+        Task BookFlight(int FlightId, string cardNumber, string cvc);
     }
 }

@@ -19,6 +19,8 @@ namespace Hotel.org.ApplicationDBContext
         public DbSet<Favourites> Favourites { get; set; }
 
         public DbSet<Flights> Flights { get; set; }
+
+        public DbSet<BookedFlights> BookedFlights { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

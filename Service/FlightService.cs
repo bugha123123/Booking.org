@@ -9,11 +9,13 @@ namespace Hotel.org.Service
     {
         private readonly AppDbContext _appDbContext;
         private readonly IAccountService _accountService;
+        private readonly IHotelService _hotelService;
 
-        public FlightService(AppDbContext appDbContext, IAccountService accountService)
+        public FlightService(AppDbContext appDbContext, IAccountService accountService, IHotelService hotelService)
         {
             _appDbContext = appDbContext;
             _accountService = accountService;
+            _hotelService = hotelService;
         }
 
 
@@ -103,6 +105,43 @@ AddedForFlight = reviews.AddedForFlight,
             return foundReviews;
 
         }
+
+        public async Task BookFlight(int FlightId, string cardNumber, string cvc)
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+            var foundFlight = await GetFlightById(FlightId);
+
+            // Check if the user has already booked this hotel
+            var existingBooking = await _appDbContext.bookedHotels
+                .FirstOrDefaultAsync(b => b.AddedBy == user.Email && b.HotelId == foundFlight.Id);
+
+            // If the user has already booked this hotel, return without booking again
+            if (existingBooking != null)
+            {
+                // You can handle this case as needed, such as throwing an exception or logging a message
+                return;
+            }
+
+            // Validate payment details
+            bool isValidPayment = await _hotelService.ValidatePaymentDetailsAsync(user, cardNumber, cvc);
+            if (!isValidPayment)
+            {
+                throw new ArgumentException("Invalid payment details.");
+            }
+
+            // Create a new booked hotel entry
+            var bookedFlight = new BookedFlights()
+            {
+                FlightId = foundFlight.Id,
+                Flights = foundFlight,
+                user = user,
+                UserId = user.Id
+            };
+
+            await _appDbContext.BookedFlights.AddAsync(bookedFlight);
+            await _appDbContext.SaveChangesAsync();
+        }
+
 
     }
 }

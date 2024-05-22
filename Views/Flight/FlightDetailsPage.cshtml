@@ -23,7 +23,7 @@
                 </div>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <button class="btn btn-dark">Book Now</button>
+                    <a asp-action="FlightCheckOutPage" asp-controller="Flight" asp-route-FlightId="@Model.Id" class="text-white"> <button class="btn btn-dark">Book Now</button></a>
                 }
                 else
                 {
