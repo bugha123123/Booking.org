@@ -111,11 +111,11 @@ AddedForFlight = reviews.AddedForFlight,
             var user = await _accountService.GetLoggedInUserAsync();
             var foundFlight = await GetFlightById(FlightId);
 
-            // Check if the user has already booked this hotel
-            var existingBooking = await _appDbContext.bookedHotels
-                .FirstOrDefaultAsync(b => b.AddedBy == user.Email && b.HotelId == foundFlight.Id);
+            // Check if the user has already booked this flight
+            var existingBooking = await _appDbContext.BookedFlights
+                .FirstOrDefaultAsync(b => b.user.Email == user.Email && b.FlightId == foundFlight.Id);
 
-            // If the user has already booked this hotel, return without booking again
+            // If the user has already booked this flight, return without booking again
             if (existingBooking != null)
             {
                 // You can handle this case as needed, such as throwing an exception or logging a message
@@ -145,13 +145,13 @@ AddedForFlight = reviews.AddedForFlight,
         public async Task<bool> IsFlightBookedAsync(int FlightId)
         {
             var user = await _accountService.GetLoggedInUserAsync();
-            var foundHotel = await GetFlightById(FlightId);
+            var foundFlight = await GetFlightById(FlightId);
             if (user == null)
             {
-                return false; // User not logged in, so the hotel is not booked
+                return false; // User not logged in, so the flight is not booked
             }
 
-            return await _appDbContext.bookedHotels.AnyAsync(b => b.AddedBy == user.UserName && b.HotelId == foundHotel.Id);
+            return await _appDbContext.BookedFlights.AnyAsync(b => b.user.Email == user.Email && b.FlightId == foundFlight.Id);
         }
 
         public async Task<List<Hotels>> GetHotelsAssociatedToFlight(int FlightId)
@@ -171,7 +171,7 @@ AddedForFlight = reviews.AddedForFlight,
 
                 if (await IsFlightAlreadyFavouritedByUser(user, FoundFlight))
                 {
-                    throw new Exception("hotel already booked.");
+                    throw new Exception("flight already booked.");
                 }
                 var FavaouritedFlight = new FavouritedFlights()
                 {
@@ -193,7 +193,7 @@ AddedForFlight = reviews.AddedForFlight,
         {
             if (user == null || flight == null)
             {
-                // Handle the case where either user or hotel is null
+                // Handle the case where either user or flight is null
                 return false;
             }
 
@@ -234,6 +234,12 @@ AddedForFlight = reviews.AddedForFlight,
 
         }
 
-       
+        public async Task<List<BookedFlights>> GetBookedFlights()
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+            var FoundBookedFlights = await _appDbContext.BookedFlights.Include(x => x.Flights).Where(bh => bh.user.Id == user.Id).ToListAsync();
+
+            return FoundBookedFlights;
+        }
     }
 }

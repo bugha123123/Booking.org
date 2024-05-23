@@ -35,5 +35,7 @@ namespace Hotel.org.Interface
         Task<List<FavouritedFlights>> GetFavouriteFlightsForUser();
 
         Task RemoveFlightsFromFavourites(int HotelId);
+
+        Task<List<BookedFlights>> GetBookedFlights();
     }
 }

@@ -22,6 +22,12 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> FlightReservationsPage()
+        {
+            var flights = await _flightService.GetBookedFlights();
+            return View(flights);
+        }
         public async Task<IActionResult> FlightDetailsPage(int FlightId)
         {
             var foundFlight = await _flightService.GetFlightById(FlightId);
