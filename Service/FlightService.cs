@@ -10,7 +10,8 @@ namespace Hotel.org.Service
         private readonly AppDbContext _appDbContext;
         private readonly IAccountService _accountService;
         private readonly IHotelService _hotelService;
-
+        private int MIN_PRICE = 220;
+        private double MIN_RATING = 4.5;
         public FlightService(AppDbContext appDbContext, IAccountService accountService, IHotelService hotelService)
         {
             _appDbContext = appDbContext;
@@ -240,6 +241,35 @@ AddedForFlight = reviews.AddedForFlight,
             var FoundBookedFlights = await _appDbContext.BookedFlights.Include(x => x.Flights).Where(bh => bh.user.Id == user.Id).ToListAsync();
 
             return FoundBookedFlights;
+        }
+
+        public async Task<List<Flights>> GetTopRatedFlightsAsync()
+        {
+            return await _appDbContext.Flights.Where(X => X.Price >= MIN_PRICE).ToListAsync();
+        }
+
+        public async Task<List<Flights>> GetMostExpensiveFlightsAsync()
+        {
+            return await _appDbContext.Flights.Where(X => X.Rating >= MIN_RATING).ToListAsync();
+        }
+
+        public async Task CancelFlightReservation(int FlightId)
+        {
+            var FoundFlight = await GetFlightById(FlightId);
+            var user = await _accountService.GetLoggedInUserAsync();
+
+            if (FoundFlight != null && user != null) {
+
+                var FlightReservationToRemove = await _appDbContext.BookedFlights.FirstOrDefaultAsync(x => x.Flights.Id == FoundFlight.Id && x.user.Id == user.Id);
+
+                if (FlightReservationToRemove == null)
+                {
+                    return;
+                }
+                _appDbContext.BookedFlights.Remove(FlightReservationToRemove);
+                await _appDbContext.SaveChangesAsync();
+            }
+
         }
     }
 }

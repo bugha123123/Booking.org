@@ -37,5 +37,11 @@ namespace Hotel.org.Interface
         Task RemoveFlightsFromFavourites(int HotelId);
 
         Task<List<BookedFlights>> GetBookedFlights();
+
+        Task<List<Flights>> GetTopRatedFlightsAsync();
+
+        Task<List<Flights>> GetMostExpensiveFlightsAsync();
+
+        Task CancelFlightReservation(int FlightId);
     }
 }

@@ -120,5 +120,16 @@ namespace Hotel.org.Controllers
             return RedirectToAction("FavouritedHotelsPage", "Hotel");
 
         }
+
+
+        [HttpPost("removeflightreservation")]
+
+        public async Task<IActionResult> CancelFlightReservation(int FlightId)
+        {
+
+            await _flightService.CancelFlightReservation(FlightId);
+            return RedirectToAction("FlightReservationsPage", "Flight");
+
+        }
     }
 }
