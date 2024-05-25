@@ -38,6 +38,7 @@ namespace Hotel.org.Interface
 
         Task<List<BookedHotels>> GetAllBookedHotelsAsync();
 
+
         //gets all of the hotels for dropdown on index page
 
         Task<List<Hotels>> GetAllHotelsForDropDown();

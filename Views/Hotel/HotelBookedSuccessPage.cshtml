@@ -82,14 +82,15 @@
             <div class="bg-white dark:bg-gray-950 rounded-lg shadow-sm p-6">
                 <h2 class="text-lg font-medium mb-4">Reservation Summary</h2>
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Room Rate</p>
-                        <p class="font-medium">@bookedHotel.AveragePricePerNight  </p>
-                    </div>
-                  
+            
                     <div>
                         <p class="text-sm text-gray-500 dark:text-gray-400">Total</p>
-                        <p class="font-medium">@bookedHotel.AveragePricePerNight</p>
+                        <p class="font-medium">@if (bookedHotel.AveragePricePerNight < 0)
+                            {
+                               <span>0</span>
+                            }else{
+                                @bookedHotel.AveragePricePerNight
+                            }</p>
 
                     </div>
                 </div>
