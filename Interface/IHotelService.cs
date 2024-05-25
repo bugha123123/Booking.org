@@ -88,5 +88,8 @@ namespace Hotel.org.Interface
 
         Task<List<Hotels>> GetExpensiveHotels();
 
+
+        Task<List<Flights>> GetFlightsAssociatedToHotel(int HotelId);
+
     }
 }

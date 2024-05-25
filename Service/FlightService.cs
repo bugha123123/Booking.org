@@ -139,6 +139,39 @@ AddedForFlight = reviews.AddedForFlight,
                 UserId = user.Id
             };
 
+
+            // checks if user has booked any flights or not
+            if (await IsFirstTimeBooking(user))
+            {
+                if (user.tierLevels == User.TierLevels.SILVER)
+                {
+                    foundFlight.Price -= 50;
+                }
+
+                if (user.tierLevels == User.TierLevels.GOLD)
+                {
+                    foundFlight.Price -= 100;
+                }
+
+                if (user.tierLevels == User.TierLevels.PLATINUM)
+                {
+                    foundFlight.Price -= 175;
+                }
+
+            }
+
+            user.Points += Convert.ToInt32(foundFlight.Price);
+
+            if (user.Points >= 500)
+            {
+                user.tierLevels = User.TierLevels.GOLD;
+
+            }
+
+            if (user.Points >= 1000)
+            {
+                user.tierLevels = User.TierLevels.PLATINUM;
+            }
             await _appDbContext.BookedFlights.AddAsync(bookedFlight);
             await _appDbContext.SaveChangesAsync();
         }
@@ -153,6 +186,10 @@ AddedForFlight = reviews.AddedForFlight,
             }
 
             return await _appDbContext.BookedFlights.AnyAsync(b => b.user.Email == user.Email && b.FlightId == foundFlight.Id);
+        }
+        private async Task<bool> IsFirstTimeBooking(User user)
+        {
+            return !await _appDbContext.BookedFlights.AnyAsync(x => x.UserId == user.Id);
         }
 
         public async Task<List<Hotels>> GetHotelsAssociatedToFlight(int FlightId)
@@ -260,12 +297,14 @@ AddedForFlight = reviews.AddedForFlight,
 
             if (FoundFlight != null && user != null) {
 
-                var FlightReservationToRemove = await _appDbContext.BookedFlights.FirstOrDefaultAsync(x => x.Flights.Id == FoundFlight.Id && x.user.Id == user.Id);
+                var FlightReservationToRemove = await _appDbContext.BookedFlights.Include(x => x.Flights).FirstOrDefaultAsync(x => x.Flights.Id == FoundFlight.Id && x.user.Id == user.Id);
 
                 if (FlightReservationToRemove == null)
                 {
                     return;
                 }
+
+                user.Points -= (int)FlightReservationToRemove.Flights.Price;
                 _appDbContext.BookedFlights.Remove(FlightReservationToRemove);
                 await _appDbContext.SaveChangesAsync();
             }

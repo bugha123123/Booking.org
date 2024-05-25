@@ -20,7 +20,7 @@
                                     <a class="text-decoration-none text-white" asp-action="FlightReservationsPage" asp-controller="Flight" asp-route-HotelId="@bookedFlight.Flights.Id">Modify</a>
                                 </button>
                                 <form asp-action="CancelFlightReservation" asp-controller="Flight" method="post">
-                                    <input hidden value="@bookedFlight.Id" name="FlightId" />
+                                    <input hidden value="@bookedFlight.Flights.Id" name="FlightId" />
 
                                     <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:text-accent-foreground h-9 rounded-md px-3 text-red-500 hover:bg-red-500/10 dark:hover:bg-red-500/20">
                                         Cancel

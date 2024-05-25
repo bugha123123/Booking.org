@@ -1,8 +1,8 @@
 ﻿@using Hotel.org.Interface
-@inject IHotelService _hotelservice;
-
+@using Hotel.org.Models
+@inject IHotelService _hotelService;
+@inject IFlightService _flightService;
 <section class="container-fluid flex flex-col md:flex-row gap-4 p-6 md:p-10">
-
     <div id="map" style="height: 400px;"></div>
 
     <div class="md:w-2/3">
@@ -14,8 +14,6 @@
             <div class="grid gap-6">
                 @if (Model.Count == 0)
                 {
-
-
                     <div class="flex flex-col items-center justify-center h-[100dvh] px-4 text-center mt-5">
                         <div class="max-w-md space-y-4">
                             <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">Hotel Not Found</h1>
@@ -34,62 +32,58 @@
                 {
                     @foreach (var hotel in Model)
                     {
-                        
-                           <input hidden value="@hotel.Id" name="HotelId"/> 
-                            <div class="card">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
+                        <input hidden value="@hotel.Id" name="HotelId" />
+                        <div class="card">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <a class="text-white" asp-action="HotelDetailsPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id">
                                         <img src="@hotel.RoomImage" alt="Hotel Image" class="card-img" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">@hotel.Name</h5>
-                                            
-                                            <p class="card-text">Located In @hotel.Address</p>
-                                            <p class="card-text">@hotel.Description</p>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="text-2xl font-bold">@hotel.AveragePricePerNight/night</div>
-
-                                                <button type="button" class="btn btn-primary mt-2"
-                                                >
-                                                    @if (await _hotelservice.IsHotelBookedAsync(hotel.Id))
+                                    </a>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@hotel.Name</h5>
+                                        <p class="card-text">Located In @hotel.Address</p>
+                                        <p class="card-text">@hotel.Description</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="text-2xl font-bold">@hotel.AveragePricePerNight/night</div>
+                                            <button type="button" class="btn btn-primary mt-2">
+                                                @if (await _hotelService.IsHotelBookedAsync(hotel.Id))
+                                                {
+                                                    <a asp-action="ViewReservationPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id">View Reservation</a>
+                                                }
+                                                else
+                                                {
+                                                    @if (User.Identity.IsAuthenticated)
                                                     {
-                                                        <a asp-action="ViewReservationPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id">View Reservation</a>
+                                                        <a asp-action="CheckOutPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id" class="text-white">Book Now</a>
                                                     }
                                                     else
                                                     {
-                                                        @if (User.Identity.IsAuthenticated)
-                                                        {
-                                                            <a asp-action="CheckOutPage" asp-controller="Hotel" asp-route-HotelId="@hotel.Id" class="text-white">Book Now</a>
-                                                        }else{
-                                                            <a asp-action="RegisterPage" asp-controller="Account">Book Now</a>
-                                                        }
+                                                        <a asp-action="RegisterPage" asp-controller="Account">Book Now</a>
                                                     }
-                                                </button>
-
-                                            </div>
-                                            <div class="rating">
-                                                @for (int i = 0; i < hotel.Rating; i++)
-                                                {
-                                                    <span class="bi bi-star checked"></span>
                                                 }
-                                                @for (int i = 0; i < (5 - hotel.Rating); i++)
-                                                {
-                                                    <span class="bi bi-star"></span>
-                                                }
-                                            </div>
+                                            </button>
+                                        </div>
+                                        <div class="rating">
+                                            @for (int i = 0; i < hotel.Rating; i++)
+                                            {
+                                                <span class="bi bi-star checked"></span>
+                                            }
+                                            @for (int i = 0; i < (5 - hotel.Rating); i++)
+                                            {
+                                                <span class="bi bi-star"></span>
+                                            }
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                     
-                     
+                        </div>
                     }
                 }
             </div>
         </div>
     </div>
 
+   
 </section>
-
-

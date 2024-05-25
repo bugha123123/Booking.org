@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240525063314_addingLoyaltyProgram")]
+    partial class addingLoyaltyProgram
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -823,9 +826,6 @@ namespace Hotel.org.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProfileImageFileName")
                         .HasColumnType("nvarchar(max)");
 
@@ -860,21 +860,20 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f0d7a46b-515d-486d-a9fa-39503ee53c30",
+                            Id = "d1076469-fc78-4e60-aac3-fc41098ec5de",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "0c4bfc4a-7f48-49e8-ba3f-6b75b18e8d31",
+                            ConcurrencyStamp = "cf234669-6763-45e3-a8c2-943371f523d5",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOYZCTmRU7H6to5ehnKY8yefcMip5OsYEG9Znarr2tA6HW1RtFRjmZth/fs0afagCQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAhhK7mC3R09Hl1iS9c1L+F4uEZqwGVKmElGyqmX6Ff5HU+RFnPLHvT0hbbPrQVWLA==",
                             PhoneNumberConfirmed = false,
-                            Points = 0,
-                            SecurityStamp = "284c2fba-aede-4f70-b0c7-40c145dc9cf7",
+                            SecurityStamp = "72383925-e2cc-43cb-82d6-d1801f63795c",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN",

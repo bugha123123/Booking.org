@@ -54,6 +54,38 @@ namespace Hotel.org.Service
                 UserId = user.Id
             };
 
+            // checks if user has booked any hotels or not
+            if (await IsFirstTimeBooking(user))
+            {
+                if (user.tierLevels == User.TierLevels.SILVER)
+                {
+                   foundHotel.AveragePricePerNight -= 50;
+                }
+
+                if (user.tierLevels == User.TierLevels.GOLD)
+                {
+                    foundHotel.AveragePricePerNight -= 100;
+                }
+
+                if (user.tierLevels == User.TierLevels.PLATINUM)
+                {
+                    foundHotel.AveragePricePerNight -= 175;
+                }
+
+            }
+            user.Points += Convert.ToInt32(foundHotel.AveragePricePerNight);
+
+            if (user.Points >= 500)
+            {
+                user.tierLevels = User.TierLevels.GOLD;
+               
+            }
+
+          if (user.Points >= 1000)
+            {
+                user.tierLevels = User.TierLevels.PLATINUM;
+            }
+        
             await _appDbContext.bookedHotels.AddAsync(bookedHotel);
             await _appDbContext.SaveChangesAsync();
         }
@@ -64,6 +96,11 @@ namespace Hotel.org.Service
             return user.CardNumber.Trim() == cardNumber && user.CardCV.Trim() == cvc;
         }
 
+
+        private async Task<bool> IsFirstTimeBooking(User user)
+        {
+            return !await _appDbContext.bookedHotels.AnyAsync(x => x.UserId == user.Id);
+        }
 
 
         public Task<Hotels> GetHotelById(int id)
@@ -179,7 +216,7 @@ namespace Hotel.org.Service
                     // Log or handle the case where the booked hotel is not found
                     return;
                 }
-
+                user.Points -= (int)foundBookedHotel.hotel.AveragePricePerNight;
                 _appDbContext.bookedHotels.Remove(foundBookedHotel);
                 await _appDbContext.SaveChangesAsync();
             }
@@ -195,7 +232,7 @@ namespace Hotel.org.Service
             var user = await _accountService.GetLoggedInUserAsync();
 
             // Retrieve the booked hotel based on the ID
-            var bookedHotel = await _appDbContext.bookedHotels.FirstOrDefaultAsync(bh => bh.Id == BookedHotelId);
+            var bookedHotel = await _appDbContext.bookedHotels.Include(x => x.hotel).FirstOrDefaultAsync(bh => bh.Id == BookedHotelId);
 
             return bookedHotel;
         }
@@ -364,6 +401,13 @@ namespace Hotel.org.Service
             var ExpensiveHotels = await _appDbContext.Hotels.Where(h => h.AveragePricePerNight > MIN_PRICE).ToListAsync();
 
             return ExpensiveHotels;
+        }
+
+        public async Task<List<Flights>> GetFlightsAssociatedToHotel(int HotelId)
+        {
+            var FoundHotel = await GetBookedHotelById(HotelId);
+
+            return await _appDbContext.Flights.Where(f => f.To == FoundHotel.hotel.Name).ToListAsync();
         }
     }
 }

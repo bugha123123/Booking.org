@@ -5,7 +5,19 @@ using System.ComponentModel.DataAnnotations;
 namespace Hotel.org.Models
 {
     public class User : IdentityUser
+
+
+
     {
+
+
+        public enum TierLevels
+        {
+         SILVER,
+         GOLD,
+         PLATINUM
+        }
+
         [Required(ErrorMessage = "Card number is required.")]
         [RegularExpression("^[0-9]{16}$", ErrorMessage = "Card number must be a 16-digit number.")]
         public string? CardNumber { get; set; } = string.Empty;
@@ -23,6 +35,9 @@ namespace Hotel.org.Models
 
         public string? UserRole { get; set; } = "USER";
 
-      
+        public TierLevels tierLevels { get; set; } = TierLevels.SILVER;
+
+        public int Points { get; set; }
+
     }
 }
