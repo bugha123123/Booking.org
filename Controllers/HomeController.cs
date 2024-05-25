@@ -25,6 +25,11 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
+
+        public IActionResult PointsSystemPage()
+        {
+            return View();
+        }
         public async Task<IActionResult> SupportListPage()
         {
             var SupportList = await _supportService.GetSupportList();

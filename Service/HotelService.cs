@@ -73,15 +73,15 @@ namespace Hotel.org.Service
                 }
 
             }
-            user.Points += Convert.ToInt32(foundHotel.AveragePricePerNight);
+            user.Points += 1;
 
-            if (user.Points >= 500)
+            if (user.Points >= 1.5)
             {
                 user.tierLevels = User.TierLevels.GOLD;
                
             }
 
-          if (user.Points >= 1000)
+          if (user.Points >= 5.5)
             {
                 user.tierLevels = User.TierLevels.PLATINUM;
             }

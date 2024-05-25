@@ -78,7 +78,12 @@
                             <a class="nav-link" asp-action="AdminPage" asp-controller="AdminDashBoard">Admin DashBoard</a>
                         </li>
                     }
-                 
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="PointsSystemPage" asp-controller="Home">Point System</a>
+                        </li>
+                    }
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @if (User.Identity.IsAuthenticated)
