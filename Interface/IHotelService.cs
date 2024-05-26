@@ -92,5 +92,8 @@ namespace Hotel.org.Interface
 
         Task<List<Flights>> GetFlightsAssociatedToHotel(int HotelId);
 
+
+        Task<bool> IsFirstTimeBooking(User user);
+
     }
 }

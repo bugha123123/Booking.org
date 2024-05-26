@@ -1,6 +1,11 @@
-﻿@using Hotel.org.Models
+﻿@using Hotel.org.Interface
+@using Hotel.org.Models
 @model Flights
-
+@inject IHotelService _hotelservice;
+@inject IAccountService _accountservice;
+@{
+    var user = await _accountservice.GetLoggedInUserAsync();
+}
 <div class="max-w-4xl mx-auto py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8">
     <div class="grid md:grid-cols-2 gap-8">
         <div>
@@ -99,7 +104,35 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-gray-500 dark:text-gray-400">Total</p>
-                        <p class="text-2xl font-bold">@Model.Price</p>
+                        @if (await _hotelservice.IsFirstTimeBooking(user))
+                        {
+
+                            @if (user.tierLevels == Hotel.org.Models.User.TierLevels.SILVER)
+                            {
+                                <p class="text-2xl font-bold">@Model.Price - 5</p>
+                            }
+                            else if (user.tierLevels == Hotel.org.Models.User.TierLevels.GOLD)
+                            {
+                                <p class="text-2xl font-bold">@Model.Price - 10</p>
+                            }
+                            else if (user.tierLevels == Hotel.org.Models.User.TierLevels.PLATINUM)
+                            {
+                                <p class="text-2xl font-bold">@Model.Price - 15</p>
+                            }
+                            else
+                            {
+                                <p class="text-2xl font-bold">@Model.Price</p>
+
+                            }
+
+
+
+
+                        }
+                        else
+                        {
+                            <p class="text-2xl font-bold">@Model.Price</p>
+                        }
                     </div>
                     <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 text-white">
                         Complete Booking

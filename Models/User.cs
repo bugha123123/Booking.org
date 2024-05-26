@@ -13,6 +13,7 @@ namespace Hotel.org.Models
 
         public enum TierLevels
         {
+          Member,
          SILVER,
          GOLD,
          PLATINUM
@@ -35,7 +36,7 @@ namespace Hotel.org.Models
 
         public string? UserRole { get; set; } = "USER";
 
-        public TierLevels tierLevels { get; set; } = TierLevels.SILVER;
+        public TierLevels tierLevels { get; set; } = TierLevels.Member;
 
         public int Points { get; set; }
 

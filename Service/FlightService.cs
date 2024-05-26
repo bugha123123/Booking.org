@@ -143,20 +143,27 @@ AddedForFlight = reviews.AddedForFlight,
             // checks if user has booked any flights or not
             if (await IsFirstTimeBooking(user))
             {
-                if (user.tierLevels == User.TierLevels.SILVER)
+                if (user.tierLevels != User.TierLevels.Member)
                 {
-                    foundFlight.Price -= 50;
+                    if (user.tierLevels == User.TierLevels.SILVER)
+                    {
+                        foundFlight.Price -= 5;
+                    }
+
+                    if (user.tierLevels == User.TierLevels.GOLD)
+                    {
+                        foundFlight.Price -= 10;
+                    }
+
+                    if (user.tierLevels == User.TierLevels.PLATINUM)
+                    {
+                        foundFlight.Price -= 15;
+                    }
+                }
+                else {
+                    foundFlight.Price -= 2;
                 }
 
-                if (user.tierLevels == User.TierLevels.GOLD)
-                {
-                    foundFlight.Price -= 100;
-                }
-
-                if (user.tierLevels == User.TierLevels.PLATINUM)
-                {
-                    foundFlight.Price -= 175;
-                }
 
             }
 
@@ -304,7 +311,7 @@ AddedForFlight = reviews.AddedForFlight,
                     return;
                 }
 
-                user.Points -= (int)FlightReservationToRemove.Flights.Price;
+                user.Points -= 1;
                 _appDbContext.BookedFlights.Remove(FlightReservationToRemove);
                 await _appDbContext.SaveChangesAsync();
             }

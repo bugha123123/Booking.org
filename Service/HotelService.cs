@@ -57,20 +57,28 @@ namespace Hotel.org.Service
             // checks if user has booked any hotels or not
             if (await IsFirstTimeBooking(user))
             {
-                if (user.tierLevels == User.TierLevels.SILVER)
+                if (user.tierLevels != User.TierLevels.Member)
                 {
-                   foundHotel.AveragePricePerNight -= 50;
+                    if (user.tierLevels == User.TierLevels.SILVER)
+                    {
+                        foundHotel.AveragePricePerNight -= 5;
+                    }
+
+                    if (user.tierLevels == User.TierLevels.GOLD)
+                    {
+                        foundHotel.AveragePricePerNight -= 10;
+                    }
+
+                    if (user.tierLevels == User.TierLevels.PLATINUM)
+                    {
+                        foundHotel.AveragePricePerNight -= 15;
+                    }
+                }
+                else
+                {
+                    foundHotel.AveragePricePerNight -= 2;
                 }
 
-                if (user.tierLevels == User.TierLevels.GOLD)
-                {
-                    foundHotel.AveragePricePerNight -= 100;
-                }
-
-                if (user.tierLevels == User.TierLevels.PLATINUM)
-                {
-                    foundHotel.AveragePricePerNight -= 175;
-                }
 
             }
             user.Points += 1;
@@ -97,7 +105,7 @@ namespace Hotel.org.Service
         }
 
 
-        private async Task<bool> IsFirstTimeBooking(User user)
+        public async Task<bool> IsFirstTimeBooking(User user)
         {
             return !await _appDbContext.bookedHotels.AnyAsync(x => x.UserId == user.Id);
         }
@@ -216,7 +224,7 @@ namespace Hotel.org.Service
                     // Log or handle the case where the booked hotel is not found
                     return;
                 }
-                user.Points -= (int)foundBookedHotel.hotel.AveragePricePerNight;
+                user.Points -= 1;
                 _appDbContext.bookedHotels.Remove(foundBookedHotel);
                 await _appDbContext.SaveChangesAsync();
             }
