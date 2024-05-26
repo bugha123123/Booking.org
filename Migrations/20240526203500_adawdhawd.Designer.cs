@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526203500_adawdhawd")]
+    partial class adawdhawd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,7 +216,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight1.jpg",
                             Price = 150.00m,
                             Rating = 4.5,
-                            To = "The Ritz-Carlton, Tokyo"
+                            To = "Miami, Florida (MIA Airport)"
                         },
                         new
                         {
@@ -230,7 +233,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight2.jpg",
                             Price = 200.00m,
                             Rating = 4.0,
-                            To = "Hotel de Paris Monte-Carlo"
+                            To = "Denver, Colorado (DEN Airport)"
                         },
                         new
                         {
@@ -247,7 +250,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight3.jpg",
                             Price = 250.00m,
                             Rating = 4.2999999999999998,
-                            To = "The Plaza Hotel"
+                            To = "Seattle, Washington (SEA Airport)"
                         },
                         new
                         {
@@ -264,7 +267,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight4.jpg",
                             Price = 220.00m,
                             Rating = 4.7000000000000002,
-                            To = "Burj Al Arab"
+                            To = "Honolulu, Hawaii (HNL Airport)"
                         },
                         new
                         {
@@ -281,7 +284,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight5.jpg",
                             Price = 180.00m,
                             Rating = 3.8999999999999999,
-                            To = "The Savoy Hotel"
+                            To = "Atlanta, Georgia (ATL Airport)"
                         },
                         new
                         {
@@ -298,7 +301,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight6.jpg",
                             Price = 190.00m,
                             Rating = 4.0999999999999996,
-                            To = "Raffles Hotel"
+                            To = "Austin, Texas (AUS Airport)"
                         },
                         new
                         {
@@ -315,7 +318,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight7.jpg",
                             Price = 210.00m,
                             Rating = 4.4000000000000004,
-                            To = "Four Seasons Hotel George V"
+                            To = "Boston, Massachusetts (BOS Airport)"
                         },
                         new
                         {
@@ -332,7 +335,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight8.jpg",
                             Price = 230.00m,
                             Rating = 4.2000000000000002,
-                            To = "The Oberoi Amarvilas"
+                            To = "Salt Lake City, Utah (SLC Airport)"
                         },
                         new
                         {
@@ -349,7 +352,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight9.jpg",
                             Price = 240.00m,
                             Rating = 4.5999999999999996,
-                            To = " Mandarin Oriental Bangkok "
+                            To = "Las Vegas, Nevada (LAS Airport)"
                         },
                         new
                         {
@@ -366,7 +369,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight10.jpg",
                             Price = 250.00m,
                             Rating = 4.7999999999999998,
-                            To = "Marina Bay Sands"
+                            To = "Orlando, Florida (MCO Airport)"
                         });
                 });
 
@@ -912,21 +915,21 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "167ac8bc-463d-47ee-8b4f-0c379f1a777b",
+                            Id = "81b2dd07-b9df-4bf5-855f-e5125f13a47b",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "7f7e117a-a015-4a88-8c89-25cdcbc4f24a",
+                            ConcurrencyStamp = "871f44c8-6bbd-49c4-97ec-e7767cf4a5f4",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPRvKYjrknQXi1Kf1Zdk5PvohpeVFCdPBdYT3BmWNHSCqhaOfoQByyNk9mT1+Zjs9A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECyml7jNMmHCuhcQX1BHKNI/Ck7Qy/iAeIM2GV63Md5PAJJUfmTEipjvtKNoD4YObg==",
                             PhoneNumberConfirmed = false,
                             Points = 0,
-                            SecurityStamp = "f7e6dca9-f76e-4d14-9ada-60c50bdb4fff",
+                            SecurityStamp = "2b0d3f50-1227-4834-992f-186b20bd60fa",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN",

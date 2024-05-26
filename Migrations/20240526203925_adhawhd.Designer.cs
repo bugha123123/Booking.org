@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526203925_adhawhd")]
+    partial class adhawhd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,7 +216,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight1.jpg",
                             Price = 150.00m,
                             Rating = 4.5,
-                            To = "The Ritz-Carlton, Tokyo"
+                            To = "Miami, Florida (MIA Airport)"
                         },
                         new
                         {
@@ -230,7 +233,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight2.jpg",
                             Price = 200.00m,
                             Rating = 4.0,
-                            To = "Hotel de Paris Monte-Carlo"
+                            To = "Denver, Colorado (DEN Airport)"
                         },
                         new
                         {
@@ -247,7 +250,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight3.jpg",
                             Price = 250.00m,
                             Rating = 4.2999999999999998,
-                            To = "The Plaza Hotel"
+                            To = "Seattle, Washington (SEA Airport)"
                         },
                         new
                         {
@@ -264,7 +267,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight4.jpg",
                             Price = 220.00m,
                             Rating = 4.7000000000000002,
-                            To = "Burj Al Arab"
+                            To = "Honolulu, Hawaii (HNL Airport)"
                         },
                         new
                         {
@@ -281,7 +284,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight5.jpg",
                             Price = 180.00m,
                             Rating = 3.8999999999999999,
-                            To = "The Savoy Hotel"
+                            To = "Atlanta, Georgia (ATL Airport)"
                         },
                         new
                         {
@@ -298,7 +301,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight6.jpg",
                             Price = 190.00m,
                             Rating = 4.0999999999999996,
-                            To = "Raffles Hotel"
+                            To = "Austin, Texas (AUS Airport)"
                         },
                         new
                         {
@@ -315,7 +318,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight7.jpg",
                             Price = 210.00m,
                             Rating = 4.4000000000000004,
-                            To = "Four Seasons Hotel George V"
+                            To = "Boston, Massachusetts (BOS Airport)"
                         },
                         new
                         {
@@ -332,7 +335,7 @@ namespace Hotel.org.Migrations
                             Image = "/Images/flight8.jpg",
                             Price = 230.00m,
                             Rating = 4.2000000000000002,
-                            To = "The Oberoi Amarvilas"
+                            To = "Salt Lake City, Utah (SLC Airport)"
                         },
                         new
                         {
@@ -912,21 +915,21 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "167ac8bc-463d-47ee-8b4f-0c379f1a777b",
+                            Id = "d5210c76-0685-4344-88fc-cf9a8a03d2a8",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "7f7e117a-a015-4a88-8c89-25cdcbc4f24a",
+                            ConcurrencyStamp = "8e911b99-27ac-4852-8f3b-49a5b9e469b7",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPRvKYjrknQXi1Kf1Zdk5PvohpeVFCdPBdYT3BmWNHSCqhaOfoQByyNk9mT1+Zjs9A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAK+VzWUEVaIzP2bhCONZ89Ozv22ZCWydND4nJ0S4cdhpXw3D4K4YOndzIyqtGcfmg==",
                             PhoneNumberConfirmed = false,
                             Points = 0,
-                            SecurityStamp = "f7e6dca9-f76e-4d14-9ada-60c50bdb4fff",
+                            SecurityStamp = "670c3088-0602-42bd-a622-5dddbc7b982d",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN",

@@ -2,8 +2,11 @@
 @using Hotel.org.Models
 @inject IHotelService _hotelService;
 @inject IFlightService _flightService;
+
+<link href="~/lib/leaflet/leaflet.css" rel="stylesheet" />
+<link href="~/lib/leaflet/leaflet.min.css" rel="stylesheet" />
 <section class="container-fluid flex flex-col md:flex-row gap-4 p-6 md:p-10">
-    <div id="map" style="height: 400px;"></div>
+    
 
     <div class="md:w-2/3">
         <div class="grid gap-6">
@@ -85,5 +88,42 @@
         </div>
     </div>
 
-   
+    <div id="map" style="height: 400px;width:600px;" class="rounded-3"></div>
+   </div>
+
+
 </section>
+
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var map = L.map('map');
+        var hotels = @Html.Raw(Json.Serialize(Model));
+
+        // Calculate average latitude and longitude
+        var totalLat = 0;
+        var totalLong = 0;
+       
+        hotels.forEach(function (hotel) {
+            totalLat += hotel.lat;
+            totalLong += hotel.longitute;
+           
+        });
+        var averageLat = totalLat / hotels.length;
+        var averageLong = totalLong / hotels.length;
+
+        // Set the map view to the average latitude and longitude
+        map.setView([averageLat, averageLong], 8);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        ).addTo(map);
+
+        hotels.forEach(function (hotel) {
+            L.marker([hotel.lat, hotel.longitute])
+                .addTo(map)
+                .bindPopup('<b>' + (hotel.Name || '') + '</b><br>' + (hotel.Address || ''));
+        });
+    });
+</script>
+

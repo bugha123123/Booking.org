@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526195331_adawd")]
+    partial class adawd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,12 +166,6 @@ namespace Hotel.org.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("FromLat")
-                        .HasColumnType("float");
-
-                    b.Property<double>("FromLong")
-                        .HasColumnType("float");
-
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
@@ -201,172 +198,152 @@ namespace Hotel.org.Migrations
                         new
                         {
                             Id = 1,
-                            Airline = "American Airlines (AA)",
+                            Airline = "Airline A",
                             ArrivalTime = new DateTime(2024, 6, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 6, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from New York City to Miami",
+                            Description = "Non-stop flight from City A to Paradise City",
                             FlightNumber = "AA123",
-                            From = "New York City (JFK Airport)",
-                            FromLat = 40.644399999999997,
-                            FromLong = -73.974000000000004,
+                            From = "City A",
                             HotelId = 1,
                             Image = "/Images/flight1.jpg",
                             Price = 150.00m,
                             Rating = 4.5,
-                            To = "The Ritz-Carlton, Tokyo"
+                            To = "Luxury Resort"
                         },
                         new
                         {
                             Id = 2,
-                            Airline = "United Airlines (UA)",
+                            Airline = "Airline B",
                             ArrivalTime = new DateTime(2024, 7, 1, 11, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 7, 1, 9, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from Los Angeles to Denver",
+                            Description = "Non-stop flight from City C to Mountain Village",
                             FlightNumber = "BB234",
-                            From = "Los Angeles, California (LAX Airport)",
-                            FromLat = 34.052199999999999,
-                            FromLong = -118.2437,
+                            From = "City C",
                             HotelId = 2,
                             Image = "/Images/flight2.jpg",
                             Price = 200.00m,
                             Rating = 4.0,
-                            To = "Hotel de Paris Monte-Carlo"
+                            To = "Mountain Village"
                         },
                         new
                         {
                             Id = 3,
-                            Airline = "Delta Air Lines (DL)",
+                            Airline = "Airline C",
                             ArrivalTime = new DateTime(2024, 8, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 8, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from Chicago to Seattle",
+                            Description = "Non-stop flight from City E to Paradise City",
                             FlightNumber = "CC345",
-                            From = "Chicago, Illinois (ORD Airport)",
-                            FromLat = 41.881900000000002,
-                            FromLong = -87.898600000000002,
+                            From = "City E",
                             HotelId = 3,
                             Image = "/Images/flight3.jpg",
                             Price = 250.00m,
                             Rating = 4.2999999999999998,
-                            To = "The Plaza Hotel"
+                            To = "Paradise City"
                         },
                         new
                         {
                             Id = 4,
-                            Airline = "American Airlines (AA)",
+                            Airline = "Airline D",
                             ArrivalTime = new DateTime(2024, 9, 1, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 9, 1, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from Dallas to Honolulu",
+                            Description = "Non-stop flight from City G to Oceanfront Town",
                             FlightNumber = "DD456",
-                            From = "Dallas, Texas (DFW Airport)",
-                            FromLat = 32.854700000000001,
-                            FromLong = -97.092799999999997,
+                            From = "City G",
                             HotelId = 4,
                             Image = "/Images/flight4.jpg",
                             Price = 220.00m,
                             Rating = 4.7000000000000002,
-                            To = "Burj Al Arab"
+                            To = "Oceanfront Town"
                         },
                         new
                         {
                             Id = 5,
-                            Airline = "Southwest Airlines (WN)",
+                            Airline = "Airline E",
                             ArrivalTime = new DateTime(2024, 10, 1, 14, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 10, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from Washington D.C. to Atlanta",
+                            Description = "Non-stop flight from City H to Ruralville",
                             FlightNumber = "EE567",
-                            From = "Washington D.C. (DCA Airport)",
-                            FromLat = 38.895099999999999,
-                            FromLong = -77.036699999999996,
+                            From = "City H",
                             HotelId = 5,
                             Image = "/Images/flight5.jpg",
                             Price = 180.00m,
                             Rating = 3.8999999999999999,
-                            To = "The Savoy Hotel"
+                            To = "Ruralville"
                         },
                         new
                         {
                             Id = 6,
-                            Airline = "United Airlines (UA)",
+                            Airline = "Airline F",
                             ArrivalTime = new DateTime(2024, 11, 1, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 11, 1, 13, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from San Francisco to Austin",
+                            Description = "Non-stop flight from City I to Hipsterville",
                             FlightNumber = "FF678",
-                            From = "San Francisco, California (SFO Airport)",
-                            FromLat = 37.618899999999996,
-                            FromLong = -122.3777,
+                            From = "City I",
                             HotelId = 6,
                             Image = "/Images/flight6.jpg",
                             Price = 190.00m,
                             Rating = 4.0999999999999996,
-                            To = "Raffles Hotel"
+                            To = "Hipsterville"
                         },
                         new
                         {
                             Id = 7,
-                            Airline = "Delta Air Lines (DL)",
+                            Airline = "Airline G",
                             ArrivalTime = new DateTime(2024, 12, 1, 16, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 12, 1, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from Seattle to Boston",
+                            Description = "Non-stop flight from City J to Old Town",
                             FlightNumber = "GG789",
-                            From = "Seattle, Washington (SEA Airport)",
-                            FromLat = 47.448999999999998,
-                            FromLong = -122.3019,
+                            From = "City J",
                             HotelId = 7,
                             Image = "/Images/flight7.jpg",
                             Price = 210.00m,
                             Rating = 4.4000000000000004,
-                            To = "Four Seasons Hotel George V"
+                            To = "Old Town"
                         },
                         new
                         {
                             Id = 8,
-                            Airline = "Frontier Airlines (F9)",
+                            Airline = "Airline H",
                             ArrivalTime = new DateTime(2024, 12, 15, 17, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 12, 15, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from Denver to Salt Lake City",
+                            Description = "Non-stop flight from City K to Snowy Peaks",
                             FlightNumber = "HH890",
-                            From = "Denver, Colorado (DEN Airport)",
-                            FromLat = 39.864699999999999,
-                            FromLong = -104.67359999999999,
+                            From = "City K",
                             HotelId = 8,
                             Image = "/Images/flight8.jpg",
                             Price = 230.00m,
                             Rating = 4.2000000000000002,
-                            To = "The Oberoi Amarvilas"
+                            To = "Snowy Peaks"
                         },
                         new
                         {
                             Id = 9,
-                            Airline = "Spirit Airlines (NK)",
+                            Airline = "Airline I",
                             ArrivalTime = new DateTime(2024, 12, 20, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 12, 20, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from Miami to Las Vegas",
+                            Description = "Non-stop flight from City L to Sandy Valley",
                             FlightNumber = "II901",
-                            From = "Miami, Florida (MIA Airport)",
-                            FromLat = 25.761700000000001,
-                            FromLong = -80.180599999999998,
+                            From = "City L",
                             HotelId = 9,
                             Image = "/Images/flight9.jpg",
                             Price = 240.00m,
                             Rating = 4.5999999999999996,
-                            To = " Mandarin Oriental Bangkok "
+                            To = "Sandy Valley"
                         },
                         new
                         {
                             Id = 10,
-                            Airline = "Delta Air Lines (DL)",
+                            Airline = "Airline J",
                             ArrivalTime = new DateTime(2024, 12, 25, 19, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartureTime = new DateTime(2024, 12, 25, 17, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Non-stop flight from Atlanta to Orlando",
+                            Description = "Non-stop flight from City M to Lakeland",
                             FlightNumber = "JJ012",
-                            From = "Atlanta, Georgia (ATL Airport)",
-                            FromLat = 33.636699999999998,
-                            FromLong = -84.428100000000001,
+                            From = "City M",
                             HotelId = 10,
                             Image = "/Images/flight10.jpg",
                             Price = 250.00m,
                             Rating = 4.7999999999999998,
-                            To = "Marina Bay Sands"
+                            To = "Lakeland"
                         });
                 });
 
@@ -912,21 +889,21 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "167ac8bc-463d-47ee-8b4f-0c379f1a777b",
+                            Id = "240f6805-0d22-4876-ac8f-59a5c6fd2710",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "7f7e117a-a015-4a88-8c89-25cdcbc4f24a",
+                            ConcurrencyStamp = "e161f609-fa53-463a-ba24-ae5e7f9b8e4a",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPRvKYjrknQXi1Kf1Zdk5PvohpeVFCdPBdYT3BmWNHSCqhaOfoQByyNk9mT1+Zjs9A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKbqUNSFwH3blQbT8skShiJ3rWjvZqer7ZfOeSz6wDNzXy7QJiG41GiPoyg5DKfx6Q==",
                             PhoneNumberConfirmed = false,
                             Points = 0,
-                            SecurityStamp = "f7e6dca9-f76e-4d14-9ada-60c50bdb4fff",
+                            SecurityStamp = "df1e4ea7-dd3d-4d4a-ba24-efbcb3da0a17",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN",

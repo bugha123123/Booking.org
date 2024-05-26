@@ -124,6 +124,10 @@ namespace Hotel.org.Models
 
         public string? UserId { get; set; }
 
+        public double lat { get; set; }
+
+        public double longitute { get; set; }
+
 
     }
 }
