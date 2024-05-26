@@ -11,7 +11,7 @@ namespace Hotel.org.Service
 
         private readonly AppDbContext _appDbContext;
         private readonly IAccountService _accountService;
-        private int MIN_PRICE = 250;
+        private int MIN_PRICE = 950;
         public HotelService(AppDbContext appDbContext, IAccountService accountService)
         {
             _appDbContext = appDbContext;
@@ -406,7 +406,7 @@ namespace Hotel.org.Service
 
         public async Task<List<Hotels>> GetExpensiveHotels()
         {
-            var ExpensiveHotels = await _appDbContext.Hotels.Where(h => h.AveragePricePerNight > MIN_PRICE).ToListAsync();
+            var ExpensiveHotels = await _appDbContext.Hotels.Where(h => h.AveragePricePerNight >= MIN_PRICE).ToListAsync();
 
             return ExpensiveHotels;
         }
