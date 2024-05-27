@@ -6,8 +6,12 @@
 @{
     var user = await _accountservice.GetLoggedInUserAsync();
 }
-<div class="max-w-4xl mx-auto py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8">
-    <div class="grid md:grid-cols-2 gap-8">
+
+<link href="~/lib/leaflet/leaflet.css" rel="stylesheet" />
+<link href="~/lib/leaflet/leaflet.min.css" rel="stylesheet" />
+
+<div class="max-w-7xl mx-auto py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-3 gap-8">
         <div>
             <div class="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
                 <img src="@Model.RoomImage"
@@ -43,8 +47,8 @@
         </div>
         <div>
             <form asp-action="BookHotel" asp-controller="Hotel" method="post" class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 space-y-4">
-                <input  hidden value="@Model.Id" name="HotelId"/>
-             
+                <input hidden value="@Model.Id" name="HotelId" />
+
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -53,7 +57,6 @@
                         </label>
                         <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                id="name" required
-
                                placeholder="Enter your name" />
                     </div>
                     <div>
@@ -85,11 +88,17 @@
                         <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                id="card-number"
                                name="cardNumber"
-                               placeholder="0000 0000 0000 0000" maxlength="16" required  />
+                               placeholder="0000 0000 0000 0000" maxlength="16" required />
                     </div>
                     <div>
-                   
-                  
+                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                               for="card-expiration">
+                            Expiration
+                        </label>
+                        <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                               id="card-expiration"
+                               name="cardExpiration"
+                               placeholder="MM/YY" maxlength="5" required />
                     </div>
                     <div>
                         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -99,7 +108,7 @@
                         <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                id="cvc"
                                name="cvc"
-                               placeholder="123" maxlength="3" />
+                               placeholder="123" maxlength="3" required />
                     </div>
                 </div>
                 <div class="flex justify-between items-center">
@@ -107,7 +116,6 @@
                         <p class="text-gray-500 dark:text-gray-400">Total</p>
                         @if (await _hotelservice.IsFirstTimeBooking(user))
                         {
-
                             @if (user.tierLevels == Hotel.org.Models.User.TierLevels.SILVER)
                             {
                                 <p class="text-2xl font-bold">@(@Model.AveragePricePerNight - 5)</p>
@@ -124,24 +132,62 @@
                             {
                                 <p class="text-2xl font-bold">@Model.AveragePricePerNight</p>
                             }
-
-
-
-
-
-                        }else{
+                        }
+                        else
+                        {
                             <p class="text-2xl font-bold">@Model.AveragePricePerNight</p>
                         }
-                      
                     </div>
                     <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 text-white">
-                        Complete Booking 
+                        Complete Booking
                     </button>
-                   
                 </div>
-                <p class="mb-4"><Strong>Note: Your first booking comes with a discount based on your tier level. See our points system below for additional details.</Strong> </p>
+                <p class="mb-4"><strong>Note: Your first booking comes with a discount based on your tier level. See our points system below for additional details.</strong></p>
             </form>
-
+        </div>
+        <div>
+            <h1 class="text-dark mb-3">Located at:</h1>
+            <div id="map" style="height: 400px; width: 100%;" class="rounded-3"></div>
         </div>
     </div>
 </div>
+
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var map = L.map('map');
+        var hotels = @Html.Raw(Json.Serialize(Model));
+
+        if (Array.isArray(hotels)) {
+            var totalLat = 0;
+            var totalLong = 0;
+
+            hotels.forEach(function (hotel) {
+                totalLat += hotel.lat;
+                totalLong += hotel.longitute;
+            });
+
+            var averageLat = totalLat / hotels.length;
+            var averageLong = totalLong / hotels.length;
+
+            map.setView([averageLat, averageLong], 8);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            hotels.forEach(function (hotel) {
+                L.marker([hotel.lat, hotel.longitute])
+                    .addTo(map)
+                    .bindPopup('<b>' + (hotel.Name || '') + '</b><br>' + (hotel.Address || ''));
+            });
+        } else {
+            map.setView([hotels.lat, hotels.longitute], 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            L.marker([hotels.lat, hotels.longitute])
+                .addTo(map)
+                .bindPopup('<b>' + (hotels.Name || '') + '</b><br>' + (hotels.Address || ''));
+        }
+    });
+</script>
