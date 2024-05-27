@@ -1,4 +1,5 @@
-﻿using Hotel.org.Interface;
+﻿using Hotel.org.DTO;
+using Hotel.org.Interface;
 using Hotel.org.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -70,21 +71,36 @@ namespace Hotel.org.Controllers
             return View(favouritedHotels);
         }
 
-
-        [Authorize]
-        public async Task<IActionResult> AllHotelsPage(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast, int rating, int numberOfRooms)
+        public async Task<IActionResult> AllHotelsPage(decimal? minPrice, decimal? maxPrice, bool? hasGym, bool? hasPool, bool? hasBreakfast, int rating, int numberOfRooms, int page = 1)
         {
+            const int PageSize = 4; // Define the number of hotels per page
+            List<Hotels> hotels;
+
             // If no filters are provided, return all hotels without applying any filters
             if (minPrice == null && maxPrice == null && hasGym == null && hasPool == null && hasBreakfast == null && rating == 0 && numberOfRooms == 0)
             {
-                return View(await _hotelService.GetAllHotelsForDropDown());
+                hotels = await _hotelService.GetAllHotelsForDropDown();
+            }
+            else
+            {
+                // Apply the provided filters
+                hotels = await _hotelService.GetFilteredHotelsByPrice(minPrice, maxPrice, hasGym, hasPool, hasBreakfast, rating, numberOfRooms);
             }
 
-            // Otherwise, apply the provided filters
-            var filteredHotels = await _hotelService.GetFilteredHotelsByPrice(minPrice, maxPrice, hasGym, hasPool, hasBreakfast, rating, numberOfRooms);
-            return View(filteredHotels);
-        }
+            // Implement paging
+            var totalPages = (int)Math.Ceiling((double)hotels.Count / PageSize);
+            var currentPageHotels = hotels.Skip((page - 1) * PageSize).Take(PageSize).ToList();
 
+            // Pass the current page and total pages to the view
+            var model = new AllHotelsViewModel
+            {
+                CurrentPage = page,
+                TotalPages = totalPages,
+                Hotels = currentPageHotels
+            };
+
+            return View(model);
+        }
 
         [HttpPost("bookhotel")]
         public async Task<IActionResult> BookHotel(int HotelId, string cardNumber, string cvc)

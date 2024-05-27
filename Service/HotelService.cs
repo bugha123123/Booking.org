@@ -43,6 +43,41 @@ namespace Hotel.org.Service
                 throw new ArgumentException("Invalid payment details.");
             }
 
+            // Store the original price
+            var originalPrice = foundHotel.AveragePricePerNight;
+
+            // Calculate the discount based on the user's tier level
+            decimal discount = 0m;
+            if (await IsFirstTimeBooking(user))
+            {
+                switch (user.tierLevels)
+                {
+                    case User.TierLevels.SILVER:
+                        discount = 5;
+                        user.Points += 2;
+                        break;
+                    case User.TierLevels.GOLD:
+                        discount = 10;
+                        user.Points += 3;
+                        break;
+                    case User.TierLevels.PLATINUM:
+                        discount = 15;
+                        user.Points += 4;
+                        break;
+                    case User.TierLevels.Member:
+                        discount = 2;
+                        user.Points += 1;
+                        break;
+                    default:    
+                        discount = 0;
+                        user.Points += (int).5;
+                        break;
+                }
+            }
+
+            // Apply the discount
+            foundHotel.AveragePricePerNight -= discount;
+
             // Create a new booked hotel entry
             var bookedHotel = new BookedHotels()
             {
@@ -51,52 +86,31 @@ namespace Hotel.org.Service
                 hotel = foundHotel,
                 BookedHotelImage = foundHotel.RoomImage,
                 user = user,
-                UserId = user.Id
+                UserId = user.Id,
+                // Set the booking price to the discounted price
+                
             };
 
-            // checks if user has booked any hotels or not
-            if (await IsFirstTimeBooking(user))
-            {
-                if (user.tierLevels != User.TierLevels.Member)
-                {
-                    if (user.tierLevels == User.TierLevels.SILVER)
-                    {
-                        foundHotel.AveragePricePerNight -= 5;
-                    }
-
-                    if (user.tierLevels == User.TierLevels.GOLD)
-                    {
-                        foundHotel.AveragePricePerNight -= 10;
-                    }
-
-                    if (user.tierLevels == User.TierLevels.PLATINUM)
-                    {
-                        foundHotel.AveragePricePerNight -= 15;
-                    }
-                }
-                else
-                {
-                    foundHotel.AveragePricePerNight -= 2;
-                }
-
-
-            }
             user.Points += 1;
 
-            if (user.Points >= 1.5)
-            {
-                user.tierLevels = User.TierLevels.GOLD;
-               
-            }
-
-          if (user.Points >= 5.5)
+            // Update the user's tier level based on points
+            if (user.Points >= 5.5)
             {
                 user.tierLevels = User.TierLevels.PLATINUM;
             }
-        
+            else if (user.Points >= 1.5)
+            {
+                user.tierLevels = User.TierLevels.GOLD;
+            }
+
             await _appDbContext.bookedHotels.AddAsync(bookedHotel);
             await _appDbContext.SaveChangesAsync();
+
+            // Reset the hotel's price to its original value
+            foundHotel.AveragePricePerNight = originalPrice;
+            await _appDbContext.SaveChangesAsync();
         }
+
 
         public async Task<bool> ValidatePaymentDetailsAsync(User user, string cardNumber, string cvc)
         {

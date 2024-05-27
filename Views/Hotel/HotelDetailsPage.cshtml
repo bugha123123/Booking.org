@@ -7,6 +7,49 @@
 @{
     var LoggedInUser = await _accountService.GetLoggedInUserAsync();
 }
+
+<style>
+    .review-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .review-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+        .review-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .review-header div {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .review-header div span {
+                font-size: 1rem;
+                font-weight: 600;
+            }
+
+            .review-header div .review-date {
+                font-size: 0.875rem;
+                color: #6b7280;
+            }
+
+    .review-content {
+        background-color: #f9fafb;
+        border-radius: 0.375rem;
+        padding: 1rem;
+        color: #374151;
+    }
+</style>
 <section class="w-full bg-gray-100 dark:bg-gray-800 py-12 md:py-24 lg:py-32 mt-5 rounded-3">
     <div class="container px-4 md:px-6">
         <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-[1fr_550px]">
@@ -225,18 +268,17 @@
                             else
                             {
                                 // Reviews found
-                                <div class="flex flex-col gap-3">
+                                <div class="flex flex-col gap-6">
                                     @foreach (var review in await _hotelservice.GetReviewsForHotelAsync(Model.Id))
                                     {
-                                        <div class="grid gap-2">
-                                            <div class="flex items-center gap-2 text-sm font-semibold">
-                                              
-                                                    <img src="@Url.Content("~/ProfileImage/" + review.user.ProfileImageFileName)" alt="User Image" class="rounded-full h-8 w-8">
-                                               
-                                             
-                                                <span>@review.AddedBy</span>
+                                        <div class="border border-gray-300 rounded-lg p-4 shadow-sm bg-white">
+                                            <div class="flex items-center gap-4 mb-3">
+                                                <img src="@Url.Content("~/ProfileImage/" + review.user.ProfileImageFileName)"  class="rounded-full h-10 w-10 object-cover">
+                                                <div>
+                                                    <span class="text-lg font-semibold">@review.AddedBy</span>
+                                                </div>
                                             </div>
-                                            <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+                                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                                                 <p class="text-gray-700 dark:text-gray-300">@review.Comment</p>
                                             </div>
                                         </div>

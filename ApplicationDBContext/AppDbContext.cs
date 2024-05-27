@@ -23,6 +23,8 @@ namespace Hotel.org.ApplicationDBContext
         public DbSet<BookedFlights> BookedFlights { get; set; }
 
         public DbSet<FavouritedFlights> FavouritedFlights { get; set; }
+
+        public DbSet<RentalCars> RentalCars { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -35,6 +37,8 @@ namespace Hotel.org.ApplicationDBContext
             modelBuilder.ApplyConfiguration(new HotelData());
 
             modelBuilder.ApplyConfiguration(new FlightSeedData());
+
+            modelBuilder.ApplyConfiguration(new CarRentalSeedData());
 
             modelBuilder.Entity<User>().HasData(
         new User

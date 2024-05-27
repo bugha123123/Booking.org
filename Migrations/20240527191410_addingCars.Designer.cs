@@ -4,6 +4,7 @@ using Hotel.org.ApplicationDBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.org.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240527191410_addingCars")]
+    partial class addingCars
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,9 +70,6 @@ namespace Hotel.org.Migrations
 
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("PaidAtBooking")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -433,9 +433,6 @@ namespace Hotel.org.Migrations
                     b.Property<int>("NumberOfRooms")
                         .HasColumnType("int");
 
-                    b.Property<double>("PaidA")
-                        .HasColumnType("float");
-
                     b.Property<bool>("Parking")
                         .HasColumnType("bit");
 
@@ -494,7 +491,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 2,
                             NumberOfChildren = 3,
                             NumberOfRooms = 245,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "107-6245",
@@ -523,7 +519,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 0,
                             NumberOfChildren = 0,
                             NumberOfRooms = 182,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "98000",
@@ -552,7 +547,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 0,
                             NumberOfChildren = 0,
                             NumberOfRooms = 282,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = false,
                             PostalCode = "10019",
@@ -581,7 +575,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 2,
                             NumberOfChildren = 3,
                             NumberOfRooms = 202,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "",
@@ -610,7 +603,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 2,
                             NumberOfChildren = 3,
                             NumberOfRooms = 267,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "WC2R 0EZ",
@@ -639,7 +631,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 2,
                             NumberOfChildren = 3,
                             NumberOfRooms = 115,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "189673",
@@ -668,7 +659,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 2,
                             NumberOfChildren = 3,
                             NumberOfRooms = 244,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "75008",
@@ -697,7 +687,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 2,
                             NumberOfChildren = 3,
                             NumberOfRooms = 102,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "282001",
@@ -726,7 +715,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 2,
                             NumberOfChildren = 3,
                             NumberOfRooms = 331,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "10500",
@@ -755,7 +743,6 @@ namespace Hotel.org.Migrations
                             NumberOfAdults = 2,
                             NumberOfChildren = 3,
                             NumberOfRooms = 2561,
-                            PaidA = 0.0,
                             Parking = true,
                             Pool = true,
                             PostalCode = "018956",
@@ -1083,21 +1070,21 @@ namespace Hotel.org.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "568ea40c-f9e1-41e7-a4f9-5a332361b4e1",
+                            Id = "bce7a411-ed83-4a22-9a7c-7f0227b3fec0",
                             AccessFailedCount = 0,
                             CardCV = "",
                             CardExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CardNumber = "",
-                            ConcurrencyStamp = "853eaccb-d335-450e-80ca-41336ad96d21",
+                            ConcurrencyStamp = "d30dc85f-4723-4aea-a15e-9dc51965a4cb",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOeeFWshmiv/6q2calZZ93ibb63419Tmk2TgS+1waYltpw7sVNXL0NlLXaEymPzJzw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDb1sUvt2QX+iN25CMxc5ipu5kq0rj9gmGIeHLXClyLEP9dl8yx/kmFMJmqwrKQCyA==",
                             PhoneNumberConfirmed = false,
                             Points = 0,
-                            SecurityStamp = "427973be-9105-46a9-a30c-464da3e35a91",
+                            SecurityStamp = "f5984993-0329-4e94-b770-04e09956f414",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com",
                             UserRole = "ADMIN",

@@ -19,5 +19,7 @@ namespace Hotel.org.Models
 
         public User user { get; set; }
 
+
+        public decimal? PaidAtBooking { get; set; }
     }
 }

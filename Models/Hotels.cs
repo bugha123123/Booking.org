@@ -120,7 +120,7 @@ namespace Hotel.org.Models
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        public User? user  { get; set; }
+        public User? user { get; set; }
 
         public string? UserId { get; set; }
 
@@ -128,6 +128,11 @@ namespace Hotel.org.Models
 
         public double longitute { get; set; }
 
+        public double PaidA
+        {
+            get; set;
 
+
+        }
     }
 }

@@ -90,16 +90,7 @@
                                name="cardNumber"
                                placeholder="0000 0000 0000 0000" maxlength="16" required />
                     </div>
-                    <div>
-                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                               for="card-expiration">
-                            Expiration
-                        </label>
-                        <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                               id="card-expiration"
-                               name="cardExpiration"
-                               placeholder="MM/YY" maxlength="5" required />
-                    </div>
+                   
                     <div>
                         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                for="cvc">
@@ -143,7 +134,10 @@
                     </button>
                 </div>
                 <p class="mb-4"><strong>Note: Your first booking comes with a discount based on your tier level. See our points system below for additional details.</strong></p>
+                <button type="button" class="btn btn-dark"><a asp-action="PointsSystemPage" asp-controller="Home" class="text-white">Points system</a></button>
+
             </form>
+
         </div>
         <div>
             <h1 class="text-dark mb-3">Located at:</h1>
