@@ -88,11 +88,31 @@ namespace Hotel.org.Service
 
 
         //signs in user
-        public async Task SignInUser(LoginViewModel loginViewModel)
+        public async Task<bool> SignInUser(LoginViewModel loginViewModel)
         {
-             await _signInManager.PasswordSignInAsync(loginViewModel.EmailAddress, loginViewModel.Password, isPersistent:false, lockoutOnFailure: false);
+            // Find the user by email
+            var user = await _userManager.FindByEmailAsync(loginViewModel.EmailAddress);
 
+            if (user == null)
+            {
+                // Email not found
+                return false;
+            }
+
+            // Check if the password is correct
+            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
+
+            if (!isPasswordCorrect)
+            {
+                // Password is incorrect
+                return false;
+            }
+
+            // Both email and password are correct, proceed to sign in
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return true;
         }
+
 
         public async Task SignOutUser()
         {
@@ -175,6 +195,30 @@ namespace Hotel.org.Service
             }
 
             return destImage;
+        }
+
+        public async Task DeleteUser()
+        {
+            var user = await GetLoggedInUserAsync();
+
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    // Additional actions like logging, notifications, etc.
+                }
+                else
+                {
+                    // Handle errors
+                    throw new InvalidOperationException($"Error deleting user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("User not found");
+            }
         }
     }
 }

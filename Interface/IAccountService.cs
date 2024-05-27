@@ -7,7 +7,7 @@ namespace Hotel.org.Interface
     {
 
         Task RegisterUser(RegisterViewModel RegisterviewModel);
-        Task SignInUser(LoginViewModel loginViewModel);
+        Task<bool> SignInUser(LoginViewModel loginViewModel);
 
         Task SignOutUser();
 
@@ -26,5 +26,7 @@ namespace Hotel.org.Interface
         //changes user profile
         Task UpdateUserProfile(IFormFile profileImage);
 
+
+        Task DeleteUser();
     }
 }

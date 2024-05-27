@@ -1,6 +1,7 @@
 ﻿using Hotel.org.DTO;
 using Hotel.org.Interface;
 using Hotel.org.Models;
+using Hotel.org.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.org.Controllers
@@ -56,11 +57,21 @@ namespace Hotel.org.Controllers
         {
             if (ModelState.IsValid)
             {
-   await _accountservice.SignInUser(loginViewModel);
-            return RedirectToAction("Index", "Home");
+                var isSignInSuccessful = await _accountservice.SignInUser(loginViewModel);
+
+                if (isSignInSuccessful)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt. Please check your email and password.");
+                }
             }
-         return View( "LogInPage", loginViewModel);
+
+            return View("LogInPage", loginViewModel);
         }
+
 
         [HttpPost("logoutuser")]
 
@@ -103,6 +114,13 @@ namespace Hotel.org.Controllers
         {
             await _accountservice.UpdateUserProfile(profileImage);
             return RedirectToAction("ProfilePage", "Account");
+        }
+
+        [HttpPost("deleteuser")]
+        public async Task<IActionResult> DeleteUser()
+        {
+            await _accountservice.DeleteUser();
+            return RedirectToAction("RegisterPage", "Account");
         }
     }
 }
