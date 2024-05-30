@@ -2,6 +2,8 @@
 using Hotel.org.Interface;
 using Hotel.org.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
+using System.Net;
 using static Hotel.org.Models.Hotels;
 
 namespace Hotel.org.Service
@@ -109,6 +111,41 @@ namespace Hotel.org.Service
             // Reset the hotel's price to its original value
             foundHotel.AveragePricePerNight = originalPrice;
             await _appDbContext.SaveChangesAsync();
+
+            using (var client = new SmtpClient())
+            {
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true;
+                client.Credentials = new NetworkCredential("irakliberdzena314@gmail.com", "coca mmba ywsy lvyz ");
+                using (var message = new MailMessage(
+                    from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
+                    to: new MailAddress($"{user.Email}", $"{user.UserName}")
+                    ))
+                {
+
+                    message.Subject = "Hotel booking service";
+                    message.Body =  $@"
+Dear {user.UserName},
+
+Thank you for booking with us!
+
+Here are your booking details:
+
+Hotel Name: {foundHotel.Name}
+
+
+We are looking forward to hosting you. If you have any questions or need further assistance, please don't hesitate to contact us.
+
+Best regards,
+Hotel Booking Service Team
+";
+
+                    client.Send(message);
+                }
+            }
         }
 
 

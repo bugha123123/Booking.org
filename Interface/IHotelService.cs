@@ -4,6 +4,8 @@ namespace Hotel.org.Interface
 {
     public interface IHotelService
     {
+
+
         //gets 8 hotels
         Task<List<Hotels>> GetHotelsAsync();
 
