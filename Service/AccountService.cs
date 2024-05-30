@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Net.Mail;
+using System.Net;
 namespace Hotel.org.Service
 {
     public class AccountService : IAccountService
@@ -16,6 +18,7 @@ namespace Hotel.org.Service
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly AppDbContext _dbcontext;
+
         public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor, AppDbContext dbcontext, IWebHostEnvironment hostingEnvironment)
         {
             _userManager = userManager;
@@ -53,24 +56,99 @@ namespace Hotel.org.Service
 
 
         //registers user using identity
-        public async Task RegisterUser(RegisterViewModel registerViewModel)
+        public async Task<bool> RegisterUser(RegisterViewModel registerViewModel)
         {
+            // Check if a user with the provided email already exists
+            var existingUser = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
+            if (existingUser != null)
+            {
+                // User with the email already exists, return false to indicate failure
+                return false;
+            }
+
             var user = new User
             {
                 UserName = registerViewModel.EmailAddress,
                 Email = registerViewModel.EmailAddress,
-         
-                
+                EmailConfirmed = false // Ensure email is not confirmed initially
             };
-            //gets the result
+
             var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
-
-            //register === success
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                var verificationCode = GenerateVerificationCode();
+
+                // Store the verification code and its expiration time in the database
+                // For simplicity, assume you have a UserVerificationCode entity
+                var userVerificationCode = new UserVerificationCode
+                {
+                    UserId = user.Id,
+                    user = user,
+                    Code = verificationCode,
+                    ExpiresAt = DateTime.UtcNow.AddMinutes(5) // Code valid for 5 minutes
+                };
+                await _dbcontext.UserVerificationCodes.AddAsync(userVerificationCode);
+                await _dbcontext.SaveChangesAsync();
+
+                await SendVerificationEmail(user.Email, verificationCode);
+
+                // Registration successful, return true
+                return true;
             }
+            else
+            {
+                // User creation failed, return false
+                return false;
+            }
+        }
+
+        private async Task SendVerificationEmail(string email, string verificationCode)
+        {
+            // Assuming _accountService is an injected dependency that provides user details
+            var user = await GetLoggedInUserAsync();
+
+            using (var client = new SmtpClient())
+            {
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true;
+                client.Credentials = new NetworkCredential("irakliberdzena314@gmail.com", "coca mmba ywsy lvyz");
+
+                using (var message = new MailMessage(
+                    from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
+                    to: new MailAddress(email))
+                )
+                {
+                    message.Subject = "Email Verification";
+                    message.IsBodyHtml = true; // Ensure that the body is treated as HTML
+
+                    // Create the HTML view for verification email
+                    string htmlBody = $@"
+                <p>Dear {user.UserName},</p>
+                <p>Thank you for registering with us!</p>
+                <p>Your verification code is: <strong>{verificationCode}</strong></p>
+                <p>Please use this code to verify your email address.</p>
+                <p>Best regards,<br>Verification Service Team</p>
+            ";
+
+                    message.Body = htmlBody;
+
+                    // Send the email
+                    await client.SendMailAsync(message);
+                }
+            }
+        }
+
+       
+
+
+        private string GenerateVerificationCode()
+        {
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString();
         }
 
         public async Task SaveCardDetailsForUser(User user)
@@ -220,5 +298,36 @@ namespace Hotel.org.Service
                 throw new InvalidOperationException("User not found");
             }
         }
+
+        public async Task<bool> VerifyVerificationCode(string code)
+        {
+            var user = await GetLoggedInUserAsync();
+
+            // Find the verification code for the logged-in user
+            var verificationCodeForUserFromDB = await _dbcontext.UserVerificationCodes.FirstOrDefaultAsync(x => x.UserId == user.Id);
+
+            // Check if a verification code was found for the user
+            if (verificationCodeForUserFromDB != null)
+            {
+                // Check if the code provided matches the code stored in the database (case-insensitive comparison)
+                if (!string.IsNullOrWhiteSpace(code) && verificationCodeForUserFromDB.Code.Trim().Equals(code.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    // Check if the verification code has not expired
+                    if (DateTime.UtcNow <= verificationCodeForUserFromDB.ExpiresAt)
+                    {
+                        user.EmailConfirmed = true;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            // No matching verification code found or code does not match
+            return false;
+        }
+
     }
 }

@@ -6,7 +6,7 @@ namespace Hotel.org.Interface
     public interface IAccountService
     {
 
-        Task RegisterUser(RegisterViewModel RegisterviewModel);
+        Task<bool> RegisterUser(RegisterViewModel RegisterviewModel);
         Task<bool> SignInUser(LoginViewModel loginViewModel);
 
         Task SignOutUser();
@@ -28,5 +28,7 @@ namespace Hotel.org.Interface
 
 
         Task DeleteUser();
+
+        Task<bool> VerifyVerificationCode(string code);
     }
 }

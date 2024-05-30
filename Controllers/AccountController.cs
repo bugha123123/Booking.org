@@ -35,6 +35,11 @@ namespace Hotel.org.Controllers
             return View();
         }
 
+
+        public IActionResult VerificationPage()
+        {
+            return View();
+        }
         [HttpPost("registeruser")]
 
 
@@ -42,8 +47,18 @@ namespace Hotel.org.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _accountservice.RegisterUser(registerViewModel);
-                return RedirectToAction("Index", "Home");
+                
+             var result =    await _accountservice.RegisterUser(registerViewModel);
+                if (result)
+                {
+                    return RedirectToAction("VerificationPage", "Account");
+
+                }
+                else {
+                    ViewData["EmailExists"] = "Error Registering try again!!!";
+                    return View("RegisterPage", registerViewModel);
+                }
+
             }
          return View("RegisterPage", registerViewModel);
 
@@ -121,6 +136,19 @@ namespace Hotel.org.Controllers
         {
             await _accountservice.DeleteUser();
             return RedirectToAction("RegisterPage", "Account");
+        }
+
+        [HttpPost("verifycode")]
+        public async Task<IActionResult> VerifyCode(string code)
+        {
+         var VerificationResult =    await _accountservice.VerifyVerificationCode(code);
+
+            if (VerificationResult)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("VerificationPage", "Account");
         }
     }
 }

@@ -121,28 +121,27 @@ namespace Hotel.org.Service
                 client.EnableSsl = true;
                 client.Credentials = new NetworkCredential("irakliberdzena314@gmail.com", "coca mmba ywsy lvyz ");
                 using (var message = new MailMessage(
-                    from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
-                    to: new MailAddress($"{user.Email}", $"{user.UserName}")
-                    ))
+            from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
+            to: new MailAddress(user.Email, user.UserName)
+        ))
                 {
-
                     message.Subject = "Hotel booking service";
-                    message.Body =  $@"
-Dear {user.UserName},
+                    message.IsBodyHtml = true; // Ensure that the body is treated as HTML
 
-Thank you for booking with us!
+                    // Create the HTML view
+                    string htmlBody = $@"
+                <p>Dear {user.UserName},</p>
+                <p>Thank you for booking with us!</p>
+                <p>Here are your booking details:</p>
+                <p>Hotel Name: {foundHotel.Name}</p>
+                <p>We are looking forward to hosting you. If you have any questions or need further assistance, please don't hesitate to contact us.</p>
+                <p>Best regards,<br>Booking Service Team</p>
+                <p><a href='https://localhost:7206/Hotel/ViewReservationPage?HotelId={foundHotel.Id}'>Click here to view your reservation</a></p>
+            ";
 
-Here are your booking details:
+                    message.Body = htmlBody;
 
-Hotel Name: {foundHotel.Name}
-
-
-We are looking forward to hosting you. If you have any questions or need further assistance, please don't hesitate to contact us.
-
-Best regards,
-Hotel Booking Service Team
-";
-
+                    // Send the email
                     client.Send(message);
                 }
             }

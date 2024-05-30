@@ -13,6 +13,7 @@
 </head>
 <body>
     <div class="RegisterContainer container-fluid bg-light rounded mt-5 p-5">
+  
         <form asp-action="RegisterUser" asp-controller="Account" method="post">
             <div class="row">
                 <div class="col-md-5">
@@ -20,7 +21,10 @@
                 </div>
                 <div class="col-md-7">
                     <h3 class="fw-bold mb-4">Register</h3>
-
+                    @if (ViewData["EmailExists"] != null)
+                    {
+                        <span class="text-danger">@ViewData["EmailExists"] </span>
+                    }
                     <div class="mb-3">
                         <input asp-for="EmailAddress" type="text" class="form-control" placeholder="Email Address">
                         <span asp-validation-for="EmailAddress" type="Email" class="text-danger"></span>
