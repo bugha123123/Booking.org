@@ -120,24 +120,85 @@ namespace Hotel.org.Service
                 client.UseDefaultCredentials = false;
                 client.EnableSsl = true;
                 client.Credentials = new NetworkCredential("irakliberdzena314@gmail.com", "coca mmba ywsy lvyz ");
+
                 using (var message = new MailMessage(
-            from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
-            to: new MailAddress(user.Email, user.UserName)
-        ))
+                    from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
+                    to: new MailAddress(user.Email, user.UserName)
+                ))
                 {
-                    message.Subject = "Hotel booking service";
+                    message.Subject = "Payment Receipt - Hotel Booking Service";
                     message.IsBodyHtml = true; // Ensure that the body is treated as HTML
 
                     // Create the HTML view
                     string htmlBody = $@"
-                <p>Dear {user.UserName},</p>
-                <p>Thank you for booking with us!</p>
-                <p>Here are your booking details:</p>
-                <p>Hotel Name: {foundHotel.Name}</p>
-                <p>We are looking forward to hosting you. If you have any questions or need further assistance, please don't hesitate to contact us.</p>
-                <p>Best regards,<br>Booking Service Team</p>
-                <p><a href='https://localhost:7206/Hotel/ViewReservationPage?HotelId={foundHotel.Id}'>Click here to view your reservation</a></p>
-            ";
+                <html>
+                <head>
+                    <style>
+                        body {{
+                            font-family: Arial, sans-serif;
+                            background-color: #f6f6f6;
+                            padding: 20px;
+                        }}
+                        .receipt-container {{
+                            background-color: #ffffff;
+                            padding: 20px;
+                            border-radius: 10px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            max-width: 600px;
+                            margin: 0 auto;
+                        }}
+                        .receipt-header {{
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #333333;
+                        }}
+                        .receipt-table {{
+                            width: 100%;
+                            margin: 20px 0;
+                            border-collapse: collapse;
+                        }}
+                        .receipt-table td {{
+                            padding: 10px;
+                            border-bottom: 1px solid #dddddd;
+                        }}
+                        .receipt-table td:first-child {{
+                            font-weight: bold;
+                            color: #555555;
+                        }}
+                        .receipt-footer {{
+                            margin-top: 20px;
+                            font-size: 14px;
+                            color: #777777;
+                        }}
+                        .receipt-footer a {{
+                            color: #007bff;
+                            text-decoration: none;
+                        }}
+                        .receipt-footer a:hover {{
+                            text-decoration: underline;
+                        }}
+                    </style>
+                </head>
+                <body>
+                    <div class='receipt-container'>
+                        <p class='receipt-header'>Payment Receipt</p>
+                        <p>Dear {user.UserName},</p>
+                        <p>Thank you for your payment!</p>
+                        <p>Here are your payment details:</p>
+                        <table class='receipt-table'>
+                            <tr><td>Hotel Name:</td><td>{foundHotel.Name}</td></tr>
+                            <tr><td>Amount Paid:</td><td>${foundHotel.AveragePricePerNight:F2}</td></tr>
+                            <tr><td>Payment Date:</td><td>{DateTime.UtcNow:yyyy-MM-dd}</td></tr>
+                        </table>
+                        <p>We are looking forward to hosting you. If you have any questions or need further assistance, please don't hesitate to contact us.</p>
+                        <p class='receipt-footer'>
+                            Best regards,<br>
+                            Booking Service Team<br>
+                            <a href='https://localhost:7206/Hotel/ViewReservationPage?HotelId={foundHotel.Id}'>Click here to view your reservation</a>
+                        </p>
+                    </div>
+                </body>
+                </html>";
 
                     message.Body = htmlBody;
 

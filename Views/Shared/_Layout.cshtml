@@ -2,6 +2,7 @@
 @inject IAccountService _accountService;
 @{
     var user = await _accountService.GetLoggedInUserAsync();
+    var currentController = ViewContext.RouteData.Values["controller"].ToString();
 }
 
 <!DOCTYPE html>
@@ -39,44 +40,48 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
-                  @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"  id="exploreDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Reservations
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="exploreDropdown">
-                                <a class="dropdown-item text-dark" href="@Url.Action("ReservationsPage", "Hotel")">Hotels</a>
-                                <a class="dropdown-item text-dark" href="@Url.Action("FlightReservationsPage", "Flight")">Flights</a>
-                            </div>
-                        </li>
-                    }
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle"  id="exploreDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Explore
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="exploreDropdown">
-                            <a class="dropdown-item text-dark" asp-action="AllHotelsPage" asp-controller="Hotel">Hotels</a>
-                            <a class="dropdown-item text-dark" asp-action="AllFlightsPage" asp-controller="Flight">Flights</a>
-                        </div>
-                    </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                        @if (currentController == "Home" || currentController == "Hotel")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("ReservationsPage", "Hotel")">Hotel Reservations</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("FlightReservationsPage", "Flight")">Flight Reservations</a>
+                                </li>
+                            }
+                        }
 
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="ReviewPage" asp-controller="Hotel">Add Review</a>
-                    </li>
-               
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="PointsSystemPage" asp-controller="Home">Point System</a>
-                        </li>
-                    }
-                    @if (user != null && user.UserRole == "ADMIN")
-                    {
+                        @if (currentController == "Home" || currentController == "Hotel")
+                        {
                             <li class="nav-item">
-                            <a class="nav-link" asp-action="AdminPage" asp-controller="AdminDashBoard">Admin DashBoard</a>
+                                <a class="nav-link" asp-action="AllHotelsPage" asp-controller="Hotel">Explore Hotels</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="AllFlightsPage" asp-controller="Flight">Explore Flights</a>
+                            </li>
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="ReviewPage" asp-controller="Hotel">Add Review</a>
                         </li>
-                    }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="PointsSystemPage" asp-controller="Home">Point System</a>
+                            </li>
+                        }
+
+             
+               
                  
                 </ul>
                 <ul class="navbar-nav ml-auto">
