@@ -194,6 +194,16 @@ namespace Hotel.org.Service
 
         public async Task SignOutUser()
         {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(-1),
+                Path = "/",
+                SameSite = SameSiteMode.None,
+                Secure = true
+            };
+
+            _httpContextAccessor.HttpContext.Response.Cookies.Append("IsVerified", "", cookieOptions);
             await _signInManager.SignOutAsync();
         }
 
@@ -316,6 +326,16 @@ namespace Hotel.org.Service
                     if (DateTime.UtcNow <= verificationCodeForUserFromDB.ExpiresAt)
                     {
                         user.EmailConfirmed = true;
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Expires = DateTime.UtcNow.AddDays(1),
+                            Path = "/",
+                            SameSite = SameSiteMode.None,
+                            Secure = true
+                        };
+
+                        _httpContextAccessor.HttpContext.Response.Cookies.Append("IsVerified", "True", cookieOptions);
                         return true;
                     }
                     else

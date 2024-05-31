@@ -42,19 +42,6 @@ namespace Hotel.org.ApplicationDBContext
 
             modelBuilder.ApplyConfiguration(new CarRentalSeedData());
 
-            modelBuilder.Entity<User>().HasData(
-        new User
-        {
-            
-            UserName = "admin@example.com",
-            NormalizedUserName = "ADMIN@EXAMPLE.COM",
-            Email = "admin@example.com",
-            NormalizedEmail = "ADMIN@EXAMPLE.COM",
-            EmailConfirmed = true,
-            PasswordHash = new PasswordHasher<User>().HashPassword(null, "Admin"),
-            UserRole = "ADMIN"
-        }
-    );
         }
     }
 }
