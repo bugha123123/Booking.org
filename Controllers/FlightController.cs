@@ -1,7 +1,9 @@
-﻿using Hotel.org.Interface;
+﻿using Hotel.org.DTO;
+using Hotel.org.Interface;
 using Hotel.org.Models;
 using Hotel.org.Service;
 using Microsoft.AspNetCore.Mvc;
+using static Hotel.org.Models.Reviews;
 
 namespace Hotel.org.Controllers
 {
@@ -21,6 +23,43 @@ namespace Hotel.org.Controllers
         public IActionResult FlightBookedSuccessPage()
         {
             return View();
+        }
+        public async Task<IActionResult> AllFlightsPage(decimal? minPrice, decimal? maxPrice,int page = 1)
+        {
+
+            const int PageSize = 4; // Define the number of hotels per page
+            List<Flights> Flights;
+
+            // If no filters are provided, return all hotels without applying any filters
+            if (minPrice == null && maxPrice == null || minPrice == 0 && maxPrice == 0)
+            {
+                Flights = await _flightService.GetAllFlightsForDropDown();
+            }
+            else
+            {
+                // Apply the provided filters
+                Flights = await _flightService.GetFilteredFlightsByPrice(minPrice, maxPrice);
+            }
+
+            // Implement paging
+            var totalPages = (int)Math.Ceiling((double)Flights.Count / PageSize);
+            var currentPageFlights = Flights.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+
+            // Pass the current page and total pages to the view
+            var model = new AllFlightsViewModel
+            {
+                CurrentPage = page,
+                TotalPages = totalPages,
+                Flights = currentPageFlights
+            };
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> ViewFlightReservationsPage(int FlightId)
+        {
+            var FoundFlightById = await _flightService.GetBookedFlightById(FlightId);
+            return View(FoundFlightById);
         }
 
         public async Task<IActionResult> FlightReservationsPage()

@@ -4,6 +4,7 @@ using Hotel.org.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 using System.Net;
+using static Hotel.org.Models.Reviews;
 
 namespace Hotel.org.Service
 {
@@ -415,5 +416,28 @@ AddedForFlight = reviews.AddedForFlight,
             }
 
         }
+
+        public async Task<BookedFlights> GetBookedFlightById(int FlightId)
+        {
+            var FoundFlight = await GetFlightById(FlightId);
+            return await _appDbContext.BookedFlights.FirstOrDefaultAsync(x => x.Flights.Id == FoundFlight.Id);
+        }
+
+        public async Task<List<Flights>> GetFilteredFlightsByPrice(decimal? minPrice, decimal? maxPrice)
+        {
+            IQueryable<Flights> query = _appDbContext.Flights.AsQueryable();
+
+            // Filter hotels by price range if provided
+            if (minPrice != null && maxPrice != null)
+            {
+                query = query.Where(h => h.Price >= minPrice && h.Price <= maxPrice);
+            }
+
+            // Filter hotels by amenities if provided
+           
+
+            return await query.ToListAsync();
+        }
+
     }
 }

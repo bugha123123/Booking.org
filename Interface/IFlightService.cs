@@ -43,5 +43,9 @@ namespace Hotel.org.Interface
         Task<List<Flights>> GetMostExpensiveFlightsAsync();
 
         Task CancelFlightReservation(int FlightId);
+
+        Task<BookedFlights> GetBookedFlightById(int FlightId);
+
+        Task<List<Flights>> GetFilteredFlightsByPrice(decimal? minPrice, decimal? maxPrice);
     }
 }

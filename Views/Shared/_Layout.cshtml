@@ -48,26 +48,38 @@
                                     <a class="nav-link" href="@Url.Action("ReservationsPage", "Hotel")">Hotel Reservations</a>
                                 </li>
                             }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("FlightReservationsPage", "Flight")">Flight Reservations</a>
-                                </li>
-                            }
+                            else if (currentController == "Flight")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("FlightReservationsPage", "Flight")">Flight Reservations</a>
+                            </li>
+                        }else{
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("FlightReservationsPage", "Flight")">Cars Rented</a>
+                            </li>
+                        }
+                           
                         }
 
-                        @if (currentController == "Home" || currentController == "Hotel")
+
+
+                    @if (currentController == "Home" || currentController == "Hotel")
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-action="AllHotelsPage" asp-controller="Hotel">Explore Hotels</a>
                             </li>
                         }
-                        else
-                        {
-                            <li class="nav-item">
+                    else if (currentController == "Flight")
+                    {
+                        <li class="nav-item">
                                 <a class="nav-link" asp-action="AllFlightsPage" asp-controller="Flight">Explore Flights</a>
-                            </li>
-                        }
+                            </li>    
+                    }else{
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="AllFlightsPage" asp-controller="Flight">Explore Cars</a>
+                        </li>
+                    }
+                       
 
                         <li class="nav-item">
                             <a class="nav-link" asp-action="ReviewPage" asp-controller="Hotel">Add Review</a>

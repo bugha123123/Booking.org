@@ -1,0 +1,254 @@
+﻿@using Hotel.org.Models
+@model BookedFlights
+
+<div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
+
+    <div>
+        <img src="@Model.Flights.Image"
+             alt="Hotel Image"
+             width="800"
+             height="600"
+             class="w-full rounded-lg overflow-hidden"
+             style="aspect-ratio: 800 / 600; object-fit: cover;" />
+    </div>
+    <div class="grid gap-6">
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <div class="flex flex-col space-y-1.5 p-6">
+                <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">@Model.Flights.Airline</h3>
+                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="w-4 h-4">
+                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                        <line x1="16" x2="16" y1="2" y2="6"></line>
+                        <line x1="8" x2="8" y1="2" y2="6"></line>
+                        <line x1="3" x2="21" y1="10" y2="10"></line>
+                        <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                    <span>@Model.Flights.DepartureTime, 2024 - @Model.Flights.ArrivalTime 2024</span>
+                    <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-4"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="w-4 h-4">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="p-6">
+
+                <div class="grid gap-4">
+              
+                    <div class="grid gap-2">
+                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                            Extras
+                        </label>
+                        <div class="flex items-center gap-4">
+                            <button type="button"
+                                    role="checkbox"
+                                    aria-checked="true"
+                                    data-state="checked"
+                                    value="on"
+                                    class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                                    id="breakfast">
+                                <span data-state="checked"
+                                      class="flex items-center justify-center text-current"
+                                      style="pointer-events: none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width="24"
+                                         height="24"
+                                         viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         stroke-width="2"
+                                         stroke-linecap="round"
+                                         stroke-linejoin="round"
+                                         class="h-4 w-4">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </span>
+                            </button>
+                            <input aria-hidden="true"
+                                   style="transform: translateX(-100%); position: absolute; pointer-events: none; opacity: 0; margin: 0px; width: 16px; height: 16px;"
+                                   tabindex="-1"
+                                   type="checkbox"
+                                   value="on"
+                                   checked="" />
+                            <button type="button"
+                                    role="checkbox"
+                                    aria-checked="false"
+                                    data-state="unchecked"
+                                    value="on"
+                                    class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                                    id="parking"></button>
+                            <input aria-hidden="true"
+                                   style="transform: translateX(-100%); position: absolute; pointer-events: none; opacity: 0; margin: 0px; width: 16px; height: 16px;"
+                                   tabindex="-1"
+                                   type="checkbox"
+                                   value="on" />
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="grid gap-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="check-in">
+                                Departure time
+                            </label>
+                            <button class="inline-flex items-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full justify-start text-left font-normal"
+                                    id="check-in"
+                                    type="button"
+                                    aria-haspopup="dialog"
+                                    aria-expanded="false"
+                                    aria-controls="radix-:r4:"
+                                    data-state="closed">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="mr-1 h-4 w-4 -translate-x-1">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                    <line x1="16" x2="16" y1="2" y2="6"></line>
+                                    <line x1="8" x2="8" y1="2" y2="6"></line>
+                                    <line x1="3" x2="21" y1="10" y2="10"></line>
+                                    <path d="M8 14h.01"></path>
+                                    <path d="M12 14h.01"></path>
+                                    <path d="M16 14h.01"></path>
+                                    <path d="M8 18h.01"></path>
+                                    <path d="M12 18h.01"></path>
+                                    <path d="M16 18h.01"></path>
+                                </svg>
+                                @Model.Flights.DepartureTime, 2024
+                            </button>
+                        </div>
+                        <div class="grid gap-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="check-out">
+                                Arrival Time
+                            </label>
+                            <button class="inline-flex items-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full justify-start text-left font-normal"
+                                    id="check-out"
+                                    type="button"
+                                    aria-haspopup="dialog"
+                                    aria-expanded="false"
+                                    aria-controls="radix-:rb:"
+                                    data-state="closed">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="mr-1 h-4 w-4 -translate-x-1">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                    <line x1="16" x2="16" y1="2" y2="6"></line>
+                                    <line x1="8" x2="8" y1="2" y2="6"></line>
+                                    <line x1="3" x2="21" y1="10" y2="10"></line>
+                                    <path d="M8 14h.01"></path>
+                                    <path d="M12 14h.01"></path>
+                                    <path d="M16 14h.01"></path>
+                                    <path d="M8 18h.01"></path>
+                                    <path d="M12 18h.01"></path>
+                                    <path d="M16 18h.01"></path>
+                                </svg>
+                                @Model.Flights.ArrivalTime, 2024
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid gap-2">
+                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                               for="guests">
+                            Guests
+                        </label>
+                        <button type="button"
+                                role="combobox"
+                                aria-controls="radix-:rc:"
+                                aria-expanded="false"
+                                aria-autocomplete="none"
+                                dir="ltr"
+                                data-state="closed"
+                                class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                            <span style="pointer-events: none;">2 guests</span>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="h-4 w-4 opacity-50"
+                                 aria-hidden="true">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </button>
+                        <select aria-hidden="true"
+                                tabindex="-1"
+                                style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;">
+                            <option value="1">1 guest</option>
+                            <option value="2" selected="">
+                                2 guests
+                            </option>
+                            <option value="3">3 guests</option>
+                            <option value="4">4 guests</option>
+                        </select>
+                    </div>
+                    <button class="inline-flex items-center  justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 w-full">
+                        <a asp-action="FlightMainPage" asp-controller="Flight" class="text-white">Home</a>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" >
+            <div class="flex flex-col space-y-1.5 p-6">
+                <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Reservation Summary</h3>
+            </div>
+            <div class="p-6 grid gap-4">
+       
+         
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-500 dark:text-gray-400">Check-in</span>
+                    <span>@Model.Flights.ArrivalTime</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-500 dark:text-gray-400">Check-out</span>
+                    <span>@Model.Flights.DepartureTime</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-500 dark:text-gray-400">Rating</span>
+                    <span>@Model.Flights.Rating</span>
+                </div>
+                <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
+                <div class="flex items-center justify-between font-medium">
+                    <span>Total</span>
+                    <span>@Model.Flights.Price</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
