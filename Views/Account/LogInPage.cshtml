@@ -9,77 +9,77 @@
     <meta name="viewport" content="width=device-width" />
     <title>Register</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" asp-append-version="true">
     <!-- You can adjust the link to point to your local Bootstrap CSS file if you prefer -->
 </head>
 <body>
 
-    <div class="RegisterContainer container-fluid bg-light rounded mt-5 p-5">
-        <form asp-action="LogInUser" asp-controller="Account" method="post">
-            <div class="row">
-                <div class="col-md-5">
-                    <img src="~/Images/travel photo.png" class="img-fluid" style="max-width: 100%; height: auto;">
+
+
+<form asp-controller="Account" asp-action="LogInUser" method="post">
+        <!--
+        // v0 by Vercel.
+        // https://v0.dev/t/s5Xba1iA08A
+        -->
+
+        <div class="flex items-center justify-center h-screen">
+            <div class="max-w-md w-full space-y-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold">Login</h2>
+                    <p class="mt-2 text-gray-500 dark:text-gray-400">
+                        Welcome back! Please enter your credentials to access your account.
+                    </p>
+                    <a asp-action="RegisterPage" asp-controller="Account"  style="text-decoration:underline">Create Account</a>
                 </div>
-                <div class="col-md-7">
-                    <h3 class="fw-bold mb-4">Log in</h3>
-                    <div class="mb-3">
-                        <input asp-for="EmailAddress" type="text" class="form-control" placeholder="Email Address">
-                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                <form class="space-y-6">
+                    <div>
+                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                               for="email">
+                            Email address
+                        </label>
+                        <input asp-for="EmailAddress" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                               id="email"
+                               placeholder="name@example.com"
+                               required=""
+                               type="email" />
                     </div>
-
-                    <div class="input-group mb-3">
-                        <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password">
-                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                            <i id="eyeIcon" class="bi bi-eye"></i>
-                        </button>
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="password">
+                                Password
+                            </label>
+                            <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                Forgot password?
+                            </a>
+                        </div>
+                        <input asp-for="Password" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                               id="password"
+                               required=""
+                               type="password" />
                     </div>
-                    <span asp-validation-for="Password" class="text-danger"></span>
-
-                    <div class="input-group mb-3">
-                        <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password" aria-label="Confirm Password">
-                        <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
-                            <i id="eyeIconConfirm" class="bi bi-eye"></i>
-                        </button>
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="confirmPassword">
+                                Confirm Password
+                            </label>
+                        </div>
+                        <input asp-for="ConfirmPassword" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                               id="confirmPassword"
+                               required=""
+                               type="password" />
                     </div>
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    <a asp-action="RegisterPage" asp-controller="Account" class="text-decoration-underline text-info">Register</a>
-
-                    <br />
-                    <br />
-
-                    <button type="submit" style="background:#07689f;color:white;" class="btn btn-lg btn-block">Log in</button>
-                </div>
+          
+                   
+              <button type="submit" class="btn btn-dark">Log in</button>
+          
+                </form>
             </div>
-        </form>
-    </div>
-
+        </div>
+</form>
 
 </body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<!-- You can adjust the link to point to your local Bootstrap JavaScript file if you prefer -->
-<script>
-    // JavaScript to toggle password visibility
-    document.addEventListener('DOMContentLoaded', function () {
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#Password');
-        const eyeIcon = document.querySelector('#eyeIcon');
 
-        togglePassword.addEventListener('click', function () {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            eyeIcon.classList.toggle('bi-eye');
-            eyeIcon.classList.toggle('bi-eye-slash');
-        });
-
-        const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
-        const confirmPassword = document.querySelector('#ConfirmPassword');
-        const eyeIconConfirm = document.querySelector('#eyeIconConfirm');
-
-        toggleConfirmPassword.addEventListener('click', function () {
-            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-            confirmPassword.setAttribute('type', type);
-            eyeIconConfirm.classList.toggle('bi-eye');
-            eyeIconConfirm.classList.toggle('bi-eye-slash');
-        });
-    });
-</script>
