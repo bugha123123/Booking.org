@@ -40,6 +40,7 @@ namespace Hotel.org.Models
 
         public int Points { get; set; }
 
+        
 
     }
 }

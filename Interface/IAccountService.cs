@@ -30,5 +30,9 @@ namespace Hotel.org.Interface
         Task DeleteUser();
 
         Task<bool> VerifyVerificationCode(string code);
+
+        Task ResetPassword(string email);
+
+        Task<string> UpdatePassword(string email,string token, string newPassword);
     }
 }

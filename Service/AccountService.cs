@@ -9,6 +9,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Net.Mail;
 using System.Net;
+using System.Security.Cryptography;
 namespace Hotel.org.Service
 {
     public class AccountService : IAccountService
@@ -18,14 +19,15 @@ namespace Hotel.org.Service
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly AppDbContext _dbcontext;
-
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor, AppDbContext dbcontext, IWebHostEnvironment hostingEnvironment)
+        private readonly IPasswordHasher<User> _passwordHasher;
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor, AppDbContext dbcontext, IWebHostEnvironment hostingEnvironment, IPasswordHasher<User> passwordHasher)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
             _dbcontext = dbcontext;
             _hostingEnvironment = hostingEnvironment;
+            _passwordHasher = passwordHasher;
         }
         public async Task<User?> GetLoggedInUserAsync()
         {
@@ -142,7 +144,7 @@ namespace Hotel.org.Service
             }
         }
 
-       
+
 
 
         private string GenerateVerificationCode()
@@ -213,7 +215,7 @@ namespace Hotel.org.Service
 
             LoggedInUser.CardCV = user.CardCV;
             LoggedInUser.CardNumber = user.CardNumber;
-            LoggedInUser.CardExpirationDate= user.CardExpirationDate;
+            LoggedInUser.CardExpirationDate = user.CardExpirationDate;
 
             await _dbcontext.SaveChangesAsync();
 
@@ -224,23 +226,23 @@ namespace Hotel.org.Service
         {
 
             var LoggedInUser = await GetLoggedInUserAsync();
-                var userToUpdate = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == LoggedInUser.Id);
+            var userToUpdate = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == LoggedInUser.Id);
 
-                if (userToUpdate != null)
+            if (userToUpdate != null)
+            {
+
+                if (profileImage != null && profileImage.Length > 0)
                 {
 
-                    if (profileImage != null && profileImage.Length > 0)
-                    {
+                    string uniqueFileName = ProcessUploadedFile(profileImage);
 
-                        string uniqueFileName = ProcessUploadedFile(profileImage);
-
-                        userToUpdate.ProfileImageFileName = uniqueFileName;
-                    }
+                    userToUpdate.ProfileImageFileName = uniqueFileName;
+                }
 
                 _dbcontext.Users.Update(userToUpdate);
-                    await _dbcontext.SaveChangesAsync();
-                }
-           
+                await _dbcontext.SaveChangesAsync();
+            }
+
         }
         private string ProcessUploadedFile(IFormFile profileImage)
         {
@@ -349,5 +351,100 @@ namespace Hotel.org.Service
             return false;
         }
 
+        public async Task ResetPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                // Handle user not found case
+                return;
+            }
+
+            string token = GenerateResetPasswordToken();
+            
+            
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                // Handle update failure case
+                return;
+            }
+
+            using (var client = new SmtpClient())
+            {
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true;
+                client.Credentials = new NetworkCredential("irakliberdzena314@gmail.com", "coca mmba ywsy lvyz");
+
+                using (var message = new MailMessage(
+                    from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
+                    to: new MailAddress(email, email)
+                ))
+                {
+                    message.Subject = "Reset Your Password";
+                    message.IsBodyHtml = true;
+
+                    string resetLink = "https://localhost:7206/Account/ResetPassword?email=" + WebUtility.UrlEncode(email) + "&token=" + WebUtility.UrlEncode(token);
+                    string htmlBody = $@"
+            <html>
+            <body>
+                <h2>Password Reset Request</h2>
+                <p>Dear {email},</p>
+                <p>We received a request to reset your password. Click the link below to reset your password:</p>
+                <p><a href='{resetLink}'>Reset Password</a></p>
+                <p>If you did not request a password reset, please ignore this email or contact support if you have questions.</p>
+                <p>Thanks,<br/>The BookingService Team</p>
+            </body>
+            </html>";
+
+                    message.Body = htmlBody;
+
+                    // Send the email
+                    client.Send(message);
+                }
+            }
+        }
+
+        private static string GenerateResetPasswordToken()
+        {
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                byte[] tokenData = new byte[32];
+                rng.GetBytes(tokenData);
+                return Convert.ToBase64String(tokenData);
+            }
+        }
+
+
+        public async Task<string> UpdatePassword(string email, string token, string newPassword)
+        {
+            // Find the user by email
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return "User not found";
+            }
+
+            // Check if the token is valid and not expired
+      
+
+            // Hash the new password
+            user.PasswordHash = _passwordHasher.HashPassword(user, newPassword);
+
+       
+
+            // Update the user in the database
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return "Password updated successfully";
+            }
+
+            return "Error updating password: " + string.Join(", ", result.Errors.Select(e => e.Description));
+        }
     }
 }

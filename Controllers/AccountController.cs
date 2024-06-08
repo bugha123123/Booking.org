@@ -24,6 +24,10 @@ namespace Hotel.org.Controllers
             return View();
         }
 
+        public IActionResult ForgotPasswordPage()
+        {
+            return View();
+        }
 
         public IActionResult ProfilePage()
         {
@@ -34,8 +38,12 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
-
-
+               public IActionResult ResetPassword(string email,string token)
+        {
+            ViewBag.Email = email;
+            ViewBag.Token = token;
+            return View();
+        }
         public IActionResult VerificationPage()
         {
             return View();
@@ -149,6 +157,26 @@ namespace Hotel.org.Controllers
             }
 
             return RedirectToAction("VerificationPage", "Account");
+        }
+
+        [HttpPost("resetpasswordaction")]
+        public async Task<IActionResult> ResetPasswordAction(string email)
+        {
+         
+          await        _accountservice.ResetPassword(email);
+                return RedirectToAction("ForgotPasswordPage", "Account");
+         
+
+        }
+
+        [HttpPost("updatepassword")]
+        public async Task<IActionResult> UpdatePassword(string email,string token, string newPassword)
+        {
+           
+         await        _accountservice.UpdatePassword(email, token,  newPassword);
+                return RedirectToAction("LogInPage", "Account");
+    
+
         }
     }
 }
