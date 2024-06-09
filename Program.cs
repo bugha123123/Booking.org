@@ -25,7 +25,6 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddScoped<ISupportService, SupportService>();
 builder.Services.AddScoped<IFlightService, FlightService>();
-builder.Services.AddScoped<ICarService, CarService>();
 // Registration ends here
 
 builder.Services.AddControllersWithViews();
@@ -62,9 +61,7 @@ app.MapGet("/", (HttpContext context) =>
         return Task.CompletedTask;
     }
 
-    // If the user is already authenticated, return 404 or another appropriate response
-    context.Response.StatusCode = 404;
-    return Task.CompletedTask;
+ 
 });
 
 
