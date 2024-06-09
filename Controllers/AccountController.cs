@@ -38,10 +38,17 @@ namespace Hotel.org.Controllers
         {
             return View();
         }
-               public IActionResult ResetPassword(string email,string token)
+        public IActionResult ResetPassword(string email, string token, long tokenExpiresAt)
         {
+            if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > tokenExpiresAt)
+            {
+                ViewBag.TokenExpired = true;
+                return View();
+            }
+
             ViewBag.Email = email;
             ViewBag.Token = token;
+            ViewBag.TokenExpired = false;
             return View();
         }
         public IActionResult VerificationPage()

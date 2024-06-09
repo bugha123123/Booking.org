@@ -34,7 +34,7 @@ namespace Hotel.org.Service
             // Check if the user is authenticated and has a name
             if (_httpContextAccessor.HttpContext.User.Identity?.IsAuthenticated != true)
             {
-                // User is not authenticated, return null or handle the case accordingly
+                // User is not authenticated, return null
                 return null;
             }
 
@@ -44,8 +44,7 @@ namespace Hotel.org.Service
             // Check if the user name is null
             if (userName == null)
             {
-                // Handle the case where the user name is null
-                // You can return null or throw an exception, depending on your requirements
+                
                 return null;
             }
 
@@ -353,23 +352,12 @@ namespace Hotel.org.Service
 
         public async Task ResetPassword(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                // Handle user not found case
-                return;
-            }
+      
 
             string token = GenerateResetPasswordToken();
-            
-            
 
-            var updateResult = await _userManager.UpdateAsync(user);
-            if (!updateResult.Succeeded)
-            {
-                // Handle update failure case
-                return;
-            }
+            DateTime expiresAt = DateTime.UtcNow.AddMinutes(3);
+            long expiresAtUnixTimestamp = new DateTimeOffset(expiresAt).ToUnixTimeSeconds();
 
             using (var client = new SmtpClient())
             {
@@ -388,7 +376,7 @@ namespace Hotel.org.Service
                     message.Subject = "Reset Your Password";
                     message.IsBodyHtml = true;
 
-                    string resetLink = "https://localhost:7206/Account/ResetPassword?email=" + WebUtility.UrlEncode(email) + "&token=" + WebUtility.UrlEncode(token);
+                    string resetLink = $"https://localhost:7206/Account/ResetPassword?email={WebUtility.UrlEncode(email)}&token={WebUtility.UrlEncode(token)}&TokenExpiresAt={expiresAtUnixTimestamp}";
                     string htmlBody = $@"
             <html>
             <body>
@@ -402,10 +390,12 @@ namespace Hotel.org.Service
             </html>";
 
                     message.Body = htmlBody;
+                    
 
                     // Send the email
                     client.Send(message);
                 }
+               
             }
         }
 
