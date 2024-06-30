@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.Net.Mail;
 using System.Net;
 using System.Security.Cryptography;
+using System.Web;
 namespace Hotel.org.Service
 {
     public class AccountService : IAccountService
@@ -352,32 +353,37 @@ namespace Hotel.org.Service
 
         public async Task ResetPassword(string email)
         {
-      
+
 
             string token = GenerateResetPasswordToken();
 
             DateTime expiresAt = DateTime.UtcNow.AddMinutes(3);
             long expiresAtUnixTimestamp = new DateTimeOffset(expiresAt).ToUnixTimeSeconds();
 
-            using (var client = new SmtpClient())
+            // check if email exists in database
+            if (await _dbcontext.Users.AnyAsync(x => x.Email == email))
             {
-                client.Host = "smtp.gmail.com";
-                client.Port = 587;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.EnableSsl = true;
-                client.Credentials = new NetworkCredential("irakliberdzena314@gmail.com", "coca mmba ywsy lvyz");
 
-                using (var message = new MailMessage(
-                    from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
-                    to: new MailAddress(email, email)
-                ))
+
+                using (var client = new SmtpClient())
                 {
-                    message.Subject = "Reset Your Password";
-                    message.IsBodyHtml = true;
+                    client.Host = "smtp.gmail.com";
+                    client.Port = 587;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.EnableSsl = true;
+                    client.Credentials = new NetworkCredential("irakliberdzena314@gmail.com", "coca mmba ywsy lvyz");
 
-                    string resetLink = $"https://localhost:7206/Account/ResetPassword?email={WebUtility.UrlEncode(email)}&token={WebUtility.UrlEncode(token)}&TokenExpiresAt={expiresAtUnixTimestamp}";
-                    string htmlBody = $@"
+                    using (var message = new MailMessage(
+                        from: new MailAddress("irakliberdzena314@gmail.com", "tryhardgamer"),
+                        to: new MailAddress(email, email)
+                    ))
+                    {
+                        message.Subject = "Reset Your Password";
+                        message.IsBodyHtml = true;
+
+                        string resetLink = $"https://localhost:7206/Account/ResetPassword?email={HttpUtility.UrlEncode(email)}&token={HttpUtility.UrlEncode(token)}&TokenExpiresAt={expiresAtUnixTimestamp}";
+                        string htmlBody = $@"
             <html>
             <body>
                 <h2>Password Reset Request</h2>
@@ -389,23 +395,33 @@ namespace Hotel.org.Service
             </body>
             </html>";
 
-                    message.Body = htmlBody;
-                    
+                        message.Body = htmlBody;
 
-                    // Send the email
-                    client.Send(message);
+
+                        // Send the email
+                        client.Send(message);
+                    }
+
                 }
-               
             }
         }
 
-        private static string GenerateResetPasswordToken()
+        public static string GenerateResetPasswordToken()
         {
+            const int tokenSize = 32; // Token size in bytes
             using (var rng = new RNGCryptoServiceProvider())
             {
-                byte[] tokenData = new byte[32];
-                rng.GetBytes(tokenData);
-                return Convert.ToBase64String(tokenData);
+                byte[] tokenData = new byte[tokenSize];
+                try
+                {
+                    rng.GetBytes(tokenData);
+                    return Convert.ToBase64String(tokenData);
+                }
+                catch (CryptographicException)
+                {
+                    // Handle potential cryptographic exceptions
+                    throw new InvalidOperationException("An error occurred while generating a secure token.");
+                }
             }
         }
 
