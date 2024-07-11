@@ -51,9 +51,8 @@ namespace Hotel.org.Controllers
             ViewBag.TokenExpired = false;
             return View();
         }
-        public IActionResult VerificationPage(string email)
+        public IActionResult VerificationPage()
         {
-            ViewBag.Email = email;
             return View();
         }
         [HttpPost("registeruser")]
@@ -67,7 +66,7 @@ namespace Hotel.org.Controllers
              var result =    await _accountservice.RegisterUser(registerViewModel);
                 if (result)
                 {
-                    return RedirectToAction("VerificationPage", "Account", new {email = registerViewModel.EmailAddress});
+                    return RedirectToAction("VerificationPage", "Account");
 
                 }
                 else {
@@ -155,9 +154,9 @@ namespace Hotel.org.Controllers
         }
 
         [HttpPost("verifycode")]
-        public async Task<IActionResult> VerifyCode(string code, string email)
+        public async Task<IActionResult> VerifyCode(string code)
         {
-            var VerificationResult = await _accountservice.VerifyVerificationCode(code, email); ;
+         var VerificationResult =    await _accountservice.VerifyVerificationCode(code);
 
             if (VerificationResult)
             {

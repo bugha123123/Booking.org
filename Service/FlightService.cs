@@ -122,7 +122,7 @@ AddedForFlight = reviews.AddedForFlight,
             // If the user has already booked this flight, return without booking again
             if (existingBooking != null)
             {
-               
+                // You can handle this case as needed, such as throwing an exception or logging a message
                 return;
             }
 

@@ -29,7 +29,7 @@ namespace Hotel.org.Interface
 
         Task DeleteUser();
 
-        Task<bool> VerifyVerificationCode(string code, string email);
+        Task<bool> VerifyVerificationCode(string code);
 
         Task ResetPassword(string email);
 
