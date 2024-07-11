@@ -295,15 +295,7 @@ namespace Hotel.org.Service
             {
                 var result = await _userManager.DeleteAsync(user);
 
-                if (result.Succeeded)
-                {
-                    // Additional actions like logging, notifications, etc.
-                }
-                else
-                {
-                    // Handle errors
-                    throw new InvalidOperationException($"Error deleting user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
-                }
+            
             }
             else
             {
@@ -435,7 +427,7 @@ namespace Hotel.org.Service
                 return "User not found";
             }
 
-            // Check if the token is valid and not expired
+           
       
 
             // Hash the new password
