@@ -303,9 +303,9 @@ namespace Hotel.org.Service
             }
         }
 
-        public async Task<bool> VerifyVerificationCode(string code)
+        public async Task<bool> VerifyVerificationCode(string code, string email)
         {
-            var user = await GetLoggedInUserAsync();
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             // Find the verification code for the logged-in user
             var verificationCodeForUserFromDB = await _dbcontext.UserVerificationCodes.FirstOrDefaultAsync(x => x.UserId == user.Id);
