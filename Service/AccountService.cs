@@ -108,7 +108,7 @@ namespace Hotel.org.Service
         private async Task SendVerificationEmail(string email, string verificationCode)
         {
             // Assuming _accountService is an injected dependency that provides user details
-            var user = await GetLoggedInUserAsync();
+            
 
             using (var client = new SmtpClient())
             {
@@ -129,7 +129,7 @@ namespace Hotel.org.Service
 
                     // Create the HTML view for verification email
                     string htmlBody = $@"
-                <p>Dear {user.UserName},</p>
+                <p>Dear {email},</p>
                 <p>Thank you for registering with us!</p>
                 <p>Your verification code is: <strong>{verificationCode}</strong></p>
                 <p>Please use this code to verify your email address.</p>
@@ -303,9 +303,9 @@ namespace Hotel.org.Service
             }
         }
 
-        public async Task<bool> VerifyVerificationCode(string code)
+        public async Task<bool> VerifyVerificationCode(string code, string email)
         {
-            var user = await GetLoggedInUserAsync();
+         var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             // Find the verification code for the logged-in user
             var verificationCodeForUserFromDB = await _dbcontext.UserVerificationCodes.FirstOrDefaultAsync(x => x.UserId == user.Id);
