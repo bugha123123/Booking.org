@@ -115,9 +115,11 @@ namespace Hotel.org.Service
 
         private async Task SendVerificationEmail(string email, string verificationCode)
         {
-            // Assuming _accountService is an injected dependency that provides user details
+            // finds user with email in DB
             var user = await _dbcontext.Users.FirstOrDefaultAsync(x => x.Email == email);
 
+
+            // USED FOR SENDING EMAILS TO A USER
             using (var client = new SmtpClient())
             {
                 client.Host = "smtp.gmail.com";
