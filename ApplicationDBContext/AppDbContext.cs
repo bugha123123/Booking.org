@@ -26,6 +26,8 @@ namespace Hotel.org.ApplicationDBContext
 
 
         public DbSet<UserVerificationCode> UserVerificationCodes { get; set; }  
+
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
