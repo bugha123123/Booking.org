@@ -1,21 +1,4 @@
-[AccountController]
-     |
-     |--(uses)--> [IAccountService]
-     |
-     |--(uses)--> [AccountService] <--(implements)-- [IAccountService]
-     |
-     |--(uses)--> [HotelService]
-                         |
-                         |--(uses)--> [AppDbContext]
-                         |--(uses)--> [IAccountService]
-                         |
-                         |--(manages)--> [Hotel], [BookedHotel], [Favourites], [Reviews]
-                         |
-                         |--(sends email)--> [SMTP]
-                         |
-                         |--(handles)--> [User Authentication], [Payment Validation], [Hotel Booking], [Reviews], [Favorites]
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
