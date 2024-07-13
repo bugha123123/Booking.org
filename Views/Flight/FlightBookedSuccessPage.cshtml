@@ -95,10 +95,25 @@
                 <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
                     <a class="text-decoration-none" asp-action="FlightMainPage" asp-controller="Flight">Go Home</a>
                 </button>
-                <button class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                <button onclick="copyToClipboard()" class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
                     Share Confirmation
                 </button>
             </div>
         </div>
     </div>
 </section>
+
+
+
+<script>
+    function copyToClipboard() {
+        const url = "@Url.Action("FlightBookedSuccessPage", "Flight", new { FlightId = bookedFlightId }, Context.Request.Scheme)";
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                alert("URL copied to clipboard!");
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+    }
+</script>
