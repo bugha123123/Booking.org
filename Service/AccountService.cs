@@ -61,54 +61,62 @@ namespace Hotel.org.Service
         public async Task<bool> RegisterUser(RegisterViewModel registerViewModel)
         {
             // Check if a user with the provided email already exists
-            var existingUser = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
-            if (existingUser != null)
+            try
             {
-                // User with the email already exists, return false to indicate failure
-                return false;
-            }
-
-            var user = new User
-            {
-                UserName = registerViewModel.EmailAddress,
-                Email = registerViewModel.EmailAddress,
-                EmailConfirmed = false // Ensure email is not confirmed initially
-            };
-
-            var result = await _userManager.CreateAsync(user, registerViewModel.Password);
-
-            if (result.Succeeded)
-            {
-                var verificationCode = GenerateVerificationCode();
-
-                // Store the verification code and its expiration time in the database
-                // For simplicity, assume you have a UserVerificationCode entity
-                var userVerificationCode = new UserVerificationCode
+                var existingUser = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
+                if (existingUser != null)
                 {
-                    UserId = user.Id,
-                    user = user,
-                    Code = verificationCode,
-                    ExpiresAt = DateTime.UtcNow.AddMinutes(5) // Code valid for 5 minutes
+                    // User with the email already exists, return false to indicate failure
+                    return false;
+                }
+
+                var user = new User
+                {
+                    UserName = registerViewModel.EmailAddress,
+                    Email = registerViewModel.EmailAddress,
+                    EmailConfirmed = false // Ensure email is not confirmed initially
                 };
-                await _dbcontext.UserVerificationCodes.AddAsync(userVerificationCode);
-                await _dbcontext.SaveChangesAsync();
 
-                await SendVerificationEmail(user.Email, verificationCode);
+                var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
-                // Registration successful, return true
-                return true;
+                if (result.Succeeded)
+                {
+                    var verificationCode = GenerateVerificationCode();
+
+                    // Store the verification code and its expiration time in the database
+                    // For simplicity, assume you have a UserVerificationCode entity
+                    var userVerificationCode = new UserVerificationCode
+                    {
+                        UserId = user.Id,
+                        user = user,
+                        Code = verificationCode,
+                        ExpiresAt = DateTime.UtcNow.AddMinutes(5) // Code valid for 5 minutes
+                    };
+                    await _dbcontext.UserVerificationCodes.AddAsync(userVerificationCode);
+                    await _dbcontext.SaveChangesAsync();
+
+                    await SendVerificationEmail(registerViewModel.EmailAddress, verificationCode);
+
+                    // Registration successful, return true
+                    return true;
+                }
+                else
+                {
+                    // User creation failed, return false
+                    return false;
+                }
             }
-            else
+            catch (Exception)
             {
-                // User creation failed, return false
-                return false;
+
+                throw;
             }
         }
 
         private async Task SendVerificationEmail(string email, string verificationCode)
         {
             // Assuming _accountService is an injected dependency that provides user details
-            var user = await GetLoggedInUserAsync();
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(x => x.Email == email);
 
             using (var client = new SmtpClient())
             {
